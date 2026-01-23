@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import WelcomePage from './welcomePage.jsx'
-import UnlockDiscountsLoginpage from './unlockDiscoutsLoginpage.jsx'
-import Dashboard from './Dashboard.jsx'
+import UnlockDiscountsLoginpage from './UnlockDiscoutsLoginpage.jsx'
+
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  if (isAuthenticated) {
-    return <Dashboard />
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true)
   }
 
   return (
@@ -18,7 +18,7 @@ export default function App() {
         </div>
         <div className="w-full md:w-1/2 flex items-center justify-center">
           <div className="auth-container flex justify-center">
-            <UnlockDiscountsLoginpage onLoginSuccess={() => setIsAuthenticated(true)} />
+            <UnlockDiscountsLoginpage onLoginSuccess={handleLoginSuccess} />
           </div>
         </div>
       </div>

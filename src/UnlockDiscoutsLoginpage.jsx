@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
 import Button from './Button.jsx'
+import Dashboard from './Dashboard.jsx'
 
 export default function UnlockDiscountsLoginpage({ onLoginSuccess }) {
   const [adminId, setAdminId] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
     if (adminId === 'admin' && password === 'unlockdigiservices@1234') {
+      setIsLoggedIn(true)
+      setAdminId('')
+      setPassword('')
       setError('')
       if (onLoginSuccess) {
         onLoginSuccess()
@@ -17,6 +22,10 @@ export default function UnlockDiscountsLoginpage({ onLoginSuccess }) {
     } else {
       setError('Invalid credentials.')
     }
+  }
+
+  if (isLoggedIn) {
+    return <Dashboard />
   }
 
   return (
