@@ -11,13 +11,15 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gray-100 flex justify-center items-center">
-      <div className="w-full max-w-[1440px] h-auto md:h-[1024px] bg-white flex flex-col md:flex-row">
-        <div className="w-full md:w-1/2 h-[320px] md:h-full">
+    <div className="min-h-screen flex items-center justify-center bg-gray-200">
+      <div className="app-layout w-full max-w-[1440px] bg-white flex flex-col md:flex-row md:h-[1024px]">
+        <div className="w-full md:w-1/2 md:h-full">
           <WelcomePage />
         </div>
-        <div className="w-full md:w-1/2 flex items-center justify-center py-10 md:py-0">
-          <UnlockDiscountsLoginpage onLoginSuccess={() => setIsAuthenticated(true)} />
+        <div className="w-full md:w-1/2 flex items-center justify-center">
+          <div className="auth-container flex justify-center">
+            <UnlockDiscountsLoginpage onLoginSuccess={() => setIsAuthenticated(true)} />
+          </div>
         </div>
       </div>
     </div>
