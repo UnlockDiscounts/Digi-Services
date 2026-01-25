@@ -48,32 +48,32 @@ const staggerContainer = {
 };
 
 
-export function AboutUs() {
+const  AboutUs = () => {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [servicesScroll, setServicesScroll] = useState(0);
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [hoveredValueCard, setHoveredValueCard] = useState<number | null>(null);
+  const servicesRef = useRef(null);  // No TS types
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [hoveredValueCard, setHoveredValueCard] = useState(null);
 
   const testimonials = [
     {
       text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations.",
       name: "Rahul Mehta",
       role: "Owner, F2 Studios",
-      image: imgUnsplash0YhIlxeCuhg,
+      //image: imgUnsplash0YhIlxeCuhg,
     },
     {
       text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations.",
       name: "Riya Sharma",
       role: "Student",
-      image: imgUnsplash0YhIlxeCuhg1,
+      //image: imgUnsplash0YhIlxeCuhg1,
     },
     {
       text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations.",
       name: "Dinesh Kumar",
       role: "CEO, XYZ",
-      image: imgUnsplash0YhIlxeCuhg2,
+      //image: imgUnsplash0YhIlxeCuhg2,
     },
   ];
 
@@ -115,20 +115,6 @@ export function AboutUs() {
     },
   ];
 
-  // const scrollServices = (direction: "left" | "right") => {
-  //   if (direction === "right") {
-  //     setServicesScroll((prev) => {
-  //       const newIndex = Math.min(prev + 1, services.length - 1);
-  //       return newIndex;
-  //     });
-  //   } else {
-  //     setServicesScroll((prev) => {
-  //       const newIndex = Math.max(prev - 1, 0);
-  //       return newIndex;
-  //     });
-  //   }
-  // };
-
 const scrollServices = (direction) => {
   if (direction === "right") {
     setServicesScroll((prev) => {
@@ -142,8 +128,6 @@ const scrollServices = (direction) => {
     });
   }
 };
-
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -172,7 +156,8 @@ const scrollServices = (direction) => {
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="absolute bg-[rgba(99,100,255,0.2)] h-[83px] left-[118px] rounded-[8px] top-[34px] w-[1177px]"
+          className="absolute bg-[rgba(99,100,255,0.2)] h-[83px] left-[120px] rounded-[8px] top-[34px] w-[1177px]  border border-white border-opacity-15
+"
         >
           <div className="absolute left-[64px] size-[45px] top-1/2 translate-y-[-50%]">
             <img
@@ -277,7 +262,7 @@ const scrollServices = (direction) => {
       </motion.div>
 
       {/* Who We Are Section */}
-      <AnimatedSection className="bg-[rgba(172,173,188,0.2)] flex flex-col gap-[32px] items-center px-[64px] py-[32px] w-[1440px] mx-auto">
+      <AnimatedSection className="bg-[rgba(172,173,188,0.2)] flex flex-col gap-[32px] items-center px-[64px] py-[32px] w-full mx-auto">
         <h2 className="font-['Poppins'] font-medium text-[48px] text-black text-center w-full">
           Who We Are
         </h2>
@@ -325,7 +310,7 @@ const scrollServices = (direction) => {
           <img
             alt=""
             className="w-full h-full object-cover"
-            src={imgUnsplashBMwHu8WU1Vk}
+            src={imgImage51}
           />
         </motion.div>
 
@@ -342,7 +327,7 @@ const scrollServices = (direction) => {
           <img
             alt=""
             className="w-full h-full object-cover"
-            src={imgFrame1321317473}
+            src={imgImage51}
           />
         </motion.div>
 
@@ -359,7 +344,7 @@ const scrollServices = (direction) => {
           <img
             alt=""
             className="w-full h-full object-cover"
-            src={imgUnsplashWS73Le0GnKs}
+            src={imgImage51}
           />
         </motion.div>
 
@@ -379,7 +364,7 @@ const scrollServices = (direction) => {
           <img
             alt=""
             className="w-full h-full object-cover"
-            src={imgFrame1321317476}
+            src={imgImage51}
           />
         </motion.div>
       </div>
@@ -694,124 +679,120 @@ const scrollServices = (direction) => {
         </motion.div>
       </AnimatedSection>
 
-      {/* Our Comprehensive Services Carousel */}
-      <AnimatedSection className="bg-white h-[901px] w-[1440px] mx-auto overflow-hidden mt-12 relative">
-        <div className="absolute left-[137px] top-[57px] h-[749px] w-full overflow-hidden">
-          {/* Services carousel container */}
-          <div className="absolute left-[565px] top-[139px] w-[750px] h-[471px] overflow-hidden">
-            <motion.div
-              className="flex gap-[31px] absolute"
-              animate={{
-                x: -servicesScroll * 363
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 30
-              }}
-            >
-              {services.map((service, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  whileHover={{ scale: 1.05, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  viewport={{ once: true }}
-                  className="bg-white h-[471px] rounded-[8px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-lg"
-                >
-                  <h3
-                    className="font-['Poppins'] font-bold text-[26.629px] text-center mt-[18px] px-4"
-                    style={{ color: service.color }}
-                  >
-                    {service.title}
-                  </h3>
-                  <p className="font-['Poppins'] font-medium text-[14px] text-black text-center mt-4 px-4">
-                    {service.description}
-                  </p>
-                  <div className="absolute bottom-0 left-[36px] h-[297.912px] w-[258.8px] rounded-t-[8px] overflow-hidden">
-                    <img
-                      alt={service.title}
-                      className="w-full h-full object-cover rounded-t-[8px]"
-                      src={service.image}
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
 
-          {/* Left gradient card - Higher z-index to cover cards */}
+{/* Our Comprehensive Services Carousel */}
+<AnimatedSection className="bg-white h-[901px] w-[1440px] mx-auto overflow-hidden mt-12 relative">
+  <div className="absolute left-[137px] top-[57px] h-[749px] w-full overflow-hidden">
+    {/* Services carousel container - UNCHANGED */}
+    <div className="absolute left-[525px] top-[139px] w-[870px] h-[471px] overflow-hidden">
+      <motion.div
+        className="flex gap-[31px] absolute"
+        animate={{
+          x: -servicesScroll * 363
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 30
+        }}
+      >
+        {services.map((service, idx) => (
           <motion.div
-            initial={{ x: -100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
+            key={idx}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.05, y: -10 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
-            className="absolute left-0 top-0 h-[749px] w-[525px] rounded-[16px] overflow-hidden z-10"
+            className="bg-white h-[471px] rounded-[8px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-lg"
           >
-            <img
-              alt=""
-              className="absolute inset-0 object-cover size-full rounded-[16px]"
-              src={imgRectangle34627825}
-            />
-            <div
-              className="absolute inset-0 rounded-[16px]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(145.443deg, rgba(254, 203, 242, 0.9) 0.28315%, rgba(151, 126, 255, 0.9) 50%, rgba(3, 52, 255, 0.9) 99.717%)",
-              }}
-            />
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-12">
-              <p className="font-['Poppins'] font-semibold text-[40px] text-center text-white mb-6">
-                Our Comprehensive Services
-              </p>
-              <p className="font-['Poppins'] text-[24px] text-center text-white">
-                At UnlockDigiServices, we combine expertise with
-                personalized service to deliver exceptional
-                results for all your digital needs.
-              </p>
+            <h3
+              className="font-['Poppins'] font-bold text-[26.629px] text-center mt-[18px] px-4"
+              style={{ color: service.color }}
+            >
+              {service.title}
+            </h3>
+            <p className="font-['Poppins'] font-medium text-[14px] text-black text-center mt-4 px-4">
+              {service.description}
+            </p>
+            <div className="absolute bottom-0 left-[36px] h-[297.912px] w-[258.8px] rounded-t-[8px] overflow-hidden">
+              <img
+                alt={service.title}
+                className="w-full h-full object-cover rounded-t-[8px]"
+                src={service.image}
+              />
             </div>
           </motion.div>
+        ))}
+      </motion.div>
+    </div>
 
-          {/* Navigation arrows */}
-          <motion.button
-            onClick={() => scrollServices("left")}
-            disabled={servicesScroll === 0}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className={`absolute right-[100px] top-[680px] z-20 size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all ${
-              servicesScroll === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer'
-            }`}
-          >
-            <svg
-              width="10"
-              height="16"
-              viewBox="0 0 10 16"
-              fill="none"
-            >
-              <path d={svgPaths.p9338b00} fill="black" />
-            </svg>
-          </motion.button>
-          <motion.button
-            onClick={() => scrollServices("right")}
-            disabled={servicesScroll === services.length - 1}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className={`absolute right-[60px] top-[680px] z-20 size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all ${
-              servicesScroll === services.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer'
-            }`}
-          >
-            <svg
-              width="10"
-              height="16"
-              viewBox="0 0 10 16"
-              fill="none"
-            >
-              <path d={svgPaths.pe4e7700} fill="black" />
-            </svg>
-          </motion.button>
-        </div>
-      </AnimatedSection>
+    {/* Left gradient card - UNCHANGED */}
+    <motion.div
+      initial={{ x: -100, opacity: 0 }}
+      whileInView={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="absolute left-0 top-0 h-[749px] w-[525px] rounded-[16px] overflow-hidden z-10"
+    >
+      <img
+        alt=""
+        className="absolute inset-0 object-cover size-full rounded-[16px]"
+        src={imgRectangle34627825}
+      />
+      <div
+        className="absolute inset-0 rounded-[16px]"
+        style={{
+          backgroundImage:
+            "linear-gradient(145.443deg, rgba(254, 203, 242, 0.9) 0.28315%, rgba(151, 126, 255, 0.9) 50%, rgba(3, 52, 255, 0.9) 99.717%)",
+        }}
+      />
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-12">
+        <p className="font-['Poppins'] font-semibold text-[40px] text-center text-white mb-6">
+          Our Comprehensive Services
+        </p>
+        <p className="font-['Poppins'] text-[24px] text-center text-white">
+          At UnlockDigiServices, we combine expertise with
+          personalized service to deliver exceptional
+          results for all your digital needs.
+        </p>
+      </div>
+    </motion.div>
+  </div>
+
+  
+{/* Navigation arrows - CENTERED BELOW CARDS */}
+<motion.button
+  onClick={() => scrollServices("left")}
+  disabled={servicesScroll === 0}
+  whileHover={{ scale: 1.1 }}
+  whileTap={{ scale: 0.9 }}
+  className={`absolute left-1/2 top-[850px] z-[30] size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all -translate-x-[90px] ${
+    servicesScroll === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer shadow-lg'
+    
+  }`}
+  style={{ rotate: '180deg'}}
+>
+  <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
+    <path d={svgPaths.p9338b00} fill="black" />
+  </svg>
+</motion.button>
+<motion.button
+  onClick={() => scrollServices("right")}
+  disabled={servicesScroll === services.length - 1}
+  whileHover={{ scale: 1.1 }}
+  whileTap={{ scale: 0.9 }}
+  className={`absolute left-1/2 top-[850px] z-[30] size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all -translate-x-[30px] ${
+    servicesScroll === services.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer shadow-lg'
+  }`}
+>
+  <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
+    <path d={svgPaths.pe4e7700} fill="black" />
+  </svg>
+</motion.button>
+</AnimatedSection>
+
+
 
       {/* Client Testimonials */}
       <AnimatedSection className="bg-[rgba(172,173,188,0.2)] flex flex-col gap-[48px] items-center px-[64px] py-[32px] rounded-[16px] w-[1305px] mx-auto my-24">
@@ -891,7 +872,7 @@ const scrollServices = (direction) => {
       </AnimatedSection>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-b from-[#719cff] to-[#a872ff] h-[739px] w-[1440px] mx-auto overflow-hidden relative">
+      <footer className="bg-gradient-to-b from-[#719cff] to-[#a872ff] h-[739px] w-full mx-auto overflow-hidden relative">
         <div className="absolute bg-[rgba(217,217,217,0.52)] h-px left-0 top-[666px] w-[1440px]" />
 
         {/* Let's Work Together */}
@@ -1045,3 +1026,5 @@ const scrollServices = (direction) => {
     </div>
   );
 }
+
+export default AboutUs;
