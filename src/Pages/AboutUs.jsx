@@ -4,22 +4,32 @@ import { motion, useInView, useAnimation } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import svgPaths from "../assets/svgPaths.js";
 import imgGroup from "../assets/imgGroup.js";
+import Navbar from '../Components/NavBar';
+import React from 'react';
 
-import imgImage47 from "../assets/logo.svg";
+const topLeftImages = [imggraph,imgpresent,imgreading];
+const topRightImages = [imgImage55, imgmanstanding, imgshooting];
+const bottomLeftImages = [imgHighfi, imgguidance, imgcoffee];
+const bottomRightImages = [imgImage51, imgchart, imgImage54];
+
+
 import imgchart from "../assets/chart.svg";
 import imggraph from "../assets/graph.svg";
 import imgHighfi from "../assets/Highfi.svg";
 import imginterview from "../assets/interview.jpg";
-import img47 from "../assets/logo.svg";
+import imgreading from "../assets/reading.svg";
 import imgmanstanding from "../assets/manstanding.jpg";
-import imgimage47 from "../assets/logo.svg";
+import imgshooting from "../assets/shooting.svg";
+import imgcoffee from "../assets/coffee.svg";
+import imgguidance from "../assets/guidance.svg";
+
 
 import imgImage52 from "../assets/mobile.svg";
 import imgImage53 from "../assets/laptop.svg";
 import imgImage54 from "../assets/writing.jpg";
 import imgImage55 from "../assets/youtuber.svg";
 import imgImage51 from "../assets/meeting.jpg";
-import imgRectangle34627825 from "../assets/presentation.jpg";
+import imgpresent from "../assets/presentation.jpg";
 
 import AnimatedSection from '../Components/AnimatedSection'; 
 
@@ -47,12 +57,11 @@ const staggerContainer = {
   },
 };
 
-
 const  AboutUs = () => {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [servicesScroll, setServicesScroll] = useState(0);
-  const servicesRef = useRef(null);  // No TS types
+  const servicesRef = useRef(null); 
   const [hoveredCard, setHoveredCard] = useState(null);
   const [hoveredValueCard, setHoveredValueCard] = useState(null);
 
@@ -77,30 +86,31 @@ const  AboutUs = () => {
     },
   ];
 
+
   const services = [
     {
       title: "GST Filing",
       description:
         "Accurate and timely GST return filing services to keep your business compliant with tax regulations",
       image: imgImage51,
-      color: "#0412c0",
-    },
-    {
-      title: "ITR Filing",
-      description:
-        "Expert income tax return preparation and filing for individuals and businesses",
-      image: imgImage52,
-      color: "#0412c0",
+      color: "#6364ff",
     },
     {
       title: "Social Media Marketing",
+      description:
+        "Expert income tax return preparation and filing for individuals and businesses",
+      image: imgImage52,
+      color: "#6364ff",
+    },
+    {
+      title: "Website Development",
       description:
         "Strategic SMM services to enhance your online presence and engage your target audience.",
       image: imgImage53,
       color: "#6364ff",
     },
     {
-      title: "Website Development",
+      title: "ITR Filing",
       description:
         "Custom, responsive websites designed to convert visitors into customers.",
       image: imgImage54,
@@ -110,7 +120,7 @@ const  AboutUs = () => {
       title: "Resume Building",
       description:
         "Professionally crafted resumes that highlight your skills and get you noticed by employers.",
-      image: imgImage55,
+      image: imginterview,
       color: "#6364ff",
     },
   ];
@@ -138,6 +148,31 @@ const scrollServices = (direction) => {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
+
+
+const [currentIndex, setCurrentIndex] = React.useState(0);
+
+// Cycle index: 2s hold + 0.6s animation = 2.6s interval
+React.useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentIndex((prev) => (prev + 1) % 4);
+  }, 2600);
+  return () => clearInterval(interval);
+}, []);
+
+// Resets the index instantly when reaching the end of the 4-image loop
+const handleAnimationComplete = () => {
+  if (currentIndex === 3) {
+    setCurrentIndex(0);
+  }
+};
+
+const transitionProps = {
+  duration: 0.6,
+  ease: [0.32, 0.72, 0, 1], // Smooth snappy transition
+};
+
+
   return (
     <div className="bg-white relative min-h-screen overflow-x-hidden">
       {/* Hero Section with Navbar */}
@@ -151,104 +186,12 @@ const scrollServices = (direction) => {
             "linear-gradient(83.9195deg, rgb(254, 203, 242) 1.8178%, rgb(145, 123, 255) 47.22%, rgb(7, 55, 255) 92.159%)",
         }}
       >
-        {/* Navbar */}
-        <motion.div
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="absolute bg-[rgba(99,100,255,0.2)] h-[83px] left-[120px] rounded-[8px] top-[34px] w-[1177px]  border border-white border-opacity-15
-"
-        >
-          <div className="absolute left-[64px] size-[45px] top-1/2 translate-y-[-50%]">
-            <img
-              alt="Logo"
-              className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-              src={imgImage47}
-            />
-          </div>
 
-          <div className="absolute left-[214px] top-[calc(50%-0.5px)] translate-y-[-50%] flex gap-[93px] items-center">
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              href="#"
-              className="font-['Poppins'] font-semibold text-[20px] text-white"
-            >
-              Home
-            </motion.a>
+        {/* <Navbar/> */}
+      <div className="w-full flex justify-center items-center py-6 px-15">
+          <Navbar />
+        </div>
 
-            <div className="relative">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                onClick={() => setServicesOpen(!servicesOpen)}
-                className="flex items-center gap-[10px] font-['Poppins'] font-semibold text-[20px] text-white"
-              >
-                Services
-                <motion.div
-                  animate={{ rotate: servicesOpen ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ChevronDown className="w-6 h-6" />
-                </motion.div>
-              </motion.button>
-
-              <motion.div
-                initial={false}
-                animate={{
-                  opacity: servicesOpen ? 1 : 0,
-                  y: servicesOpen ? 0 : -10,
-                  display: servicesOpen ? "block" : "none",
-                }}
-                transition={{ duration: 0.3 }}
-                className="absolute top-[50px] left-0 bg-[rgba(99,100,255,0.95)] rounded-[8px] overflow-hidden min-w-[304px] z-50"
-              >
-                {[
-                  "Website Development",
-                  "Social Media Management",
-                  "Resume Building",
-                ].map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    whileHover={{
-                      backgroundColor: "rgba(99,100,255,0.8)",
-                    }}
-                    className="px-4 py-3 cursor-pointer"
-                  >
-                    <p className="font-['Poppins'] font-semibold text-[20px] text-white">
-                      {item}
-                    </p>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              href="#"
-              className="font-['Poppins'] font-semibold text-[20px] text-white"
-            >
-              About
-            </motion.a>
-
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              href="#"
-              className="font-['Poppins'] font-semibold text-[20px] text-white"
-            >
-              Blogs
-            </motion.a>
-          </div>
-
-          <motion.button
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: "#f0f0f0",
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="absolute bg-white h-[60px] left-[1007px] px-[18px] py-[20px] rounded-[8px] top-[calc(50%-0.5px)] translate-y-[-50%] font-['Poppins'] font-semibold text-[20px] text-black"
-          >
-            Contact Us
-          </motion.button>
-        </motion.div>
 
         {/* Hero Title */}
         <motion.h1
@@ -295,79 +238,100 @@ const scrollServices = (direction) => {
         </div>
       </AnimatedSection>
 
+
       {/* Animated Image Gallery */}
-      <div className="relative h-[981px] w-[1130px] mx-auto my-24 overflow-hidden">
-        {/* Top Left - Horizontal carousel moving right */}
-        <motion.div
-          animate={{ x: [0, -608, 0] }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute left-0 top-0 w-[608px] h-[405px] overflow-hidden rounded-lg"
-        >
-          <img
-            alt=""
-            className="w-full h-full object-cover"
-            src={imgImage51}
-          />
-        </motion.div>
+      
 
-        {/* Middle - Vertical carousel moving down */}
-        <motion.div
-          animate={{ y: [0, -587, 0] }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute left-[647px] top-0 w-[483px] h-[587px] overflow-hidden rounded-lg"
-        >
-          <img
-            alt=""
-            className="w-full h-full object-cover"
-            src={imgImage51}
-          />
-        </motion.div>
 
-        {/* Bottom Left - Moving up */}
-        <motion.div
-          animate={{ y: [0, 100, 0] }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute left-0 top-[423px] w-[608px] h-[558px] overflow-hidden rounded-lg"
-        >
-          <img
-            alt=""
-            className="w-full h-full object-cover"
-            src={imgImage51}
-          />
-        </motion.div>
+  <div className="relative w-[1130px] h-[981px] mx-auto my-12 overflow-hidden rounded-3xl shadow-2xl bg-gray-50">
+    
+    {/* TOP‑LEFT (608 x 405.3) – Swipe L→R (Horizontal) */}
+    <div 
+      className="absolute left-0 top-0 overflow-hidden" 
+      style={{ width: 608, height: 405.3 }}
+    >
+      <motion.div
+        className="flex"
+        animate={{ x: -(currentIndex * 608) }}
+        transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+        onAnimationComplete={handleAnimationComplete}
+      >
+        {[...topLeftImages, topLeftImages[0]].map((src, i) => (
+          <img key={i} src={src} style={{ width: 608, height: 405.3 }} className="object-cover flex-shrink-0" alt="" />
+        ))}
+      </motion.div>
+    </div>
 
-        {/* Bottom Right - Diagonal movement */}
-        <motion.div
-          animate={{
-            x: [0, -50, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{
-            duration: 22,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute left-[647px] top-[630px] w-[483px] h-[351px] overflow-hidden rounded-lg"
-        >
-          <img
-            alt=""
-            className="w-full h-full object-cover"
-            src={imgImage51}
-          />
-        </motion.div>
-      </div>
+    {/* TOP‑RIGHT (483 x 587) – Swipe T→B (Vertical) */}
+    <div 
+      className="absolute right-0 top-0 overflow-hidden" 
+      style={{ width: 483, height: 587 }}
+    >
+      <motion.div
+        className="flex flex-col"
+        animate={{ y: -(currentIndex * 587) }}
+        transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+      >
+        {[...topRightImages, topRightImages[0]].map((src, i) => (
+          <img key={i} src={src} style={{ width: 483, height: 587 }} className="object-cover flex-shrink-0" alt="" />
+        ))}
+      </motion.div>
+    </div>
+
+    {/* BOTTOM‑LEFT (608 x 558) – Swipe T→B (Vertical) */}
+    <div 
+      className="absolute left-0 bottom-0 overflow-hidden" 
+      style={{ width: 608, height: 558 }}
+    >
+      <motion.div
+        className="flex flex-col"
+        animate={{ y: -(currentIndex * 558) }}
+        transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+      >
+        {[...bottomLeftImages, bottomLeftImages[0]].map((src, i) => (
+          <img key={i} src={src} style={{ width: 608, height: 558 }} className="object-cover flex-shrink-0" alt="" />
+        ))}
+      </motion.div>
+    </div>
+
+    {/* BOTTOM‑RIGHT (483 x 350.5) – Swipe L→R (Horizontal) */}
+    <div 
+      className="absolute right-0 bottom-0 overflow-hidden" 
+      style={{ width: 483, height: 350.5 }}
+    >
+      <motion.div
+        className="flex"
+        animate={{ x: -(currentIndex * 483) }}
+        transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+      >
+        {[...bottomRightImages, bottomRightImages[0]].map((src, i) => (
+          <img key={i} src={src} style={{ width: 483, height: 350.5 }} className="object-cover flex-shrink-0" alt="" />
+        ))}
+      </motion.div>
+    </div>
+
+    {/* The Gap "Strip" (Crosshair) */}
+    <div className="absolute inset-0 pointer-events-none flex justify-center items-center">
+      {/* Horizontal Strip */}
+      <div className="absolute w-full h-[18px] bg-white z-10 opacity-80" style={{ top: '41%' }}></div>
+      {/* Vertical Strip */}
+      <div className="absolute h-full w-[39px] bg-white z-10 opacity-80" style={{ left: '53.8%' }}></div>
+      
+      {/* Optional dashed lines inside the strip for that Figma look */}
+      <div className="absolute top-[42%] left-0 w-full h-px border-t border-dashed border-blue-400 z-20"></div>
+      <div className="absolute left-[55.5%] top-0 h-full w-px border-l border-dashed border-blue-400 z-20"></div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
 
       {/* Our Vision & Mission Section */}
       <AnimatedSection className="flex flex-col gap-[48px] items-center px-[64px] py-[32px] w-[1440px] mx-auto mt-12">
@@ -508,7 +472,7 @@ const scrollServices = (direction) => {
                     y: hoveredValueCard === idx ? -30 : 0
                   }}
                   transition={{ duration: 0.3 }}
-                  className="font-['Poppins'] font-semibold text-[24px] text-center mt-2"
+                  className="font-['Poppins'] font-semibold text-[28px] text-center mt-2"
                 >
                   {value.title}
                 </motion.p>
@@ -521,7 +485,7 @@ const scrollServices = (direction) => {
                     y: hoveredValueCard === idx ? -20 : 20
                   }}
                   transition={{ duration: 0.3, delay: 0.1 }}
-                  className="font-['Poppins'] text-[14px] text-white text-center leading-relaxed mt-4 px-4"
+                  className="font-['Poppins'] text-[18px] text-white text-center leading-relaxed mt-4 px-4"
                 >
                   {value.description}
                 </motion.p>
@@ -669,7 +633,7 @@ const scrollServices = (direction) => {
                     y: hoveredCard === idx ? 0 : 20,
                   }}
                   transition={{ duration: 0.3, delay: 0.1 }}
-                  className="font-['Poppins'] text-[14px] text-white text-center leading-relaxed"
+                  className="font-['Poppins'] text-[18px] text-white text-center leading-relaxed"
                 >
                   {feature.description}
                 </motion.p>
@@ -678,6 +642,10 @@ const scrollServices = (direction) => {
           ))}
         </motion.div>
       </AnimatedSection>
+
+
+
+
 
 
 {/* Our Comprehensive Services Carousel */}
@@ -712,7 +680,7 @@ const scrollServices = (direction) => {
             >
               {service.title}
             </h3>
-            <p className="font-['Poppins'] font-medium text-[14px] text-black text-center mt-4 px-4">
+            <p className="font-['Poppins'] font-medium text-[18px] text-black text-center mt-4 px-4">
               {service.description}
             </p>
             <div className="absolute bottom-0 left-[36px] h-[297.912px] w-[258.8px] rounded-t-[8px] overflow-hidden">
@@ -738,7 +706,7 @@ const scrollServices = (direction) => {
       <img
         alt=""
         className="absolute inset-0 object-cover size-full rounded-[16px]"
-        src={imgRectangle34627825}
+        src={imginterview}
       />
       <div
         className="absolute inset-0 rounded-[16px]"

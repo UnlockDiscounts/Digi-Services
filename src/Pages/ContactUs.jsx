@@ -39,7 +39,7 @@ const ContactUs = () => {
       initial={{ opacity: 0, y: -30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.4 }}
-      className="font-['Inter'] font-bold text-[48px] text-white text-center mb-[54px]"
+      className="font-['Poppins'] font-bold text-[48px] text-white text-center mb-[54px]"
     >
       Get In Touch With Us
     </motion.p>
@@ -53,22 +53,22 @@ const ContactUs = () => {
 
               {/* Left purple card */}
               <div className="md:w-1/2 bg-[#8A72EB] text-white px-10 py-12 flex flex-col justify-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                <h2 className="text-3xl md:text-4xlfont-['Poppins'] font-bold mb-6 leading-tight">
                   Digitizing Your Business Growth
                 </h2>
 
                 <div className="space-y-4 text-sm md:text-base">
-                  <p className="font-semibold">How It's Works:</p>
-                  <p><span className="font-semibold">Step 1:</span> Select the service you need.</p>
-                  <p><span className="font-semibold">Step 2:</span> Share your details via WhatsApp or Email.</p>
-                  <p><span className="font-semibold">Step 3:</span> Your service will be delivered within 2–3 days.</p>
+                  <p className="font-semibold font-['Poppins']">How It's Works:</p>
+                  <p><span className="font-semibold font-['Poppins']">Step 1:</span> Select the service you need.</p>
+                  <p><span className="font-semibold font-['Poppins']">Step 2:</span> Share your details via WhatsApp or Email.</p>
+                  <p><span className="font-semibold font-['Poppins']">Step 3:</span> Your service will be delivered within 2–3 days.</p>
                   <p className="pt-4">
                     Reach us at :{' '}
                     <a href="mailto:info@unlockdigiservices.com" className="underline  !text-white/100 font-semibold">
                       info@unlockdigiservices.com
                     </a>
                   </p>
-                  <p className="pt-4">
+                  <p className="pt-4 font-['Poppins']">
                     Thank you for choosing UnlockDigiServices!
                     <br />
                     We look forward to connecting with you.
@@ -88,7 +88,7 @@ const ContactUs = () => {
 </p>
 
 
-                  <h3 className="text-2xl md:text-3xl text-[#000000] font-medium mt-2">
+                  <h3 className="text-2xl md:text-3xl text-[#000000]  font-['Poppins'] font-medium mt-2">
                     Start A Conversation
                   </h3>
                 </div>
@@ -144,7 +144,6 @@ const ContactUs = () => {
 >
   Submit
 </button>
-
 
                 </form>
               </div>

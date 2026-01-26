@@ -7,7 +7,6 @@ export default function NavBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-
   <nav className="w-[1100px] h-[80px] mx-auto bg-[#6364FF33] border-2 border-[#6364FF33] rounded-lg shadow-lg backdrop-blur-sm">
   <div className="h-full px-[60px] flex items-center">
     {/* Logo - left fixed */}
@@ -17,7 +16,7 @@ export default function NavBar() {
 
     {/* Links - start right after logo with fixed gaps */}
     <div className="ml-[145px] flex items-center gap-[90px] flex-1">
-      <a href="#home" className="!text-white font-medium text-[20px] font-semibold hover:opacity-80 transition-opacity">
+      <a href="/" className="!text-white font-medium text-[20px] font-semibold hover:opacity-80 transition-opacity">
         Home
       </a>
 
@@ -31,32 +30,36 @@ export default function NavBar() {
         </button>
         {isServicesOpen && (
           <div className="absolute top-full mt-2 w-48 bg-[#6364FF33] border-2 border-white/50 rounded-lg shadow-lg py-2 z-50 backdrop-blur-sm left-0">
-            <a href="#service1" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all">
+            <a href="/service1" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all">
               Service 1
             </a>
-            <a href="#service2" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all">
+            <a href="/service2" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all">
               Service 2
             </a>
-            <a href="#service3" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all">
+            <a href="/service3" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all">
               Service 3
             </a>
           </div>
         )}
       </div>
 
-      <a href="#about" className="!text-white font-medium text-[20px] font-semibold hover:opacity-80 transition-opacity">
+      <a href="/about" className="!text-white font-medium text-[20px] font-semibold hover:opacity-80 transition-opacity">
         About
       </a>
 
-      <a href="#blogs" className="!text-white font-medium text-[20px] font-semibold hover:opacity-80 transition-opacity">
+      <a href="/blogs" className="!text-white font-medium text-[20px] font-semibold hover:opacity-80 transition-opacity">
         Blogs
       </a>
     </div>
 
     {/* Contact button - fixed right */}
-    <button className="bg-white !text-black ml-45px px-6 py-2 rounded-lg font-semibold text-[20px] hover:bg-gray-100 hover:shadow-lg transition-all w-[160px]">
+    
+<a href="/contact" className="block">
+  <button className="bg-white !text-black ml-45px px-6 py-2 rounded-lg font-semibold text-[20px] hover:bg-gray-100 hover:shadow-lg transition-all w-[160px]">
       Contact Us
     </button>
+</a>
+
 
     {/* Mobile menu button - hidden on desktop */}
     <div className="md:hidden ml-4">
@@ -77,3 +80,5 @@ export default function NavBar() {
 </nav>
   );
 }
+
+
