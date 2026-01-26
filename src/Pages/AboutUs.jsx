@@ -312,14 +312,10 @@ const transitionProps = {
 
     {/* The Gap "Strip" (Crosshair) */}
     <div className="absolute inset-0 pointer-events-none flex justify-center items-center">
-      {/* Horizontal Strip */}
-      <div className="absolute w-full h-[18px] bg-white z-10 opacity-80" style={{ top: '41%' }}></div>
+      
       {/* Vertical Strip */}
       <div className="absolute h-full w-[39px] bg-white z-10 opacity-80" style={{ left: '53.8%' }}></div>
       
-      {/* Optional dashed lines inside the strip for that Figma look */}
-      <div className="absolute top-[42%] left-0 w-full h-px border-t border-dashed border-blue-400 z-20"></div>
-      <div className="absolute left-[55.5%] top-0 h-full w-px border-l border-dashed border-blue-400 z-20"></div>
     </div>
   </div>
 
