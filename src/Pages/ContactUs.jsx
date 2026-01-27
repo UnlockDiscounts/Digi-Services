@@ -51,21 +51,21 @@ const ContactUs = () => {
               
               {/* Left purple card */}
               <div className="lg:w-1/2 bg-[#8A72EB] text-white px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 flex flex-col justify-center">
-                <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-['Poppins'] font-bold mb-4 sm:mb-6 lg:mb-6 leading-tight">
+                <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-4 sm:mb-6 lg:mb-6 leading-tight">
                   Digitizing Your Business Growth
                 </h2>
                 <div className="space-y-3 sm:space-y-4 lg:space-y-4 text-xs sm:text-sm lg:text-base">
-                  <p className="font-semibold font-['Poppins']">How It's Works:</p>
-                  <p><span className="font-semibold font-['Poppins']">Step 1:</span> Select the service you need.</p>
-                  <p><span className="font-semibold font-['Poppins']">Step 2:</span> Share your details via WhatsApp or Email.</p>
-                  <p><span className="font-semibold font-['Poppins']">Step 3:</span> Your service will be delivered within 2–3 days.</p>
+                  <p className="font-semibold">How It's Works:</p>
+                  <p><span className="font-semibold ">Step 1:</span> Select the service you need.</p>
+                  <p><span className="font-semibold ">Step 2:</span> Share your details via WhatsApp or Email.</p>
+                  <p><span className="font-semibold ]">Step 3:</span> Your service will be delivered within 2–3 days.</p>
                   <p className="pt-3 sm:pt-4 lg:pt-4">
                     Reach us at :{' '}
                     <a href="mailto:info@unlockdigiservices.com" className="underline !text-white/100 font-semibold">
                       info@unlockdigiservices.com
                     </a>
                   </p>
-                  <p className="pt-3 sm:pt-4 font-['Poppins']">
+                  <p className="pt-3 sm:pt-4 ">
                     Thank you for choosing UnlockDigiServices!
                     <br className="sm:hidden" />
                     <span className="hidden sm:inline"> </span>
@@ -77,10 +77,10 @@ const ContactUs = () => {
               {/* Right white form card */}
               <div className="lg:w-1/2 bg-white px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 flex flex-col justify-center">
                 <div className="mb-6 sm:mb-8 text-center">
-                  <p className="font-['Poppins'] font-medium text-[16px] sm:text-[18px] lg:text-[19.78px] text-[#000000] tracking-wide">
+                  <p className=" font-medium text-[16px] sm:text-[18px] lg:text-[19.78px] text-[#000000] tracking-wide">
                     LET'S GROW YOUR BRAND ONLINE
                   </p>
-                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-['Poppins'] font-medium mt-2 text-[#000000]">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-medium mt-2 text-[#000000]">
                     Start A Conversation
                   </h3>
                 </div>

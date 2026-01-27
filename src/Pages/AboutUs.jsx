@@ -22,6 +22,9 @@ import imgImage54 from "../assets/writing.jpg";
 import imgImage55 from "../assets/youtuber.svg";
 import imgImage51 from "../assets/meeting.jpg";
 import imgpresent from "../assets/presentation.jpg";
+import imgBoy from "../assets/Boy.jpg";
+import imggirl from "../assets/girl.png";
+import imgman from "../assets/man.png";
 
 import AnimatedSection from '../Components/AnimatedSection'; 
 import Footer from "../Components/Footer.jsx";
@@ -62,19 +65,19 @@ const AboutUs = () => {
       text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations.",
       name: "Rahul Mehta",
       role: "Owner, F2 Studios",
-      image: imgpresent,
+      image: imgBoy,
     },
     {
       text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations.",
       name: "Riya Sharma",
       role: "Student",
-      image: imgImage54,
+      image: imggirl,
     },
     {
       text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations.",
       name: "Dinesh Kumar",
       role: "CEO, XYZ",
-      image: imginterview,
+      image: imgman,
     },
   ];
 
@@ -115,7 +118,7 @@ const AboutUs = () => {
   const transitionProps = { duration: 0.6, ease: [0.32, 0.72, 0, 1] };
 
   return (
-    <div className="bg-white relative min-h-screen overflow-x-hidden font-['Poppins']">
+    <div className="bg-white relative min-h-screen overflow-x-hidden ">
       
       {/* Hero Section */}
       <motion.div
@@ -125,14 +128,19 @@ const AboutUs = () => {
         className="relative h-[510px] w-full overflow-hidden"
         style={{ backgroundImage: "linear-gradient(83.9195deg, rgb(254, 203, 242) 1.8178%, rgb(145, 123, 255) 47.22%, rgb(7, 55, 255) 92.159%)" }}
       >
-        <div className="w-full flex justify-center items-center py-6 px-4 md:px-15">
+        {/* <div className="w-full flex justify-center items-center py-6 px-4 md:px-15">
+          <Navbar />
+        </div> */}
+
+    <div className="w-full flex justify-center items-center py-4 sm:py-6 lg:py-6 px-4 lg:px-15">
           <Navbar />
         </div>
+
         <motion.h1
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="absolute font-['Inter'] font-bold text-[48px] text-white left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full px-4"
+          className="absolute  font-bold text-[48px] text-white left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full px-4"
         >
           ABOUT US
         </motion.h1>
@@ -140,7 +148,7 @@ const AboutUs = () => {
 
       {/* Who We Are Section */}
       <AnimatedSection className="bg-[rgba(172,173,188,0.2)] flex flex-col gap-[32px] items-center px-6 md:px-[64px] py-[32px] w-full">
-        <h2 className="font-['Poppins'] font-medium text-[48px] text-black text-center w-full">
+        <h2 className="font-medium text-[48px] text-black text-center w-full">
           Who We Are
         </h2>
         <div className="font-['Poppins'] text-[23px] text-black w-full max-w-[1312px] mx-auto">
@@ -198,10 +206,10 @@ const AboutUs = () => {
 
       {/* Vision & Mission */}
       <AnimatedSection className="flex flex-col gap-[48px] items-center px-6 md:px-[64px] py-[32px] w-full max-w-[1440px] mx-auto mt-12">
-        <h2 className="font-['Poppins'] font-bold text-[48px] text-black text-center w-full">
+        <h2 className="font-bold text-[48px] text-black text-center w-full">
           Our <span className="text-[#6364ff]">Vision</span> & <span className="text-[#6364ff]">Mission</span>
         </h2>
-        <div className="font-['Poppins'] text-[24px] text-black w-full text-center md:text-left">
+        <div className=" text-[24px] text-black w-full text-center md:text-left">
           <p className="mb-4">At Unlock Digi Services, our vision is to be India's
             most trusted and accessible partner for digital and
             compliance services. We believe that every
@@ -273,8 +281,8 @@ const AboutUs = () => {
       {/* Why Clients Choose Us */}
       <AnimatedSection className="bg-[rgba(172,173,188,0.2)] flex flex-col gap-[32px] items-center px-6 md:px-[64px] py-[60px] w-full mt-12">
         <div className="flex flex-col gap-[16px] items-center text-center w-full">
-          <h2 className="font-['Poppins'] font-medium text-[48px] text-black">Why Clients Choose Us</h2>
-          <p className="font-['Poppins'] text-[24px] text-black max-w-[900px]">AAt UnlockDigiServices, we combine expertise with
+          <h2 className=" font-medium text-[48px] text-black">Why Clients Choose Us</h2>
+          <p className=" text-[24px] text-black max-w-[900px]">At UnlockDigiServices, we combine expertise with
       personalized service to deliver exceptional results
       for all your digital needs.</p>
         </div>
@@ -304,8 +312,8 @@ const AboutUs = () => {
                     <path d={feature.icon} fill={hoveredCard === idx ? "#6364FF" : "white"} />
                   </svg>
                 </motion.div>
-                <motion.p animate={{ color: hoveredCard === idx ? "#ffffff" : "#000000", y: hoveredCard === idx ? -20 : 0 }} className="font-['Poppins'] font-semibold text-[24px] text-center">{feature.title}</motion.p>
-                <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: hoveredCard === idx ? 1 : 0, y: hoveredCard === idx ? 0 : 20 }} className="font-['Poppins'] text-[18px] text-white text-center leading-relaxed mt-2">{feature.description}</motion.p>
+                <motion.p animate={{ color: hoveredCard === idx ? "#ffffff" : "#000000", y: hoveredCard === idx ? -20 : 0 }} className=" font-semibold text-[24px] text-center">{feature.title}</motion.p>
+                <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: hoveredCard === idx ? 1 : 0, y: hoveredCard === idx ? 0 : 20 }} className=" text-[18px] text-white text-center leading-relaxed mt-2">{feature.description}</motion.p>
               </div>
             </motion.div>
           ))}
@@ -321,8 +329,8 @@ const AboutUs = () => {
               <motion.div className="flex gap-[31px] absolute" animate={{ x: -servicesScroll * 363 }}>
                 {services.map((service, idx) => (
                   <div key={idx} className="bg-white h-[471px] rounded-[8px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-lg">
-                    <h3 className="font-['Poppins'] font-bold text-[26px] text-center mt-[18px] px-4" style={{ color: service.color }}>{service.title}</h3>
-                    <p className="font-['Poppins'] font-medium text-[18px] text-black text-center mt-4 px-4">{service.description}</p>
+                    <h3 className=" font-bold text-[26px] text-center mt-[18px] px-4" style={{ color: service.color }}>{service.title}</h3>
+                    <p className=" font-medium text-[18px] text-black text-center mt-4 px-4">{service.description}</p>
                     <div className="absolute bottom-0 left-[36px] h-[297px] w-[258px] overflow-hidden"><img src={service.image} className="w-full h-full object-cover" /></div>
                   </div>
                 ))}
@@ -403,7 +411,7 @@ const AboutUs = () => {
     viewport={{ once: true }}
     className="w-full text-center"
   >
-    <h2 className="font-['Poppins'] font-medium text-[28px] sm:text-[32px] md:text-[40px] lg:text-[48px] text-black leading-tight">
+    <h2 className=" font-medium text-[28px] sm:text-[32px] md:text-[40px] lg:text-[48px] text-black leading-tight">
       Our Commitment
     </h2>
   </motion.div>
@@ -413,7 +421,7 @@ const AboutUs = () => {
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, delay: 0.2 }}
     viewport={{ once: true }}
-    className="font-['Poppins'] text-[16px] sm:text-[18px] md:text-[24px] text-black leading-relaxed max-w-[90vw] md:max-w-2xl lg:max-w-none mx-auto px-2 sm:px-4"
+    className=" text-[16px] sm:text-[18px] md:text-[24px] text-black leading-relaxed max-w-[90vw] md:max-w-2xl lg:max-w-none mx-auto px-2 sm:px-4"
   >
     At Unlock Digi Services, we are committed to providing
     accurate, transparent, and affordable solutions that

@@ -8,7 +8,7 @@ export default function NavBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="w-full max-w-[1100px] lg:w-[1100px] h-20 lg:h-[80px] mx-auto bg-[#6364FF33] border-2 border-[#6364FF33] rounded-lg shadow-lg backdrop-blur-sm px-4 sm:px-6 lg:px-[60px]">
+    <nav className="w-full max-w-[1100px] lg:w-[1100px] h-20 lg:h-[80px] mx-auto bg-[#6364FF33] border-2 border-[#6364FF33] rounded-lg shadow-lg backdrop-blur-sm px-4 sm:px-6  lg:px-[60px]">
       <div className="h-full flex items-center justify-between lg:justify-start">
         {/* Logo - left fixed */}
         <div className="w-10 h-10 lg:w-[40px] lg:h-[40px] flex-shrink-0">
@@ -34,21 +34,21 @@ export default function NavBar() {
                 <a href="/service1" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all text-sm">
                   Website Building
                 </a>
-                <a href="/service2" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all text-sm">
+                <a href="/service2" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all  text-sm">
                   Resume Building
                 </a>
-                <a href="/service3" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all text-sm">
+                <a href="/service3" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all  text-sm">
                   Social media management
                 </a>
               </div>
             )}
           </div>
 
-          <a href="/" className="!text-white font-medium text-base lg:text-[20px] font-semibold hover:opacity-80 transition-opacity">
+          <a href="/" className="!text-white font-medium text-base lg:text-[20px] font-semibold hover:opacity- transition-opacity">
             About
           </a>
 
-          <a href="/blogs" className="!text-white font-medium text-base lg:text-[20px] font-semibold hover:opacity-80 transition-opacity">
+          <a href="/blogs" className="!text-white font-medium text-base lg:text-[20px] font-semibold hover:opacity-80   transition-opacity">
             Blogs
           </a>
         </div>
