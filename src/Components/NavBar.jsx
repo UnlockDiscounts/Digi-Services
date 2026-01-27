@@ -17,7 +17,7 @@ export default function NavBar() {
 
         {/* Desktop Links - hidden on mobile */}
         <div className="hidden lg:ml-[145px] lg:flex lg:items-center lg:gap-[90px] lg:flex-1">
-          <a href="/" className="!text-white font-medium text-base lg:text-[20px] font-semibold hover:opacity-80 transition-opacity">
+          <a href="/home" className="!text-white hover:opacity-80 transition-opacity font-medium text-base lg:text-[20px] font-semibold">
             Home
           </a>
 
@@ -32,19 +32,19 @@ export default function NavBar() {
             {isServicesOpen && (
               <div className="absolute top-full mt-2 w-48 bg-[#6364FF33] border-2 border-white/50 rounded-lg shadow-lg py-2 z-50 backdrop-blur-sm left-0 lg:left-auto">
                 <a href="/service1" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all text-sm">
-                  Service 1
+                  Website Building
                 </a>
                 <a href="/service2" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all text-sm">
-                  Service 2
+                  Resume Building
                 </a>
                 <a href="/service3" className="block px-4 py-2 !text-white hover:bg-white/20 hover:rounded transition-all text-sm">
-                  Service 3
+                  Social media management
                 </a>
               </div>
             )}
           </div>
 
-          <a href="/about" className="!text-white font-medium text-base lg:text-[20px] font-semibold hover:opacity-80 transition-opacity">
+          <a href="/" className="!text-white font-medium text-base lg:text-[20px] font-semibold hover:opacity-80 transition-opacity">
             About
           </a>
 

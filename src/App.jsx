@@ -10,8 +10,9 @@ function App() {
     
       {/* Route definitions */}
       <Routes>
-        <Route path="/about" element={<AboutUs />} />
+        <Route path="/" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="*" element={<div>404 - Not Found</div>} />
       </Routes>
     </>
   );

@@ -169,7 +169,7 @@ export default function Footer() {
 
         <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-white/80 text-sm">
-            © Copyright 2025 UNLOCK DIGI Services. All Rights Reserved
+            © Copyright 2025 Unlock Digi Services. All Rights Reserved
           </p>
 
           <div className="flex gap-8 mt-4 md:mt-0">

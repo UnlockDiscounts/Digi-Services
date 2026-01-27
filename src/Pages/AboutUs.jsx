@@ -132,7 +132,7 @@ const AboutUs = () => {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="absolute font-['Poppins'] font-bold text-[48px] text-white left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full px-4"
+          className="absolute font-['Inter'] font-bold text-[48px] text-white left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full px-4"
         >
           ABOUT US
         </motion.h1>
@@ -369,8 +369,6 @@ const AboutUs = () => {
     <path d={svgPaths.pe4e7700} fill="black" />
   </svg>
 </motion.button>
-
-
 
 
 
