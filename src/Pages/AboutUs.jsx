@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, useInView, useAnimation } from "motion/react";
+import { motion, useInView, useAnimation,AnimatePresence  } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import svgPaths from "../assets/svgPaths.js";
 import Navbar from '../Components/NavBar';
@@ -117,6 +117,7 @@ const AboutUs = () => {
 
   const transitionProps = { duration: 0.6, ease: [0.32, 0.72, 0, 1] };
 
+
   return (
     <div className="bg-white relative min-h-screen overflow-x-hidden ">
       
@@ -169,8 +170,113 @@ const AboutUs = () => {
         </div>
       </AnimatedSection>
 
+
+
+<div className="w-full py-12 px-4">
+  <div
+    className="
+      relative mx-auto overflow-hidden rounded-3xl shadow-2xl bg-gray-50 flex-shrink-0
+      w-full max-w-[1130px]
+      aspect-[1130/981]
+    "
+  >
+    {/* Top-left */}
+    <div
+      className="absolute left-0 top-0 overflow-hidden
+                 w-[54%] h-[41%]   /* 608/1130 ≈ 54%, 405.3/981 ≈ 41% */"
+    >
+      <motion.div
+        className="flex"
+        animate={{ x: -(currentIndex * 608) }}
+        transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+        onAnimationComplete={handleAnimationComplete}
+      >
+        {[...topLeftImages, topLeftImages[0]].map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            className="object-cover flex-shrink-0 w-full h-full"
+            alt=""
+          />
+        ))}
+      </motion.div>
+    </div>
+
+    {/* Top-right */}
+    <div
+      className="absolute right-0 top-0 overflow-hidden
+                 w-[43%] h-[60%]   /* 483/1130 ≈ 43%, 587/981 ≈ 60% */"
+    >
+      <motion.div
+        className="flex flex-col"
+        animate={{ y: -(currentIndex * 587) }}
+        transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+      >
+        {[...topRightImages, topRightImages[0]].map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            className="object-cover flex-shrink-0 w-full h-full"
+            alt=""
+          />
+        ))}
+      </motion.div>
+    </div>
+
+    {/* Bottom-left */}
+    <div
+      className="absolute left-0 bottom-0 overflow-hidden
+                 w-[54%] h-[57%]   /* 608/1130 ≈ 54%, 558/981 ≈ 57% */"
+    >
+      <motion.div
+        className="flex flex-col"
+        animate={{ y: -(currentIndex * 558) }}
+        transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+      >
+        {[...bottomLeftImages, bottomLeftImages[0]].map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            className="object-cover flex-shrink-0 w-full h-full"
+            alt=""
+          />
+        ))}
+      </motion.div>
+    </div>
+
+    {/* Bottom-right */}
+    <div
+      className="absolute right-0 bottom-0 overflow-hidden
+                 w-[43%] h-[36%]   /* 483/1130 ≈ 43%, 350.5/981 ≈ 36% */"
+    >
+      <motion.div
+        className="flex"
+        animate={{ x: -(currentIndex * 483) }}
+        transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+      >
+        {[...bottomRightImages, bottomRightImages[0]].map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            className="object-cover flex-shrink-0 w-full h-full"
+            alt=""
+          />
+        ))}
+      </motion.div>
+    </div>
+
+    {/* Center divider */}
+    <div
+      className="absolute h-full bg-white z-10 opacity-80 w-[3.5%]"
+      style={{ left: '53.8%' }}
+    ></div>
+  </div>
+</div>
+
+
+
       {/* Animated Image Gallery - Wrapped for Mobile Scroll */}
-      <div className="w-full overflow-x-auto py-12 px-4 scrollbar-hide">
+       {/* <div className="w-full overflow-x-auto py-12 px-4 scrollbar-hide">
         <div className="relative w-[1130px] h-[981px] mx-auto overflow-hidden rounded-3xl shadow-2xl bg-gray-50 flex-shrink-0">
           <div className="absolute left-0 top-0 overflow-hidden" style={{ width: 608, height: 405.3 }}>
             <motion.div className="flex" animate={{ x: -(currentIndex * 608) }} transition={currentIndex === 0 ? { duration: 0 } : transitionProps} onAnimationComplete={handleAnimationComplete}>
@@ -202,7 +308,9 @@ const AboutUs = () => {
           </div>
           <div className="absolute h-full w-[39px] bg-white z-10 opacity-80" style={{ left: '53.8%' }}></div>
         </div>
-      </div>
+      </div> 
+ */}
+
 
       {/* Vision & Mission */}
       <AnimatedSection className="flex flex-col gap-[48px] items-center px-6 md:px-[64px] py-[32px] w-full max-w-[1440px] mx-auto mt-12">
@@ -378,13 +486,10 @@ const AboutUs = () => {
   </svg>
 </motion.button>
 
-
-
-
       </AnimatedSection>
 
       {/* Testimonials - Wrapped for scroll */}
-      <AnimatedSection className="bg-[rgba(172,173,188,0.2)] py-12 w-full max-w-[1305px] mx-auto overflow-hidden">
+      {/* <AnimatedSection className="bg-[rgba(172,173,188,0.2)] py-12 w-full max-w-[1305px] mx-auto overflow-hidden">
         <h2 className="font-medium text-[48px] text-black text-center mb-12">Client Testimonials</h2>
         <div className="w-full overflow-x-auto scrollbar-hide px-4">
           <div className="w-[1150px] mx-auto">
@@ -400,7 +505,68 @@ const AboutUs = () => {
             </motion.div>
           </div>
         </div>
+      </AnimatedSection> */}
+
+
+<div className="min-h-screen py-20 bg-gray-100 flex items-center justify-center p-4">
+      
+      <AnimatedSection className="bg-[rgba(172,173,188,0.2)] py-12 w-full max-w-[1305px] mx-auto overflow-hidden rounded-2xl">
+        <h2 className="font-medium text-[32px] md:text-[48px] text-black text-center mb-12 px-4 leading-tight">
+          Client Testimonials
+        </h2>
+        
+        {/* Container for the card: Added px-4 and removed fixed width for responsiveness */}
+        <div className="w-full px-4 md:px-0">
+          <div className="max-w-[1150px] mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={currentTestimonial} 
+                initial={{ opacity: 0, x: 50 }} 
+                animate={{ opacity: 1, x: 0 }} 
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white flex flex-col md:flex-row gap-8 md:gap-[64px] items-center p-6 md:p-[32px] rounded-[16px] shadow-sm"
+              >
+                {/* Image Container: Full width on mobile, 400px on desktop */}
+                <div className="w-full md:w-[400px] h-[250px] md:h-[330px] rounded-lg overflow-hidden flex-shrink-0">
+                  <img 
+                    src={testimonials[currentTestimonial].image} 
+                    className="w-full h-full object-cover" 
+                    alt={testimonials[currentTestimonial].name}
+ />
+                </div>
+
+                {/* Text Content */}
+                <div className="flex flex-col gap-4 text-center md:text-left">
+                  <p className="text-[18px] md:text-[20px] text-black italic leading-relaxed">
+                    "{testimonials[currentTestimonial].text}"
+                  </p>
+                  <div className="mt-2 md:mt-0">
+                    <p className="font-bold text-[20px] md:text-[24px] text-[#473cf0]">
+                      {testimonials[currentTestimonial].name}
+                    </p>
+                    <p className="text-[14px] md:text-[16px] text-gray-500 uppercase tracking-wide">
+                      {testimonials[currentTestimonial].role}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/*  Dot indicators for the demo */}
+        <div className="flex justify-center gap-2 mt-8">
+          {testimonials.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentTestimonial(idx)}
+              className={`h-2 rounded-full transition-all duration-300 ${idx === currentTestimonial ? 'w-8 bg-[#473cf0]' : 'w-2 bg-gray-400'}`}
+            />
+          ))}
+</div>
       </AnimatedSection>
+    </div>
 
       
 <AnimatedSection className="flex flex-col gap-8 sm:gap-12 md:gap-16 lg:gap-[48px] px-4 sm:px-6 md:px-8 lg:px-[64px] py-8 sm:py-12 md:py-16 lg:py-[32px] w-full lg:w-[1440px] mx-auto my-12 sm:my-16 md:my-20 lg:my-24">
