@@ -1,27 +1,27 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, useInView, useAnimation,AnimatePresence  } from "motion/react";
+import { motion, useInView, useAnimation,AnimatePresence } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import svgPaths from "../assets/svgPaths.js";
-import Navbar from '../Components/NavBar';
+import Navbar from '../components/NavBar';
 
 import React from 'react';
 
 // Assets
-import imgchart from "../assets/chart.svg";
-import imggraph from "../assets/graph.svg";
-import imgHighfi from "../assets/Highfi.svg";
+import imgchart from "../assets/chart.svg?react";
+import imggraph from "../assets/graph.svg?react";
+import imgHighfi from "../assets/Highfi.svg?react";
 import imginterview from "../assets/interview.jpg";
-import imgreading from "../assets/reading.svg";
-import imgmanstanding from "../assets/manstanding.jpg";
-import imgshooting from "../assets/shooting.svg";
-import imgcoffee from "../assets/coffee.svg";
-import imgguidance from "../assets/guidance.svg";
-import imgImage52 from "../assets/mobile.svg";
-import imgImage53 from "../assets/laptop.svg";
-import imgImage54 from "../assets/writing.jpg";
-import imgImage55 from "../assets/youtuber.svg";
-import imgImage51 from "../assets/meeting.jpg";
-import imgpresent from "../assets/presentation.jpg";
+import imgreading from "../assets/reading.svg?react";
+import imgmanstanding from "../assets/manstanding.svg?react";
+import imgshooting from "../assets/shooting.svg?react";
+import imgcoffee from "../assets/coffee.svg?react";
+import imgguidance from "../assets/guidance.svg?react";
+import imgImage52 from "../assets/mobile.svg?react";
+import imgImage53 from "../assets/laptop.svg?react";
+import imgImage54 from "../assets/writing.svg?react";
+import imgImage55 from "../assets/youtuber.svg?react";
+import imgImage51 from "../assets/meeting.svg?react";
+import imgpresent from "../assets/presentation.svg?react";
 import imgBoy from "../assets/Boy.jpg";
 import imggirl from "../assets/girl.png";
 import imgman from "../assets/man.png";
@@ -86,7 +86,7 @@ const AboutUs = () => {
     { title: "Social Media Marketing", description: "Expert income tax return preparation...", image: imgImage52, color: "#6364ff" },
     { title: "Website Development", description: "Strategic SMM services to enhance presence...", image: imgImage53, color: "#6364ff" },
     { title: "ITR Filing", description: "Custom, responsive websites designed to convert...", image: imgImage54, color: "#6364ff" },
-    { title: "Resume Building", description: "Professionally crafted resumes that highlight...", image: imginterview, color: "#6364ff" },
+    { title: "Resume Building", description: "Professionally crafted resumes that highlight...", image: imgImage51, color: "#6364ff" },
   ];
 
   const scrollServices = (direction) => {
@@ -171,7 +171,6 @@ const AboutUs = () => {
       </AnimatedSection>
 
 
-
 <div className="w-full py-12 px-4">
   <div
     className="
@@ -191,13 +190,20 @@ const AboutUs = () => {
         transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
         onAnimationComplete={handleAnimationComplete}
       >
-        {[...topLeftImages, topLeftImages[0]].map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            className="object-cover flex-shrink-0 w-full h-full"
-            alt=""
-          />
+        {[...topLeftImages, topLeftImages[0]].map((ImageComponent, i) => (
+          // <img
+          //   key={i}
+          //   src={src}
+          //   className="object-cover flex-shrink-0 w-full h-full"
+          //   alt=""
+          // />
+
+          <div key={i} className="flex-shrink-0 w-[608px] h-full p-4">
+      <ImageComponent 
+        className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all fill-current text-blue-500"
+      />
+    </div>
+
         ))}
       </motion.div>
     </div>
@@ -212,13 +218,21 @@ const AboutUs = () => {
         animate={{ y: -(currentIndex * 587) }}
         transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
       >
-        {[...topRightImages, topRightImages[0]].map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            className="object-cover flex-shrink-0 w-full h-full"
-            alt=""
-          />
+        {[...topRightImages, topRightImages[0]].map((ImageComponent, i) => (
+          // <img
+          //   key={i}
+          //   src={src}
+          //   className="object-cover flex-shrink-0 w-full h-full"
+          //   alt=""
+          // />
+
+<div key={i} className="flex-shrink-0 w-[490px] h-full p-4">
+      <ImageComponent 
+        className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all fill-current text-blue-500"
+      />
+    </div>
+
+
         ))}
       </motion.div>
     </div>
@@ -233,13 +247,20 @@ const AboutUs = () => {
         animate={{ y: -(currentIndex * 558) }}
         transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
       >
-        {[...bottomLeftImages, bottomLeftImages[0]].map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            className="object-cover flex-shrink-0 w-full h-full"
-            alt=""
-          />
+        {[...bottomLeftImages, bottomLeftImages[0]].map((ImageComponent, i) => (
+          // <img
+          //   key={i}
+          //   src={src}
+          //   className="object-cover flex-shrink-0 w-full h-full"
+          //   alt=""
+          // />
+
+
+          <div key={i} className="flex-shrink-0 w-[608px] h-full p-4">
+      <ImageComponent 
+        className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all fill-current text-blue-500"
+      />
+    </div>
         ))}
       </motion.div>
     </div>
@@ -254,13 +275,20 @@ const AboutUs = () => {
         animate={{ x: -(currentIndex * 483) }}
         transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
       >
-        {[...bottomRightImages, bottomRightImages[0]].map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            className="object-cover flex-shrink-0 w-full h-full"
-            alt=""
-          />
+        {[...bottomRightImages, bottomRightImages[0]].map((ImageComponent, i) => (
+          // <img
+          //   key={i}
+          //   src={src}
+          //   className="object-cover flex-shrink-0 w-full h-full"
+          //   alt=""
+          // />
+
+
+          <div key={i} className="flex-shrink-0 w-[490px] h-full p-4">
+      <ImageComponent 
+        className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all fill-current text-blue-500"
+      />
+    </div>
         ))}
       </motion.div>
     </div>
@@ -272,8 +300,6 @@ const AboutUs = () => {
     ></div>
   </div>
 </div>
-
-
 
       {/* Animated Image Gallery - Wrapped for Mobile Scroll */}
        {/* <div className="w-full overflow-x-auto py-12 px-4 scrollbar-hide">
@@ -439,7 +465,14 @@ const AboutUs = () => {
                   <div key={idx} className="bg-white h-[471px] rounded-[8px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-lg">
                     <h3 className=" font-bold text-[26px] text-center mt-[18px] px-4" style={{ color: service.color }}>{service.title}</h3>
                     <p className=" font-medium text-[18px] text-black text-center mt-4 px-4">{service.description}</p>
-                    <div className="absolute bottom-0 left-[36px] h-[297px] w-[258px] overflow-hidden"><img src={service.image} className="w-full h-full object-cover" /></div>
+                    <div className="absolute bottom-0 left-[36px] h-[297px] w-[258px] overflow-hidden">
+                      {/* <img src={service.image} className="w-full h-full object-cover" /> */}
+
+                      <service.image 
+    className="w-full h-full object-cover fill-current"  // Key: dynamic component!
+    aria-hidden="true"
+  />
+                      </div>
                   </div>
                 ))}
               </motion.div>

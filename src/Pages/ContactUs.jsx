@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
-import Navbar from '../Components/NavBar';
-import Footer from "../Components/Footer"
+import Navbar from '../components/NavBar';
 import { motion } from "motion/react";
 
 const ContactUs = () => {
