@@ -1,0 +1,271 @@
+const PricingCardBg = (props) => {
+  return (
+    <svg
+      width="380"
+      height="289"
+      viewBox="0 0 380 289"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g filter="url(#filter0_f_1559_2104)">
+        <path
+          d="M221.906 85.3655C194.329 53.3289 160.93 -4.06641 160.93 -4.06641L377.904 6.09632V177.846C377.904 177.846 327.128 171.595 298.635 157.013C262.14 138.335 248.652 116.437 221.906 85.3655Z"
+          fill="url(#paint0_linear_1559_2104)"
+        />
+      </g>
+      <circle
+        cx="328.615"
+        cy="51.8294"
+        r="2.03254"
+        fill="url(#paint1_linear_1559_2104)"
+      />
+      <circle
+        cx="279.834"
+        cy="59.959"
+        r="3.04882"
+        fill="url(#paint2_linear_1559_2104)"
+      />
+      <circle cx="2" cy="280" r="2" fill="url(#paint3_linear_1559_2104)" />
+      <circle
+        cx="274.752"
+        cy="21.3418"
+        r="3.04882"
+        fill="url(#paint4_linear_1559_2104)"
+      />
+      <circle
+        cx="7.04882"
+        cy="285.049"
+        r="3.04882"
+        fill="url(#paint5_linear_1559_2104)"
+      />
+      <circle
+        cx="240.197"
+        cy="31.5052"
+        r="2.03254"
+        fill="url(#paint6_linear_1559_2104)"
+      />
+      <g filter="url(#filter1_dd_1559_2104)">
+        <path
+          d="M344.132 61.7078L344.658 73.1269L353.934 80.3748L342.165 80.6189L334.902 89.4464L334.376 78.0273L325.1 70.7794L336.87 70.5353L344.132 61.7078Z"
+          fill="url(#paint7_linear_1559_2104)"
+        />
+      </g>
+      <path
+        d="M355.5 29.5927L355.736 34.7224L359.903 37.9783L354.616 38.0879L351.354 42.0534L351.118 36.9237L346.95 33.6679L352.237 33.5582L355.5 29.5927Z"
+        fill="url(#paint8_linear_1559_2104)"
+      />
+      <path
+        d="M291.225 31.4262L296.446 36.5591L303.634 35.9462L298.643 41.1549L299.359 48.442L294.137 43.3091L286.95 43.9219L291.94 38.7133L291.225 31.4262Z"
+        fill="url(#paint9_linear_1559_2104)"
+      />
+      <path
+        d="M350.342 224.989L355.564 230.122L362.751 229.509L357.761 234.717L358.476 242.004L353.255 236.872L346.067 237.484L351.057 232.276L350.342 224.989Z"
+        fill="url(#paint10_linear_1559_2104)"
+      />
+      <defs>
+        <filter
+          id="filter0_f_1559_2104"
+          x="60.9297"
+          y="-104.066"
+          width="416.973"
+          height="381.914"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feGaussianBlur
+            stdDeviation="31.5553"
+            result="effect1_foregroundBlur_1559_2104"
+          />
+        </filter>
+        <filter
+          id="filter1_dd_1559_2104"
+          x="314.098"
+          y="54.707"
+          width="50.8359"
+          height="49.7383"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="1" />
+          <feGaussianBlur stdDeviation="1.5" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_1559_2104"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feMorphology
+            radius="3"
+            operator="dilate"
+            in="SourceAlpha"
+            result="effect2_dropShadow_1559_2104"
+          />
+          <feOffset dy="4" />
+          <feGaussianBlur stdDeviation="4" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="effect1_dropShadow_1559_2104"
+            result="effect2_dropShadow_1559_2104"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect2_dropShadow_1559_2104"
+            result="shape"
+          />
+        </filter>
+        <linearGradient
+          id="paint0_linear_1559_2104"
+          x1="351.481"
+          y1="12.1939"
+          x2="279.834"
+          y2="115.346"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#62429D" />
+          <stop offset="1" stopColor="#A987E8" stopOpacity="0.9" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_1559_2104"
+          x1="328.615"
+          y1="49.7969"
+          x2="328.615"
+          y2="53.862"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="#8B80D6" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_1559_2104"
+          x1="279.834"
+          y1="56.9102"
+          x2="279.834"
+          y2="63.0078"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="#8B80D6" />
+        </linearGradient>
+        <linearGradient
+          id="paint3_linear_1559_2104"
+          x1="2"
+          y1="278"
+          x2="2"
+          y2="282"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="#8B80D6" />
+        </linearGradient>
+        <linearGradient
+          id="paint4_linear_1559_2104"
+          x1="274.752"
+          y1="18.293"
+          x2="274.752"
+          y2="24.3906"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="#8B80D6" />
+        </linearGradient>
+        <linearGradient
+          id="paint5_linear_1559_2104"
+          x1="7.04882"
+          y1="282"
+          x2="7.04882"
+          y2="288.098"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="#8B80D6" />
+        </linearGradient>
+        <linearGradient
+          id="paint6_linear_1559_2104"
+          x1="240.197"
+          y1="29.4727"
+          x2="240.197"
+          y2="33.5377"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="#8B80D6" />
+        </linearGradient>
+        <linearGradient
+          id="paint7_linear_1559_2104"
+          x1="344.132"
+          y1="61.7078"
+          x2="334.902"
+          y2="89.4464"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="white" />
+          <stop offset="0.451237" stopColor="#8B80D6" />
+        </linearGradient>
+        <linearGradient
+          id="paint8_linear_1559_2104"
+          x1="355.5"
+          y1="29.5927"
+          x2="351.354"
+          y2="42.0534"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="#8B80D6" />
+        </linearGradient>
+        <linearGradient
+          id="paint9_linear_1559_2104"
+          x1="299.143"
+          y1="47.7642"
+          x2="292.029"
+          y2="33.0282"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0.486206" stopColor="#8B80D6" />
+          <stop offset="1" stopColor="white" />
+        </linearGradient>
+        <linearGradient
+          id="paint10_linear_1559_2104"
+          x1="358.26"
+          y1="241.327"
+          x2="351.146"
+          y2="226.591"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0.486206" stopColor="#8B80D6" />
+          <stop offset="1" stopColor="white" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+};
+
+export default PricingCardBg;

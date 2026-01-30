@@ -1,10 +1,12 @@
 @import "tailwindcss";
+
 html,
 body {
   height: 100%;
 }
 
 body {
+  font-family: "Poppins", sans-serif;
   margin: 0;
   background-color: #e5e7eb; /* gray-200 */
   min-height: 100vh;
@@ -12,6 +14,32 @@ body {
 
 #root {
   min-height: 100vh;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 /* Layout and component styles are handled directly via Tailwind
