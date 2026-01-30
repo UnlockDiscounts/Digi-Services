@@ -1,5 +1,47 @@
 @import "tailwindcss";
 
+html,
+body {
+  height: 100%;
+}
 
+body {
+  margin: 0;
+  background-color: #e5e7eb; /* gray-200 */
+  min-height: 100vh;
+}
 
+#root {
+  min-height: 100vh;
+}
 
+/* Layout and component styles are handled directly via Tailwind
+   utility classes in JSX components. */
+
+/* Custom responsive layout helpers using media queries */
+
+.app-layout {
+  padding: 1rem;
+}
+
+.auth-container {
+  padding: 1.5rem;
+  border-radius: 16px;
+}
+
+@media (max-width: 640px) {
+  .auth-container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-layout {
+    padding: 2rem;
+  }
+
+  .auth-container {
+    padding: 2.5rem 3rem;
+  }
+}
