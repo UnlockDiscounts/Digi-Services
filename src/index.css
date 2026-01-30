@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
+html,
+body {
+  height: 100%;
+}
 
 /* @custom-variant dark (&:is(.dark *)); */
 
@@ -129,6 +133,72 @@
     @apply border-border outline-ring/50;
   }
 
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background-color: #e5e7eb; /* gray-200 */
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Layout and component styles are handled directly via Tailwind
+   utility classes in JSX components. */
+
+/* Custom responsive layout helpers using media queries */
+
+.app-layout {
+  padding: 1rem;
+}
+
+.auth-container {
+  padding: 1.5rem;
+  border-radius: 16px;
+}
+
+@media (max-width: 640px) {
+  .auth-container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-layout {
+    padding: 2rem;
+  }
+
+  .auth-container {
+    padding: 2.5rem 3rem;
+  }
   body {
     @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
