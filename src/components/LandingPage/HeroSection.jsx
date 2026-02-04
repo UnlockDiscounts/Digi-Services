@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { ChevronRight } from "lucide-react";
 import hero from "../../assets/hero.svg";
+import { Link } from "react-router-dom";
 
 export function HeroSection() {
   return (
@@ -58,7 +59,7 @@ export function HeroSection() {
   className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start pt-4"
 >
   {/* Button 1: Start Your Journey (Floating Animation) */}
-  <button className="relative bg-[#574dec] text-white font-['Poppins'] font-medium text-xl sm:text-2xl px-8 py-4 rounded-[16px] group hover:bg-[#473bd0] transition-colors shadow-lg">
+  <button className="cursor-pointer relative bg-[#574dec] text-white font-['Poppins'] font-medium text-xl sm:text-2xl px-8 py-4 rounded-[16px] group hover:bg-[#473bd0] transition-colors shadow-lg">
     <motion.div
       animate={{ 
         y: [0, -6, 0], // Subtle floating up and down
@@ -74,6 +75,7 @@ export function HeroSection() {
   </button>
 
   {/* Button 2: Explore Services (Identical Roundedness & Hidden Bracket) */}
+  <Link to="/services" className="relative">
   <button className="group relative bg-white text-black font-['Poppins'] font-medium text-xl sm:text-2xl px-8 py-4 rounded-[16px] hover:bg-gray-100 transition-all shadow-lg overflow-hidden min-w-[240px]">
     <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-3 block">
       Explore Services
@@ -86,6 +88,7 @@ export function HeroSection() {
       <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 stroke-[2]" />
     </motion.div>
   </button>
+  </Link>
 </motion.div>
         </motion.div>
 

@@ -30,7 +30,7 @@ const ContactUs = () => {
         
         {/* Navbar - DEAD CENTER */}
         <div className="w-full flex justify-center items-center py-4 sm:py-6 lg:py-6 px-4 lg:px-15">
-          <Navbar />
+          {/* <Navbar /> */}
         </div>
 
         {/* Title - Responsive positioning */}
@@ -38,7 +38,7 @@ const ContactUs = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="font-['Inter'] font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-white text-center mb-8 sm:mb-12 lg:mb-[54px] px-4 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-[194px] w-full lg:w-[min(1377px,95%)]"
+          className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-white text-center mb-12 sm:mb-12 lg:mb-[54px] px-4 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-[194px] w-full lg:w-[min(1377px,95%)]"
         >
           Get In Touch With Us
         </motion.p>
