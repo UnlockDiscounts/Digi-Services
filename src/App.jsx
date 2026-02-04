@@ -4,12 +4,12 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage.jsx";
 import Articles from "./pages/Articles.jsx";
 import Blog from "./pages/Blog.jsx";
-import ServiceCategory from "./pages/ServiceCategory";
-import ServiceDetail from "./pages/ServiceDetail";
+import ServiceCategory from "./pages/ServiceCategory.jsx";
+import ServiceDetail from "./pages/ServiceDetail.jsx";
 import Sidebar from "./components/sidebar/sidebar.jsx";
 import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
-import AboutUs from "./Pages/AboutUs";
-import ContactUs from "./Pages/ContactUs";
+import AboutUs from "./pages/AboutUs.jsx";
+import ContactUs from "./pages/ContactUs.jsx";
 
 import Navbar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";

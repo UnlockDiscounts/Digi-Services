@@ -5,21 +5,52 @@ import { motion } from "motion/react";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({ 
-    name: '', 
-    company: '', 
+    fullname: '', 
+    companyName: '', 
     email: '', 
-    contact: '', 
+    contactNumber: '', 
     message: '' 
   });
+
+  const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(false);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-  };
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log('Form submitted:', formData);
+  setLoading(true);
+  setStatus('');
+
+  try {
+    const response = await fetch('https://digiservices-backend.onrender.com/api/v1/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.status === 201) {
+      setStatus('Message sent successfully! We\'ll contact you soon.');
+      setFormData({ fullname: '', companyName: '', email: '', contactNumber: '', message: '' });
+    } else if (response.status === 400) {
+      setStatus('Please fill all required fields.');
+    } else {
+      setStatus('Server error. Please try again.');
+    }
+  } catch (error) {
+    setStatus('Network error. Please check your connection.');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <>
@@ -87,18 +118,18 @@ const ContactUs = () => {
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                   <input
                     type="text"
-                    name="name"
+                    name="fullname"
                     placeholder="Full Name"
-                    value={formData.name}
+                    value={formData.fullname}
                     onChange={handleChange}
                     className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-none lg:rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#8A72EB] lg:first:rounded-none"
                     required
                   />
                   <input
                     type="text"
-                    name="company"
+                    name="companyName"
                     placeholder="Company Name"
-                    value={formData.company}
+                    value={formData.companyName}
                     onChange={handleChange}
                     className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#8A72EB]"
                   />
@@ -113,9 +144,9 @@ const ContactUs = () => {
                   />
                   <input
                     type="tel"
-                    name="contact"
+                    name="contactNumber"
                     placeholder="Contact Number"
-                    value={formData.contact}
+                    value={formData.contactNumber}
                     onChange={handleChange}
                     className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#8A72EB]"
                   />
@@ -129,12 +160,32 @@ const ContactUs = () => {
                     required
                   />
                   
-                  <button
+                  {/* <button
                     type="submit"
                     className="w-full !bg-[#6364FF] !text-white py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-[#7a64d6] transition-colors"
                   >
                     Submit
+                  </button> */}
+
+
+                  <button
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full !bg-[#6364FF] !text-white py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-[#7a64d6] transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                  {loading ? 'Sending...' : 'Submit'}
                   </button>
+
+                  {status && (
+                  <p className={`text-center py-3 px-4 rounded-lg text-sm font-medium mt-2 ${
+                   status.includes('✅') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  }`}>
+                 {status}
+                 </p>
+                 )}
+
+
+
                 </form>
               </div>
             </div>

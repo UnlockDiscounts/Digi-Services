@@ -57,7 +57,19 @@ const AboutUs = () => {
   const [hoveredValueCard, setHoveredValueCard] = useState(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
-  const testimonials = [
+//const [testimonials, setTestimonials] = useState([]);
+//const [loading, setLoading] = useState(true);
+
+
+useEffect(() => {
+    fetch('https://digiservices-backend.onrender.com/api/v1/testimonials')
+      .then(res => res.json())
+      .then(setTestimonials);
+  }, []);
+  
+
+
+  const [testimonials, setTestimonials] = useState([
     {
       text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations.",
       name: "Rahul Mehta",
@@ -76,7 +88,7 @@ const AboutUs = () => {
       role: "CEO, XYZ",
       image: imgman,
     },
-  ];
+  ]);
 
   const services = [
     { title: "GST Filing", description: "Accurate and timely GST return filing services...", image: imgImage51, color: "#6364ff" },
@@ -125,6 +137,12 @@ const AboutUs = () => {
         className="relative h-[510px] w-full overflow-hidden"
         style={{ backgroundImage: "linear-gradient(83.9195deg, rgb(254, 203, 242) 1.8178%, rgb(145, 123, 255) 47.22%, rgb(7, 55, 255) 92.159%)" }}
       >
+        
+
+    <div className="w-full flex justify-center items-center py-4 sm:py-6 lg:py-6 px-4 lg:px-15">
+          <Navbar />
+        </div>
+
         <motion.h1
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -355,25 +373,47 @@ const AboutUs = () => {
         </motion.button>
       </AnimatedSection>
 
-      {/* Testimonials */}
-      <div className="min-h-[600px] py-20 bg-gray-100 flex items-center justify-center p-4">
-        <AnimatedSection className="bg-[rgba(172,173,188,0.2)] py-12 w-full max-w-[1305px] mx-auto overflow-hidden rounded-2xl">
-          <h2 className="font-medium text-[32px] md:text-[48px] text-black text-center mb-12 px-4 leading-tight">
-            Client Testimonials
-          </h2>
-          <div className="w-full px-4 md:px-0">
-            <div className="max-w-[1150px] mx-auto">
-              <AnimatePresence mode="wait">
-                <motion.div 
-                  key={currentTestimonial} 
-                  initial={{ opacity: 0, x: 50 }} 
-                  animate={{ opacity: 1, x: 0 }} 
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.5 }}
-                  className="bg-white flex flex-col md:flex-row gap-8 md:gap-[64px] items-center p-6 md:p-[32px] rounded-[16px] shadow-sm"
-                >
-                  <div className="w-full md:w-[400px] h-[250px] md:h-[330px] rounded-lg overflow-hidden flex-shrink-0">
-                    <img src={testimonials[currentTestimonial].image} className="w-full h-full object-cover" alt={testimonials[currentTestimonial].name} />
+
+<div className="min-h-screen py-20 bg-gray-100 flex items-center justify-center p-4">
+      
+      <AnimatedSection className="bg-[rgba(172,173,188,0.2)] py-12 w-full max-w-[1305px] mx-auto overflow-hidden rounded-2xl">
+        <h2 className="font-medium text-[32px] md:text-[48px] text-black text-center mb-12 px-4 leading-tight">
+          Client Testimonials
+        </h2>
+        
+        {/* Container for the card: Added px-4 and removed fixed width for responsiveness */}
+        <div className="w-full px-4 md:px-0">
+          <div className="max-w-[1150px] mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={currentTestimonial} 
+                initial={{ opacity: 0, x: 50 }} 
+                animate={{ opacity: 1, x: 0 }} 
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white flex flex-col md:flex-row gap-8 md:gap-[64px] items-center p-6 md:p-[32px] rounded-[16px] shadow-sm"
+              >
+                {/* Image Container: Full width on mobile, 400px on desktop */}
+                <div className="w-full md:w-[400px] h-[250px] md:h-[330px] rounded-lg overflow-hidden flex-shrink-0">
+                  <img 
+                    src={testimonials[currentTestimonial].image} 
+                    className="w-full h-full object-cover" 
+                    alt={testimonials[currentTestimonial].name}
+ />
+                </div>
+
+                {/* Text Content */}
+                <div className="flex flex-col gap-4 text-center md:text-left">
+                  <p className="text-[18px] md:text-[20px] text-black italic leading-relaxed">
+                    "{testimonials[currentTestimonial].text}"
+                  </p>
+                  <div className="mt-2 md:mt-0">
+                    <p className="font-bold text-[20px] md:text-[24px] text-[#473cf0]">
+                      {testimonials[currentTestimonial].name}
+                    </p>
+                    <p className="text-[14px] md:text-[16px] text-gray-500 uppercase tracking-wide">
+                      {testimonials[currentTestimonial].role}
+                    </p>
                   </div>
                   <div className="flex flex-col gap-4 text-center md:text-left">
                     <p className="text-[18px] md:text-[20px] text-black italic leading-relaxed">
@@ -383,6 +423,7 @@ const AboutUs = () => {
                       <p className="font-bold text-[20px] md:text-[24px] text-[#473cf0]">{testimonials[currentTestimonial].name}</p>
                       <p className="text-[14px] md:text-[16px] text-gray-500 uppercase tracking-wide">{testimonials[currentTestimonial].role}</p>
                     </div>
+                  </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
