@@ -8,8 +8,8 @@ import ServiceCategory from "./pages/ServiceCategory";
 import ServiceDetail from "./pages/ServiceDetail";
 import Sidebar from "./components/sidebar/sidebar.jsx";
 import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
-import AboutUs from "./Pages/AboutUs";
-import ContactUs from "./Pages/ContactUs";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
 
 import Navbar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
