@@ -1,6 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getCards, createCard, updateCard } from '../../services/cardsApi';
 
 export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Fetch existing cards on mount
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        setLoading(true);
+        const data = await getCards();
+        if (data && Array.isArray(data)) {
+          setCardItems(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch cards:', error);
+        setErrorMessage('Failed to load cards from server');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCards();
+  }, [setCardItems]);
   const sections = [
     { id: 1, name: 'Section 1' },
     { id: 2, name: 'Section 2' },
@@ -16,30 +38,43 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
   // Filter items ONLY for the active section
   const currentSectionItems = cardItems.filter(item => item.sectionId === activeSection);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (sectionTitle && title && description) {
-      if (editingId) {
-        // UPDATE existing item
-        const updatedItems = cardItems.map(item => 
-          item.id === editingId 
-            ? { ...item, sectionTitle, title, description } 
-            : item
-        );
-        setCardItems(updatedItems);
-      } else {
-        // ADD new item
-        const newItem = {
-          id: Date.now(),
-          sectionId: activeSection,
+      try {
+        setErrorMessage('');
+        setLoading(true);
+        
+        const section = {
           sectionTitle,
           title,
           description,
         };
-        setCardItems([...cardItems, newItem]);
+
+        if (editingId) {
+          // UPDATE existing item
+          const cardData = { sections: [section] };
+          const updated = await updateCard(editingId, cardData);
+          const updatedItems = cardItems.map(item => 
+            (item.id || item._id) === editingId 
+              ? { ...updated, id: updated._id || updated.id } 
+              : item
+          );
+          setCardItems(updatedItems);
+        } else {
+          // ADD new item - send sections array as API expects
+          const cardData = { sections: [section] };
+          const newCard = await createCard(cardData);
+          setCardItems([...cardItems, { ...newCard, id: newCard._id || newCard.id }]);
+        }
+        
+        // Reset form and editing state
+        clearForm();
+      } catch (error) {
+        console.error('Failed to save card:', error);
+        setErrorMessage('Failed to save card. Please try again.');
+      } finally {
+        setLoading(false);
       }
-      
-      // Reset form and editing state
-      clearForm();
     }
   };
 
@@ -47,7 +82,7 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
     setSectionTitle(item.sectionTitle);
     setTitle(item.title);
     setDescription(item.description);
-    setEditingId(item.id); // Set this ID so "Save" knows to update instead of add
+    setEditingId(item._id || item.id); // Set this ID so "Save" knows to update instead of add
   };
 
   const clearForm = () => {
@@ -121,14 +156,14 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
           <div className="relative flex-1 h-[52px]">
             {currentSectionItems.map((item, index) => (
               <div 
-                key={item.id}
+                key={item._id || item.id}
                 onClick={() => loadItem(item)} // CLICKING THE NUMBER LOADS DATA
                 style={{ left: `${index * 80}px` }} 
                 className={`absolute flex items-center justify-center h-[52px] w-[64px] rounded-[8px] border-2 cursor-pointer transition-colors ${
-                  editingId === item.id ? 'border-[#6364ff] bg-[#6364ff]/10' : 'border-[rgba(102,102,102,0.75)]'
+                  editingId === (item._id || item.id) ? 'border-[#6364ff] bg-[#6364ff]/10' : 'border-[rgba(102,102,102,0.75)]'
                 }`}
               >
-                <p className={`text-[24px] font-['Poppins'] ${editingId === item.id ? 'text-[#6364ff]' : 'text-[rgba(102,102,102,0.75)]'}`}>
+                <p className={`text-[24px] font-['Poppins'] ${editingId === (item._id || item.id) ? 'text-[#6364ff]' : 'text-[rgba(102,102,102,0.75)]'}`}>
                   {index + 1}
                 </p>
               </div>
@@ -137,31 +172,25 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
 
           <button
             onClick={handleSave}
-            className="bg-[#6364ff] h-[56px] w-[184px] rounded-[15px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee] transition-colors"
+            disabled={loading}
+            className="bg-[#6364ff] h-[56px] w-[184px] rounded-[15px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {editingId ? 'Update' : 'Save'}
+            {loading ? 'Saving...' : (editingId ? 'Update' : 'Save')}
           </button>
         </div>
-          <div className="w-full flex justify-end">
-        <button
-          onClick={onNext}
-          className="bg-[#6364ff] h-[56px] rounded-[15px] w-[184px] text-white text-[24px] font-['Poppins']"
-        >
-          Next
-        </button>
-      </div>
+        
+        {errorMessage && (
+          <p className="text-red-500 text-[16px] mt-2">{errorMessage}</p>
+        )}
       </div>
 
       {/* Footer Navigation */}
-      {/* <div className="w-full flex justify-end">
-        <button
-          onClick={onNext}
-          className="bg-[#6364ff] h-[56px] rounded-[15px] w-[184px] text-white text-[24px] font-['Poppins']"
-        >
-          Next
-        </button>
-      </div> */}
-      
+      <button
+        onClick={onNext}
+        className="absolute bg-[#6364ff] h-[56px] rounded-[15px] w-[184px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee] transition-colors right-[79px] bottom-[32px]"
+      >
+        Next
+      </button>
     </div>
   );
 }

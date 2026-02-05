@@ -1,30 +1,32 @@
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import noimage from "../../assets/noimage.svg";
-
-const testimonials = [
-  {
-    name: "Rahul Mehta",
-    role: "Owner, F2 Studios",
-    image: noimage,
-    text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations."
-  },
-  {
-    name: "Riya Sharma",
-    role: "Student",
-    image: noimage,
-    text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations."
-  },
-  {
-    name: "Dinesh Kumar",
-    role: "CEO, XYZ",
-    image: noimage,
-    text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations."
-  }
-];
+import { getTestimonials } from "../../services/testimonialsApi";
 
 export function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch testimonials from API on mount
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        setLoading(true);
+        const data = await getTestimonials();
+        if (data && Array.isArray(data)) {
+          setTestimonials(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch testimonials:', error);
+        // Fallback to empty array if API fails
+        setTestimonials([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   // Auto-slide functionality
   useEffect(() => {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
 import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage.jsx";
+import WelcomePage from "./welcomePage.jsx";
 import Articles from "./pages/Articles.jsx";
 import Blog from "./pages/Blog.jsx";
 import ServiceCategory from "./pages/ServiceCategory";
@@ -10,6 +11,7 @@ import Sidebar from "./components/sidebar/sidebar.jsx";
 import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
 import AboutUs from "./Pages/AboutUs";
 import ContactUs from "./Pages/ContactUs";
+import DebugAllData from "./Pages/DebugAllData";
 
 import Navbar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
@@ -33,12 +35,27 @@ const ClientLayout = () => {
 };
 
 /* ---------------- ADMIN LAYOUT ---------------- */
-const AdminLayout = () => {
-  return (
-    <div className="flex min-h-screen">
-      <main className="flex-1">
+const AdminLayout = ({ isLoggedIn }) => {
+  if (isLoggedIn) {
+    return (
+      <div className="min-h-screen w-full">
         <Outlet />
-      </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-200">
+      <div className="app-layout w-full  bg-white flex flex-col md:flex-row md:h-[1024px]">
+        <div className="w-full md:w-1/2 md:h-full">
+          <WelcomePage />
+        </div>
+        <div className="w-full md:w-1/2 flex items-center justify-center">
+          <div className="auth-container flex justify-center">
+            <Outlet />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -67,10 +84,13 @@ const App = () => {
         <Route path="/services" element={<ServiceCategory />} />
         <Route path="/services/:serviceType" element={<ServiceDetail />} />
 
+        {/* Debug - View all database data */}
+        <Route path="/debug" element={<DebugAllData />} />
+
       </Route>
 
       {/* ================= ADMIN ROUTES ================= */}
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/admin" element={<AdminLayout isLoggedIn={isLoggedIn} />}>
         {isLoggedIn ?
           <Route index element={<Sidebar />} /> :
           <Route index element={<UnlockDiscountsLoginpage onLoginSuccess={handleLoginSuccess} />} />}

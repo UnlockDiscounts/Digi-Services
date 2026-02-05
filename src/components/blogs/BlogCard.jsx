@@ -36,9 +36,10 @@ export function BlogCard({ blog, onEdit, onDelete }) {
     <div className="bg-[#ebebeb] rounded-[16px] overflow-hidden relative h-[371px]">
       <div className="h-[187px] rounded-[8px] m-3 overflow-hidden">
         <img 
-          src={blog.image} 
+          src={blog.image || (blog.images && blog.images[0]) || ''} 
           alt={blog.title} 
           className="w-full h-full object-cover"
+          onError={(e) => { e.target.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22%3E%3Crect fill=%22%23ddd%22 width=%22100%25%22 height=%22100%25%22/%3E%3C/svg%3E'; }}
         />
       </div>
 

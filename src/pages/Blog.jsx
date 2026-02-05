@@ -1,26 +1,89 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import ExploreBlogCard from "../components/ExploreBlogCard";
 import StackSlider from "../components/StackSlider";
 import FinalThoughtsImage from "../components/FinalThoughtsImage";
 
-import { blogDetails } from "../data/dummyBlogContent";
-import { blogs } from "../data/dummyblogs";
+import { getPostById, getPosts } from "../services/blogApi";
 
 const Blog = () => {
+  const { id } = useParams();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [blog, setBlog] = useState(null);
+  const [relatedBlogs, setRelatedBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Auto-rotate slider every 4 seconds
   useEffect(() => {
+    if (relatedBlogs.length === 0) return undefined;
     const interval = setInterval(() => {
-      setCurrentSlideIndex((prevIndex) => (prevIndex + 3) % blogs.length);
+      setCurrentSlideIndex(
+        (prevIndex) => (prevIndex + 3) % relatedBlogs.length
+      );
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [relatedBlogs.length]);
 
-  // Get current 3 blogs
-  const displayedBlogs = blogs.slice(currentSlideIndex, currentSlideIndex + 3);
+  const displayedBlogs = relatedBlogs.slice(
+    currentSlideIndex,
+    currentSlideIndex + 3
+  );
+
+  const contentBlocks = useMemo(() => {
+    if (blog?.content && Array.isArray(blog.content)) {
+      return blog.content;
+    }
+
+    const blocks = [];
+    if (blog?.description) {
+      blocks.push({ type: "paragraph", text: blog.description });
+    }
+    if (blog?.images?.length) {
+      blocks.push({ type: "image", src: blog.images[0] });
+    } else if (blog?.image) {
+      blocks.push({ type: "image", src: blog.image });
+    }
+
+    return blocks;
+  }, [blog]);
+
+  useEffect(() => {
+    let isActive = true;
+
+    const fetchBlog = async () => {
+      try {
+        setIsLoading(true);
+        setErrorMessage("");
+        if (id) {
+          const blogData = await getPostById(id);
+          if (isActive) {
+            setBlog(blogData);
+          }
+        }
+
+        const posts = await getPosts();
+        if (isActive) {
+          setRelatedBlogs(posts.filter((item) => item.id !== id));
+        }
+      } catch (error) {
+        if (isActive) {
+          setErrorMessage(error?.message || "Failed to load blog.");
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchBlog();
+    return () => {
+      isActive = false;
+    };
+  }, [id]);
 
   return (
     <div>
@@ -36,10 +99,10 @@ const Blog = () => {
           {/* Main Heading Container */}
           <div className="w-full md:w-[796px]">
             <h1 className="text-3xl md:text-5xl font-bold mb-3 leading-snug text-left">
-              {blogDetails.title}
+              {blog?.title || (isLoading ? "Loading blog..." : "Blog")}
             </h1>
             <p className="text-xs font-semibold text-[#E6E6E6E5] leading-none text-left">
-              {blogDetails.author} &nbsp;&nbsp; {blogDetails.date}
+              {blog?.author} &nbsp;&nbsp; {blog?.date}
             </p>
           </div>
         </div>
@@ -47,7 +110,16 @@ const Blog = () => {
 
       {/* CONTENT */}
       <section className="max-w-[1312px] mx-auto px-6 mt-14 mb-20 space-y-6">
-        {blogDetails.content.map((block, index) => {
+        {errorMessage && (
+          <p className="text-red-600 text-center">{errorMessage}</p>
+        )}
+        {isLoading && !blog && (
+          <p className="text-center">Loading blog content...</p>
+        )}
+        {!isLoading && contentBlocks.length === 0 && (
+          <p className="text-center">No content available.</p>
+        )}
+        {contentBlocks.map((block, index) => {
           if (block.type === "paragraph") {
             return (
               <p
@@ -114,8 +186,8 @@ const Blog = () => {
 
           {/* Animated Grid Container */}
           <div className="grid gap-x-8 gap-y-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 transition-opacity duration-500 ease-in-out">
-            {displayedBlogs.map((blog) => (
-              <ExploreBlogCard key={blog.id} blog={blog} />
+            {displayedBlogs.map((item) => (
+              <ExploreBlogCard key={item.id} blog={item} />
             ))}
           </div>
         </div>

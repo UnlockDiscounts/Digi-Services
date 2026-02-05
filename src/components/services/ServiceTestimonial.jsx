@@ -1,24 +1,54 @@
 import { useState, useEffect } from "react";
+import { getTestimonials } from "../../services/testimonialsApi";
 
-const ServiceTestimonial = ({ data }) => {
-  if (!data) return null;
-  const { title, highlight, reviews } = data;
+const ServiceTestimonial = () => {
+  const [testimonials, setTestimonials] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch testimonials from API on mount
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        setLoading(true);
+        const data = await getTestimonials();
+        if (data && Array.isArray(data)) {
+          setTestimonials(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch testimonials:', error);
+        setTestimonials([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   useEffect(() => {
+    if (testimonials.length === 0) return;
+    
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % reviews.length);
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
     }, 2000);
     return () => clearInterval(interval);
-  }, [reviews.length]);
+  }, [testimonials.length]);
+
+  if (loading) {
+    return <section className="w-full py-16 text-center text-gray-600">Loading testimonials...</section>;
+  }
+
+  if (testimonials.length === 0) {
+    return <section className="w-full py-16 text-center text-gray-600">No testimonials available</section>;
+  }
 
   return (
     <section className="w-full py-16 px-4 md:px-16 bg-white flex flex-col items-center">
       {/* Heading */}
       <div className="text-center mb-16">
         <h2 className="text-5xl font-medium leading-[1.4] text-black">
-          {title} <br />
-          <span className="text-[#6364FF]">{highlight}</span>
+          Client <br />
+          <span className="text-[#6364FF]">Testimonials</span>
         </h2>
       </div>
 
@@ -28,9 +58,9 @@ const ServiceTestimonial = ({ data }) => {
           className="flex transition-transform duration-500 ease-in-out h-full"
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
-          {reviews.map((review) => (
+          {testimonials.map((review, idx) => (
             <div
-              key={review.id}
+              key={review._id || review.id || idx}
               className="min-w-full flex-shrink-0 flex flex-col md:flex-row p-8 gap-16 items-center"
             >
               {/* Image Placeholder (Left) */}

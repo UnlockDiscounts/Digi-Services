@@ -1,22 +1,61 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, CircleX } from 'lucide-react'; // Import icons
+import { getWorks, createWork, deleteWork } from '../../services/worksApi';
 
 export default function WorkExampleTab({ workExamples, setWorkExamples, onNext }) {
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Fetch existing work examples on mount
+  useEffect(() => {
+    const fetchWorks = async () => {
+      try {
+        setLoading(true);
+        const data = await getWorks();
+        if (data && Array.isArray(data)) {
+          setWorkExamples(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch work examples:', error);
+        setErrorMessage('Failed to load work examples from server');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchWorks();
+  }, [setWorkExamples]);
   
-  const handleAddWorkExample = (e) => {
+  const handleAddWorkExample = async (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      const newExample = {
-        id: Date.now(),
-        imageUrl,
-      };
-      setWorkExamples([...workExamples, newExample]);
+      try {
+        setErrorMessage('');
+        setLoading(true);
+        
+        const newWork = await createWork(file);
+        setWorkExamples([...workExamples, { ...newWork, id: newWork._id || newWork.id }]);
+      } catch (error) {
+        console.error('Failed to add work example:', error);
+        setErrorMessage('Failed to upload work example. Please try again.');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
-  const handleRemoveExample = (id) => {
-    setWorkExamples(workExamples.filter(item => item.id !== id));
+  const handleRemoveExample = async (id) => {
+    try {
+      setErrorMessage('');
+      setLoading(true);
+      
+      await deleteWork(id);
+      setWorkExamples(workExamples.filter(item => (item._id || item.id) !== id));
+    } catch (error) {
+      console.error('Failed to delete work example:', error);
+      setErrorMessage('Failed to delete work example. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,10 +83,15 @@ export default function WorkExampleTab({ workExamples, setWorkExamples, onNext }
         </label>
       </div>
 
+      {/* Error Message */}
+      {errorMessage && (
+        <p className="absolute left-[79px] top-[320px] text-red-500 text-[16px]">{errorMessage}</p>
+      )}
+
       {/* Existing Work Examples */}
       {workExamples.map((example, index) => (
         <div
-          key={example.id}
+          key={example._id || example.id}
           className="absolute bg-white h-[224px] overflow-visible rounded-[16px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.3)] top-[80px] w-[190px]"
           style={{ left: `${289 + index * 210}px` }}
         >
@@ -56,14 +100,15 @@ export default function WorkExampleTab({ workExamples, setWorkExamples, onNext }
             <img
               alt="Work Example"
               className="object-cover size-full"
-              src={example.imageUrl}
+              src={example.image || example.imageUrl}
             />
           </div>
 
           {/* Delete (Cross) Button */}
           <button
-            onClick={() => handleRemoveExample(example.id)}
-            className="absolute -top-3 -right-3 bg-white rounded-full text-red-500 hover:text-red-700 transition-colors shadow-md z-10"
+            onClick={() => handleRemoveExample(example._id || example.id)}
+            disabled={loading}
+            className="absolute -top-3 -right-3 bg-white rounded-full text-red-500 hover:text-red-700 transition-colors shadow-md z-10 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <CircleX size={28} fill="white" />
           </button>

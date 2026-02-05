@@ -3,10 +3,24 @@ import { Link } from "react-router-dom";
 import { ArrowIcon } from "./svg";
 
 const BlogCard = ({ blog }) => {
+  const imageIsString = typeof blog?.image === "string";
+  const ImageComponent = !imageIsString ? blog?.image : null;
+  const blogId = blog?.id ?? blog?._id;
+
   return (
     <div className="bg-white rounded-2xl overflow-hidden flex flex-col h-auto min-h-[438px] w-full max-w-[377px] mx-auto hover:shadow-2xl transition-shadow duration-300">
       <div className="w-full pt-3 px-2.5">
-        <blog.image className="w-full h-54 object-cover rounded-lg bg-[#B5B5B5]" />
+        {imageIsString ? (
+          <img
+            src={blog.image}
+            alt={blog.title}
+            className="w-full h-54 object-cover rounded-lg bg-[#B5B5B5]"
+          />
+        ) : ImageComponent ? (
+          <ImageComponent className="w-full h-54 object-cover rounded-lg bg-[#B5B5B5]" />
+        ) : (
+          <div className="w-full h-54 rounded-lg bg-[#B5B5B5]" />
+        )}
       </div>
 
       <div className="pb-7 pt-0 flex flex-col flex-1 items-center">
@@ -20,7 +34,7 @@ const BlogCard = ({ blog }) => {
 
         <div className="mt-auto w-[78px] h-[21px] mx-auto flex justify-center items-center gap-2 pt-4">
           <Link
-            to={`/blog/${blog.id}`}
+            to={`/blog/${blogId}`}
             className="text-sm font-medium leading-none whitespace-nowrap inline-flex items-center gap-2 group transition-transform duration-300 hover:-translate-x-1 text-[#473CF0]"
           >
             Read more

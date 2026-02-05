@@ -3,17 +3,31 @@ import { Link } from "react-router-dom";
 import { ArrowIcon } from "./svg";
 
 const ExploreBlogCard = ({ blog }) => {
+  const imageIsString = typeof blog?.image === "string";
+  const ImageComponent = !imageIsString ? blog?.image : null;
+  const blogId = blog?.id ?? blog?._id;
+
   return (
     <div className="bg-white rounded-2xl flex flex-col h-full hover:shadow-2xl transition-shadow duration-300 group/card">
       {/* Image Container */}
       <div className="w-full relative p-3 pb-0 grid place-items-center">
         <div className="relative w-full h-54 overflow-hidden rounded-lg">
-          <blog.image className="w-full h-full object-cover" />
+          {imageIsString ? (
+            <img
+              src={blog.image}
+              alt={blog.title}
+              className="w-full h-full object-cover"
+            />
+          ) : ImageComponent ? (
+            <ImageComponent className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full bg-[#B5B5B5]" />
+          )}
 
           {/* Read More Button */}
           <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10">
             <Link
-              to={`/blog/${blog.id}`}
+              to={`/blog/${blogId}`}
               className="bg-white px-2.5 py-0.5 rounded-2xl shadow-lg text-[#473CF0] text-sm font-medium leading-normal inline-flex items-center gap-0 group transition-all duration-300 hover:gap-2 hover:-translate-x-1 hover:bg-gray-50"
             >
               Read more

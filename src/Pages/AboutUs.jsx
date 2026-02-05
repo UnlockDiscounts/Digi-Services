@@ -3,6 +3,7 @@ import { motion, useInView, useAnimation, AnimatePresence } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import svgPaths from "../assets/svgPaths.js";
 import React from 'react';
+import { getTestimonials } from "../services/testimonialsApi";
 
 // Assets
 import imgchart from "../assets/chart.svg";
@@ -56,8 +57,7 @@ const AboutUs = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [hoveredValueCard, setHoveredValueCard] = useState(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
-
-  const testimonials = [
+  const [testimonials, setTestimonials] = useState([
     {
       text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations.",
       name: "Rahul Mehta",
@@ -76,7 +76,8 @@ const AboutUs = () => {
       role: "CEO, XYZ",
       image: imgman,
     },
-  ];
+  ]);
+  const [loadingTestimonials, setLoadingTestimonials] = useState(true);
 
   const services = [
     { title: "GST Filing", description: "Accurate and timely GST return filing services...", image: imgImage51, color: "#6364ff" },
@@ -93,6 +94,31 @@ const AboutUs = () => {
       setServicesScroll((prev) => Math.max(prev - 1, 0));
     }
   };
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        setLoadingTestimonials(true);
+        const data = await getTestimonials();
+        if (data && data.length > 0) {
+          const formattedTestimonials = data.map((item) => ({
+            text: item.description || "",
+            name: item.name || "Anonymous",
+            role: item.role || "",
+            image: item.file || imgBoy,
+          }));
+          setTestimonials(formattedTestimonials);
+        }
+      } catch (error) {
+        console.error("Failed to fetch testimonials:", error);
+        // Keep default testimonials on error
+      } finally {
+        setLoadingTestimonials(false);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {

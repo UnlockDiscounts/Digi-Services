@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/NavBar';
 import { motion } from "motion/react";
+import { createContact } from "../services/contactApi";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({ 
@@ -11,14 +12,41 @@ const ContactUs = () => {
     contact: '', 
     message: '' 
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    try {
+      await createContact({
+        fullname: formData.name,
+        companyName: formData.company,
+        email: formData.email,
+        contactNumber: formData.contact,
+        message: formData.message,
+      });
+      setSuccessMessage('Message sent successfully.');
+      setFormData({
+        name: '',
+        company: '',
+        email: '',
+        contact: '',
+        message: '',
+      });
+    } catch (error) {
+      setErrorMessage(error?.message || 'Failed to send message.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -85,6 +113,16 @@ const ContactUs = () => {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+                  {errorMessage && (
+                    <p className="text-sm text-red-600 text-center">
+                      {errorMessage}
+                    </p>
+                  )}
+                  {successMessage && (
+                    <p className="text-sm text-green-600 text-center">
+                      {successMessage}
+                    </p>
+                  )}
                   <input
                     type="text"
                     name="name"
@@ -131,9 +169,10 @@ const ContactUs = () => {
                   
                   <button
                     type="submit"
-                    className="w-full !bg-[#6364FF] !text-white py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-[#7a64d6] transition-colors"
+                    disabled={isSubmitting}
+                    className="w-full !bg-[#6364FF] !text-white py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-[#7a64d6] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Submit
+                    {isSubmitting ? 'Submitting...' : 'Submit'}
                   </button>
                 </form>
               </div>

@@ -1,14 +1,61 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronRight } from "lucide-react";
 
 import BlogCard from "../components/BlogCard";
 import ArticlesHeroCurve1 from "../components/svg/ArticlesHeroCurve1";
 import ArticlesHeroCurve2 from "../components/svg/ArticlesHeroCurve2";
 
-import { blogs } from "../data/dummyblogs";
+import { getPosts } from "../services/blogApi";
 
 const Articles = () => {
   const [activeTab, setActiveTab] = useState("All Blogs");
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    let isActive = true;
+
+    const fetchBlogs = async () => {
+      try {
+        setIsLoading(true);
+        setErrorMessage("");
+        const data = await getPosts();
+        if (isActive) {
+          setBlogs(data);
+        }
+      } catch (error) {
+        if (isActive) {
+          setErrorMessage(error?.message || "Failed to load blogs.");
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchBlogs();
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  const filteredBlogs = useMemo(() => {
+    if (activeTab === "All Blogs") return blogs;
+    const categoryMap = {
+      "Website Development": "web development",
+      "Social Media Management": "social media management",
+      "Resume Building": "resume building",
+    };
+    const categoryValue = categoryMap[activeTab];
+    return blogs.filter((blog) => {
+      const blogCategory = (blog.category || "").toString().toLowerCase();
+      return categoryValue
+        ? blogCategory.includes(categoryValue)
+        : true;
+    });
+  }, [activeTab, blogs]);
 
   return (
     <div>
@@ -65,25 +112,32 @@ const Articles = () => {
           ))}
         </div>
 
-        {/* CONDITIONALLY RENDER CONTENT */}
-        {activeTab === "All Blogs" && (
-          <>
-            {/* BLOG GRID */}
-            <div className="max-w-[1193px] mx-auto rounded-2xl grid gap-x-8 gap-y-8 md:gap-y-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
-              {blogs.map((blog) => (
-                <BlogCard key={blog.id} blog={blog} />
-              ))}
-            </div>
+        {/* BLOG GRID */}
+        <div className="max-w-[1193px] mx-auto rounded-2xl grid gap-x-8 gap-y-8 md:gap-y-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
+          {isLoading && (
+            <p className="col-span-3 text-center">Loading blogs...</p>
+          )}
+          {errorMessage && (
+            <p className="col-span-3 text-center text-red-600">
+              {errorMessage}
+            </p>
+          )}
+          {!isLoading && !errorMessage && filteredBlogs.length === 0 && (
+            <p className="col-span-3 text-center">No blogs found.</p>
+          )}
+          {!isLoading && !errorMessage &&
+            filteredBlogs.map((blog) => (
+              <BlogCard key={blog.id} blog={blog} />
+            ))}
+        </div>
 
-            {/* LOAD MORE BLOGS BUTTON */}
-            <div className="text-center mt-16">
-              <button className="w-[264px] h-14 px-[15px] py-2.5 rounded-3xl flex items-center justify-center gap-2.5 mx-auto bg-white border border-[#0412C0] shadow-[0px_1px_10px_0px_rgba(0,0,0,0.25)] text-2xl font-normal leading-none text-black transition-all duration-300 hover:bg-[#6364FF] hover:text-white hover:border-[#6364FF]">
-                Load More Blogs{" "}
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
-          </>
-        )}
+        {/* LOAD MORE BLOGS BUTTON */}
+        <div className="text-center mt-16">
+          <button className="w-[264px] h-14 px-[15px] py-2.5 rounded-3xl flex items-center justify-center gap-2.5 mx-auto bg-white border border-[#0412C0] shadow-[0px_1px_10px_0px_rgba(0,0,0,0.25)] text-2xl font-normal leading-none text-black transition-all duration-300 hover:bg-[#6364FF] hover:text-white hover:border-[#6364FF]">
+            Load More Blogs{" "}
+            <ChevronRight className="w-6 h-6" />
+          </button>
+        </div>
       </section>
     </div>
   );

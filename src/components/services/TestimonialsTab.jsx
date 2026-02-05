@@ -1,6 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getTestimonials, createTestimonial, updateTestimonial } from '../../services/testimonialsApi';
 
 export default function TestimonialsTab({ testimonials, setTestimonials, onNext }) {
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // Fetch existing testimonials on mount
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        setLoading(true);
+        const data = await getTestimonials();
+        if (data && Array.isArray(data)) {
+          setTestimonials(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch testimonials:', error);
+        setErrorMessage('Failed to load testimonials from server');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, [setTestimonials]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [fileName, setFileName] = useState('No file chosen');
@@ -10,46 +33,55 @@ export default function TestimonialsTab({ testimonials, setTestimonials, onNext 
     const file = e.target.files?.[0];
     if (file) {
       setFileName(file.name);
+      setSelectedFile(file);
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (name && description) {
-      if (editingId) {
-        // UPDATE existing testimonial
-        const updated = testimonials.map((t) =>
-          t.id === editingId 
-            ? { ...t, name, description, imageFile: fileName } 
-            : t
-        );
-        setTestimonials(updated);
-      } else {
-        // ADD new testimonial
-        const newTestimonial = {
-          id: Date.now(),
-          name,
-          description,
-          imageFile: fileName,
-        };
-        setTestimonials([...testimonials, newTestimonial]);
+      try {
+        setErrorMessage('');
+        setLoading(true);
+
+        if (editingId) {
+          // UPDATE existing testimonial
+          const updated = await updateTestimonial(editingId, { name, description }, selectedFile);
+          const updatedList = testimonials.map((t) =>
+            (t.id || t._id) === editingId 
+              ? { ...updated, id: updated._id || updated.id } 
+              : t
+          );
+          setTestimonials(updatedList);
+        } else {
+          // ADD new testimonial
+          const newTestimonial = await createTestimonial({ name, description }, selectedFile);
+          setTestimonials([...testimonials, { ...newTestimonial, id: newTestimonial._id || newTestimonial.id }]);
+        }
+        
+        // Reset form
+        clearForm();
+      } catch (error) {
+        console.error('Failed to save testimonial:', error);
+        setErrorMessage('Failed to save testimonial. Please try again.');
+      } finally {
+        setLoading(false);
       }
-      
-      // Reset form
-      clearForm();
     }
   };
 
   const loadTestimonial = (item) => {
     setName(item.name);
     setDescription(item.description);
-    setFileName(item.imageFile);
-    setEditingId(item.id);
+    setFileName(item.image || item.imageFile || 'No file chosen');
+    setSelectedFile(null);
+    setEditingId(item._id || item.id);
   };
 
   const clearForm = () => {
     setName('');
     setDescription('');
     setFileName('No file chosen');
+    setSelectedFile(null);
     setEditingId(null);
   };
 
@@ -94,13 +126,18 @@ export default function TestimonialsTab({ testimonials, setTestimonials, onNext 
       <div className="absolute content-stretch flex items-center left-[calc(50%-0.5px)] top-[385px] translate-x-[-50%]">
         <button
           onClick={handleSave}
-          className="bg-[#6364ff] flex h-[56px] items-center justify-center px-[17px] py-[16px] rounded-[15px] w-[184px] cursor-pointer hover:bg-[#5253ee] transition-colors"
+          disabled={loading}
+          className="bg-[#6364ff] flex h-[56px] items-center justify-center px-[17px] py-[16px] rounded-[15px] w-[184px] cursor-pointer hover:bg-[#5253ee] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <p className="text-[24px] text-white">
-            {editingId ? 'Update' : 'Save'}
+            {loading ? 'Saving...' : (editingId ? 'Update' : 'Save')}
           </p>
         </button>
       </div>
+      
+      {errorMessage && (
+        <p className="absolute left-1/2 -translate-x-1/2 top-[450px] text-red-500 text-[16px]">{errorMessage}</p>
+      )}
 
       {/* Numbers Row */}
       <div className="relative w-full">
@@ -108,21 +145,21 @@ export default function TestimonialsTab({ testimonials, setTestimonials, onNext 
           <>
             {testimonials.map((item, index) => (
               <div
-                key={item.id}
+                key={item._id || item.id}
                 onClick={() => loadTestimonial(item)}
                 style={{ left: `${79 + index * 80}px` }}
                 className={`absolute flex flex-col h-[52px] items-center justify-center top-[474px] w-[64px] px-[16px] py-[8px] rounded-[8px] cursor-pointer transition-all ${
-                  editingId === item.id ? 'bg-[#6364ff]/10 scale-110' : ''
+                  editingId === (item._id || item.id) ? 'bg-[#6364ff]/10 scale-110' : ''
                 }`}
               >
                 <div
                   aria-hidden="true"
                   className={`absolute border-2 border-solid inset-[-1px] pointer-events-none rounded-[9px] ${
-                    editingId === item.id ? 'border-[#6364ff]' : 'border-[rgba(102,102,102,0.75)]'
+                    editingId === (item._id || item.id) ? 'border-[#6364ff]' : 'border-[rgba(102,102,102,0.75)]'
                   }`}
                 />
                 <p className={`font-['Poppins'] text-[24px] text-center ${
-                    editingId === item.id ? 'text-[#6364ff] font-bold' : 'text-[rgba(102,102,102,0.75)]'
+                    editingId === (item._id || item.id) ? 'text-[#6364ff] font-bold' : 'text-[rgba(102,102,102,0.75)]'
                   }`}>
                   {index + 1}
                 </p>

@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import ServiceFeatures from "../components/services/ServiceFeatures";
 import ServiceSolutions from "../components/services/ServiceSolutions";
@@ -7,14 +8,38 @@ import ServicePricing from "../components/services/ServicePricing";
 import ServicePortfolio from "../components/services/ServicePortfolio";
 import ServiceFAQ from "../components/services/ServiceFAQ";
 
-import { serviceDetails } from "../data/serviceDetails";
+import { getServiceById } from "../services/servicesApi";
 
 const ServiceDetail = () => {
   const { serviceType } = useParams();
-  const serviceData = serviceDetails[serviceType];
+  const [serviceData, setServiceData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  if (!serviceData) {
-    return <div className="text-center pt-32">Service Not Found</div>;
+  useEffect(() => {
+    const fetchServiceData = async () => {
+      try {
+        setLoading(true);
+        const service = await getServiceById(serviceType);
+        setServiceData(service);
+      } catch (err) {
+        console.error('Failed to fetch service:', err);
+        setError('Service not found');
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (serviceType) {
+      fetchServiceData();
+    }
+  }, [serviceType]);
+
+  if (loading) {
+    return <div className="text-center pt-32">Loading service...</div>;
+  }
+
+  if (error || !serviceData) {
+    return <div className="text-center pt-32 text-red-500">{error || 'Service Not Found'}</div>;
   }
 
   const { hero, features } = serviceData;

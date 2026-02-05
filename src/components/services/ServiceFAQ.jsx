@@ -1,12 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import FaqPlus from "../svg/FaqPlus";
 import FaqClose from "../svg/FaqClose";
+import { getFAQs } from "../../services/faqsApi";
 
-const ServiceFAQ = ({ data }) => {
-  if (!data) return null;
-  const { title, highlight, questions } = data;
+const ServiceFAQ = () => {
+  const [faqs, setFaqs] = useState([]);
   const [openIndex, setOpenIndex] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch FAQs from API on mount
+  useEffect(() => {
+    const fetchFAQs = async () => {
+      try {
+        setLoading(true);
+        const data = await getFAQs();
+        if (data && Array.isArray(data)) {
+          setFaqs(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch FAQs:', error);
+        setFaqs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFAQs();
+  }, []);
+
+  if (loading) {
+    return <section className="w-full py-12 text-center text-gray-600">Loading FAQs...</section>;
+  }
+
+  if (faqs.length === 0) {
+    return <section className="w-full py-12 text-center text-gray-600">No FAQs available</section>;
+  }
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -17,14 +45,14 @@ const ServiceFAQ = ({ data }) => {
       {/* Heading */}
       <div className="text-center mb-12 md:mb-16">
         <h2 className="text-3xl md:text-5xl font-medium leading-[1.4] text-black">
-          {title} <br />
-          <span className="text-[#6364FF]">{highlight}</span>
+          Frequently Asked <br />
+          <span className="text-[#6364FF]">Questions</span>
         </h2>
       </div>
 
       {/* FAQ List */}
       <div className="w-full max-w-[1315px] flex flex-col gap-4 md:gap-9">
-        {questions.map((item, index) => (
+        {faqs.map((item, index) => (
           <div
             key={index}
             className={`rounded-2xl overflow-hidden transition-all duration-300 ${

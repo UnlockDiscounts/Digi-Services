@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Plus, Search, ListFilter, Settings } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Plus, Search, ListFilter, Settings, CheckCircle, Circle } from 'lucide-react';
 import { ServiceModal } from './ServiceModal';
 import { MoreFilters } from './MoreFilters';
+import { getServices, deleteService, updateServiceStatus } from '../../services/servicesApi';
 import service1 from "../../assets/service1.svg";
 import service2 from "../../assets/service2.svg";
 import service3 from "../../assets/service3.svg";
@@ -12,32 +13,79 @@ export default function Service() {
   const [statusFilter, setStatusFilter] = useState('All Status');
   const [isMoreFiltersOpen, setIsMoreFiltersOpen] = useState(false);
   const [sortBy, setSortBy] = useState('newest');
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
+  // Filter and sort services
+  const filteredServices = services
+    .filter(service => {
+      // Search filter
+      const matchesSearch = service.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           service.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           service.category?.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      // Status filter
+      const matchesStatus = statusFilter === 'All Status' || 
+                           (service.status || 'active') === statusFilter.toLowerCase();
+      
+      return matchesSearch && matchesStatus;
+    })
+    .sort((a, b) => {
+      // Sort by date
+      if (sortBy === 'newest') {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else if (sortBy === 'oldest') {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+      return 0;
+    });
 
-  const [services, setServices] = useState([
-    {
-      id: '1',
-      title: 'Website Development',
-      image: service1, // Add your service image path here
-      status: 'active'
-    },
-    {
-      id: '2',
-      title: 'Social Media Management',
-      image: service2,
-      status: 'active'
-    },
-    {
-      id: '3',
-      title: 'Resume Building',
-      image: service3,
-      status: 'active'
-    }
-  ]);
+  // Fetch services from API on mount
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setLoading(true);
+        const data = await getServices();
+        if (data && Array.isArray(data)) {
+          setServices(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch services:', error);
+        setErrorMessage('Failed to load services from server');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this service?')) {
-      setServices(services.filter(s => s.id !== id));
+      try {
+        setErrorMessage('');
+        await deleteService(id);
+        setServices(services.filter(s => (s._id || s.id) !== id));
+      } catch (error) {
+        console.error('Failed to delete service:', error);
+        setErrorMessage('Failed to delete service. Please try again.');
+      }
+    }
+  };
+
+  const handleToggleStatus = async (service) => {
+    try {
+      setErrorMessage('');
+      const newStatus = (service.status || 'active') === 'active' ? 'inactive' : 'active';
+      const updated = await updateServiceStatus(service._id || service.id, newStatus);
+      setServices(services.map(s => 
+        (s._id || s.id) === (service._id || service.id) 
+          ? { ...s, status: newStatus, ...updated }
+          : s
+      ));
+    } catch (error) {
+      console.error('Failed to toggle service status:', error);
+      setErrorMessage('Failed to update service status. Please try again.');
     }
   };
 
@@ -86,7 +134,7 @@ export default function Service() {
           </div>
 
           <div className="bg-white px-4 py-3 rounded-[8px] font-['Poppins',sans-serif]">
-            Total Services: <span className="font-semibold">{services.length}</span>
+            Total Services: <span className="font-semibold">{filteredServices.length}</span>
           </div>
 
           <select
@@ -114,14 +162,26 @@ export default function Service() {
           />
         </div>
 
-        {/* Services Grid - Fixed 3-column layout from Blogs */}
+        {errorMessage && (
+          <p className="text-red-600 text-[16px] mb-4">{errorMessage}</p>
+        )}
+
+        {loading ? (
+          <div className="text-center py-8">
+            <p className="text-gray-500">Loading services...</p>
+          </div>
+        ) : filteredServices.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-gray-500">No services found matching your filters.</p>
+          </div>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service) => (
-            <div key={service.id} className="bg-white rounded-[16px] overflow-hidden shadow-sm border border-gray-100 p-4">
+          {filteredServices.map((service) => (
+            <div key={service._id || service.id} className="bg-white rounded-[16px] overflow-hidden shadow-sm border border-gray-100 p-4">
               {/* Service Image placeholder */}
               <div className="h-[180px] bg-gray-200 rounded-[12px] mb-4 overflow-hidden">
-                {service.image ? (
-                  <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+                {(service.image || (service.files && service.files[0])) ? (
+                  <img src={service.image || (service.files && service.files[0])} alt={service.title} className="w-full h-full object-cover" onError={(e) => e.target.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22%3E%3Crect fill=%22%23ddd%22 width=%22100%25%22 height=%22100%25%22/%3E%3C/svg%3E'} />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-gray-400">
                     <Settings size={48} />
@@ -132,10 +192,26 @@ export default function Service() {
               <h3 className="text-[20px] font-semibold mb-2 truncate">{service.title}</h3>
 
               <div className="flex items-center justify-between mt-4">
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${service.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                  }`}>
-                  {service.status.charAt(0).toUpperCase() + service.status.slice(1)}
-                </span>
+                <button
+                  onClick={() => handleToggleStatus(service)}
+                  className="flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 hover:scale-105"
+                  style={{
+                    backgroundColor: (service.status || 'active') === 'active' ? '#dcfce7' : '#fee2e2',
+                    color: (service.status || 'active') === 'active' ? '#166534' : '#991b1b',
+                  }}
+                >
+                  {(service.status || 'active') === 'active' ? (
+                    <>
+                      <CheckCircle size={16} />
+                      <span>Active</span>
+                    </>
+                  ) : (
+                    <>
+                      <Circle size={16} />
+                      <span>Inactive</span>
+                    </>
+                  )}
+                </button>
 
                 <div className="flex gap-2">
                   <button
@@ -145,7 +221,7 @@ export default function Service() {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(service.id)}
+                    onClick={() => handleDelete(service._id || service.id)}
                     className="p-2 hover:bg-gray-100 rounded-lg text-red-600 transition-colors"
                   >
                     Delete
@@ -155,6 +231,7 @@ export default function Service() {
             </div>
           ))}
         </div>
+        )}
       </div>
 
       {/* Modal */}
