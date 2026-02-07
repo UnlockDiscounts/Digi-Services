@@ -1,10 +1,29 @@
+import { useState, useEffect } from "react";
 import ServiceOverviewCard from "../components/ServiceOverviewCard";
 import ServiceProcessAutomation from "../components/ServiceProcessAutomation";
 
-import { servicesData } from "../data/servicesData";
+// import { servicesData } from "../data/servicesData";
 import { serviceProcessData } from "../data/serviceProcessData";
+import { getAllServices } from "../api/serviceService";
 
 const ServiceCategory = () => {
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const data = await getAllServices();
+        setServices(data);
+      } catch (error) {
+        console.error("Failed to fetch services:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
   return (
     <div className="w-full">
       {/* HERO SECTION */}
@@ -62,9 +81,13 @@ const ServiceCategory = () => {
         </h3>
 
         <div className="w-full max-w-[1440px] mx-auto min-h-auto md:min-h-[500px] px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-8">
-          {servicesData.map((service) => (
-            <ServiceOverviewCard key={service.id} service={service} />
-          ))}
+          {loading ? (
+            <div className="w-full text-center text-xl">Loading services...</div>
+          ) : (
+            services.map((service) => (
+              <ServiceOverviewCard key={service._id} service={service} />
+            ))
+          )}
         </div>
       </section>
 
