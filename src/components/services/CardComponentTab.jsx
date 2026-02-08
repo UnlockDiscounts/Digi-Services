@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
   const sections = [
@@ -11,35 +12,61 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
   const [sectionTitle, setSectionTitle] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [editingId, setEditingId] = useState(null); // Track which item is being edited
+  const [editingId, setEditingId] = useState(null); 
+  const [loading, setLoading] = useState(false);
 
   // Filter items ONLY for the active section
   const currentSectionItems = cardItems.filter(item => item.sectionId === activeSection);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (sectionTitle && title && description) {
-      if (editingId) {
-        // UPDATE existing item
-        const updatedItems = cardItems.map(item => 
-          item.id === editingId 
-            ? { ...item, sectionTitle, title, description } 
-            : item
+      setLoading(true);
+
+      // Constructing the payload exactly like your API body example
+      const payload = {
+        service: localStorage.getItem('serviceId'), // Use the stored service ID
+        sections: [
+          {
+            sectionTitle,
+            title,
+            description
+          }
+        ]
+      };
+
+      try {
+        const response = await axios.post(
+          'https://digiservices-backend-6hc3.onrender.com/api/v1/cards',
+          payload
         );
-        setCardItems(updatedItems);
-      } else {
-        // ADD new item
-        const newItem = {
-          id: Date.now(),
-          sectionId: activeSection,
-          sectionTitle,
-          title,
-          description,
-        };
-        setCardItems([...cardItems, newItem]);
+
+        if (response.status === 201 || response.status === 200) {
+          // If update, replace item; if new, add to list
+          if (editingId) {
+            const updatedItems = cardItems.map(item => 
+              item.id === editingId 
+                ? { ...item, sectionTitle, title, description } 
+                : item
+            );
+            setCardItems(updatedItems);
+          } else {
+            const newItem = {
+              id: response.data._id || Date.now(), // Use API ID for the preview
+              sectionId: activeSection,
+              sectionTitle,
+              title,
+              description,
+            };
+            setCardItems([...cardItems, newItem]);
+          }
+          clearForm();
+        }
+      } catch (error) {
+        console.error('API Error:', error.response?.data || error.message);
+        alert('Failed to save card data.');
+      } finally {
+        setLoading(false);
       }
-      
-      // Reset form and editing state
-      clearForm();
     }
   };
 
@@ -47,7 +74,7 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
     setSectionTitle(item.sectionTitle);
     setTitle(item.title);
     setDescription(item.description);
-    setEditingId(item.id); // Set this ID so "Save" knows to update instead of add
+    setEditingId(item.id); 
   };
 
   const clearForm = () => {
@@ -67,7 +94,7 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
             key={section.id}
             onClick={() => {
               setActiveSection(section.id);
-              clearForm(); // Clear inputs when switching sections
+              clearForm();
             }}
             className={`flex items-center justify-center px-[16px] py-[8px] relative rounded-[8px] w-[184px] cursor-pointer ${
               activeSection === section.id ? 'bg-[#6364ff]' : ''
@@ -122,7 +149,7 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
             {currentSectionItems.map((item, index) => (
               <div 
                 key={item.id}
-                onClick={() => loadItem(item)} // CLICKING THE NUMBER LOADS DATA
+                onClick={() => loadItem(item)} 
                 style={{ left: `${index * 80}px` }} 
                 className={`absolute flex items-center justify-center h-[52px] w-[64px] rounded-[8px] border-2 cursor-pointer transition-colors ${
                   editingId === item.id ? 'border-[#6364ff] bg-[#6364ff]/10' : 'border-[rgba(102,102,102,0.75)]'
@@ -137,31 +164,22 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
 
           <button
             onClick={handleSave}
-            className="bg-[#6364ff] h-[56px] w-[184px] rounded-[15px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee] transition-colors"
+            disabled={loading}
+            className="bg-[#6364ff] h-[56px] w-[184px] rounded-[15px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee] transition-colors disabled:bg-gray-400"
           >
-            {editingId ? 'Update' : 'Save'}
+            {loading ? 'Saving...' : (editingId ? 'Update' : 'Save')}
           </button>
         </div>
-          <div className="w-full flex justify-end">
-        <button
-          onClick={onNext}
-          className="bg-[#6364ff] h-[56px] rounded-[15px] w-[184px] text-white text-[24px] font-['Poppins']"
-        >
-          Next
-        </button>
-      </div>
-      </div>
 
-      {/* Footer Navigation */}
-      {/* <div className="w-full flex justify-end">
-        <button
-          onClick={onNext}
-          className="bg-[#6364ff] h-[56px] rounded-[15px] w-[184px] text-white text-[24px] font-['Poppins']"
-        >
-          Next
-        </button>
-      </div> */}
-      
+        <div className="w-full flex justify-end">
+          <button
+            onClick={onNext}
+            className="bg-[#6364ff] h-[56px] rounded-[15px] w-[184px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee]"
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

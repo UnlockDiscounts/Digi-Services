@@ -1,19 +1,56 @@
 import { useState } from 'react';
-
-// interface AddServiceTabProps {
-//   onNext: () => void;
-// }
+import axios from 'axios'; // Ensure axios is installed
 
 export default function AddServiceTab({ onNext }) {
   const [serviceCategory, setServiceCategory] = useState('');
   const [serviceTitle, setServiceTitle] = useState('');
   const [description, setDescription] = useState('');
   const [fileName, setFileName] = useState('No file chosen');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
       setFileName(file.name);
+      setSelectedFile(file);
+    }
+  };
+
+  const handleNextClick = async () => {
+    setLoading(true);
+    
+    // Prepare the form data exactly as shown in your Postman screenshot
+    const formData = new FormData();
+    formData.append('category', serviceCategory);
+    formData.append('title', serviceTitle);
+    formData.append('description', description);
+    if (selectedFile) {
+      formData.append('files', selectedFile);
+    }
+
+    try {
+      const response = await axios.post(
+        'https://digiservices-backend-6hc3.onrender.com/api/v1/services',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      // Axios returns the response in the .data property
+      if (response.status === 201 || response.status === 200) {
+        console.log('Success:', response.data._id);
+        localStorage.setItem('serviceId', response.data._id); // Store the service ID for later use
+        onNext(); 
+      }
+    } catch (error) {
+      console.error('API Error:', error.response?.data || error.message);
+      alert('Failed to create service. Check console for details.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,10 +111,13 @@ export default function AddServiceTab({ onNext }) {
 
       {/* Next Button */}
       <button
-        onClick={onNext}
-        className="absolute bg-[#6364ff] content-stretch flex h-[56px] items-center justify-center px-[17px] py-[16px] right-[79px] rounded-[15px] top-[468px] w-[184px] cursor-pointer hover:bg-[#5253ee] transition-colors"
+        onClick={handleNextClick}
+        disabled={loading}
+        className="absolute bg-[#6364ff] content-stretch flex h-[56px] items-center justify-center px-[17px] py-[16px] right-[79px] rounded-[15px] top-[468px] w-[184px] cursor-pointer hover:bg-[#5253ee] transition-colors disabled:bg-gray-400"
       >
-        <p className="css-ew64yg leading-[normal] not-italic relative shrink-0 text-[24px] text-white">Next</p>
+        <p className="css-ew64yg leading-[normal] not-italic relative shrink-0 text-[24px] text-white">
+          {loading ? 'Submitting...' : 'Next'}
+        </p>
       </button>
     </div>
   );
