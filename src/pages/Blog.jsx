@@ -7,7 +7,8 @@ import ExploreBlogCard from "../components/ExploreBlogCard";
 
 // import { blogDetails } from "../data/dummyBlogContent";
 // import { blogs } from "../data/dummyblogs";
-import { getBlogById, getAllBlogs } from "../api/blogService";
+import { blogs as dummyBlogs } from "../data/dummyBlogs";
+// import { getBlogById, getAllBlogs } from "../api/blogService";
 
 const Blog = () => {
   const { id } = useParams();
@@ -17,28 +18,36 @@ const Blog = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        // Fetch the single blog
-        const blogData = await getBlogById(id);
-        console.log(blogData);
-        setBlog(blogData);
+    // const fetchData = async () => {
+    //   setLoading(true);
+    //   try {
+    //     // Fetch the single blog
+    //     const blogData = await getBlogById(id);
+    //     console.log(blogData);
+    //     setBlog(blogData);
+    //
+    //     // Fetch all blogs for "Explore More"
+    //     const allBlogs = await getAllBlogs();
+    //     // Filter out current blog from explore more section
+    //     setExploreBlogs(allBlogs.filter((b) => b._id !== id));
+    //   } catch (error) {
+    //     console.error("Failed to fetch blog data:", error);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
 
-        // Fetch all blogs for "Explore More"
-        const allBlogs = await getAllBlogs();
-        // Filter out current blog from explore more section
-        setExploreBlogs(allBlogs.filter((b) => b._id !== id));
-      } catch (error) {
-        console.error("Failed to fetch blog data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    // Dummy Data Implementation
     if (id) {
-      fetchData();
       window.scrollTo(0, 0);
+      const foundBlog = dummyBlogs.find((b) => b._id === id);
+      setBlog(foundBlog || null);
+      if (foundBlog) {
+        // Filter out current blog from explore more section
+        const others = dummyBlogs.filter((b) => b._id !== id);
+        setExploreBlogs(others);
+      }
+      setLoading(false);
     }
   }, [id]);
 
@@ -46,7 +55,9 @@ const Blog = () => {
   useEffect(() => {
     if (exploreBlogs.length === 0) return;
     const interval = setInterval(() => {
-      setCurrentSlideIndex((prevIndex) => (prevIndex + 3) % exploreBlogs.length);
+      setCurrentSlideIndex(
+        (prevIndex) => (prevIndex + 3) % exploreBlogs.length,
+      );
     }, 4000);
 
     return () => clearInterval(interval);
@@ -55,10 +66,11 @@ const Blog = () => {
   // Get current 3 blogs
   const displayedBlogs = exploreBlogs.slice(
     currentSlideIndex,
-    currentSlideIndex + 3
+    currentSlideIndex + 3,
   );
 
-  if (!loading && !blog) return <div className="text-center py-20">Blog not found.</div>;
+  if (!loading && !blog)
+    return <div className="text-center py-20">Blog not found.</div>;
 
   return (
     <div>
@@ -79,9 +91,10 @@ const Blog = () => {
             <p className="text-xs font-semibold text-[#E6E6E6E5] leading-none text-left">
               {loading
                 ? ""
-                : blog?.createdAt
-                ? new Date(blog.createdAt).toLocaleDateString()
-                : ""}
+                : blog?.date ||
+                  (blog?.createdAt
+                    ? new Date(blog.createdAt).toLocaleDateString()
+                    : "")}
             </p>
           </div>
         </div>
@@ -90,7 +103,9 @@ const Blog = () => {
       {/* CONTENT */}
       <section className="max-w-[1312px] mx-auto px-6 mt-14 mb-20 space-y-6">
         <div className="text-black leading-normal text-lg md:text-2xl font-normal mb-6 whitespace-pre-wrap">
-          {loading ? "Loading content..." : blog?.description || "Content not available."}
+          {loading
+            ? "Loading content..."
+            : blog?.description || "Content not available."}
         </div>
       </section>
 

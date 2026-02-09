@@ -1,38 +1,9 @@
 import { useState, useEffect } from "react";
 
 const ServiceTestimonial = ({ data }) => {
-  
-  const [dynamicData, setDynamicData] = useState(null);  
-  const [loading, setLoading] = useState(true);
+  if (!data) return null;
+  const { title, highlight, reviews } = data;
   const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('https://digiservices-backend.onrender.com/api/v1/testimonials');
-        if (!response.ok) throw new Error('API failed');
-        const apiData = await response.json();
-        if (apiData && apiData.reviews?.length > 0) {
-          setDynamicData(apiData);  // API data
-        } else {
-          throw new Error('No API data');
-        }
-      } catch (error) {
-        console.error('API failed, using prop fallback:', error);
-        setDynamicData(data);  //original prop data
-      } finally {
-        setLoading(false);
-      }
-      };
-
-    fetchData();  
-  }, []);  
-
-
-if (loading || !dynamicData) return null;
-
-  const { title, highlight, reviews } = dynamicData;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,8 +11,6 @@ if (loading || !dynamicData) return null;
     }, 2000);
     return () => clearInterval(interval);
   }, [reviews.length]);
-
-
 
   return (
     <section className="w-full py-16 px-4 md:px-16 bg-white flex flex-col items-center">
@@ -66,8 +35,12 @@ if (loading || !dynamicData) return null;
             >
               {/* Image Placeholder (Left) */}
               <div className="w-[326px] h-[175px] md:w-[511px] md:h-[341.34px] bg-gray-200 rounded-[20px] md:rounded-lg opacity-100 flex-shrink-0 flex items-center justify-center text-gray-400 overflow-hidden">
-                {review.image ? (
-                  <review.image className="w-full h-full object-cover" />
+                {typeof review.image === "string" ? (
+                  <img
+                    src={review.image}
+                    alt={review.authorName}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <svg
                     className="w-24 h-24"
@@ -97,9 +70,9 @@ if (loading || !dynamicData) return null;
                   <h4 className="w-full text-2xl font-semibold text-[#473CF0] leading-none tracking-normal opacity-100 block">
                     {review.authorName}
                   </h4>
-                  <p className="w-full text-base font-normal text-black leading-none tracking-normal opacity-100 block">
+                  {/* <p className="w-full text-base font-normal text-black leading-none tracking-normal opacity-100 block">
                     {review.authorRole}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>

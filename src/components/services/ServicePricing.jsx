@@ -1,5 +1,31 @@
+import { useEffect, useRef } from "react";
 import ServicePricingVector from "../svg/PricingCardBg";
 import PricingCheckmark from "../svg/PricingCheckmark";
+
+const RazorpayButton = ({ paymentButtonId }) => {
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/payment-button.js";
+    script.dataset.payment_button_id = paymentButtonId;
+    script.async = true;
+
+    const currentForm = formRef.current;
+    if (currentForm) {
+      currentForm.innerHTML = "";
+      currentForm.appendChild(script);
+    }
+
+    return () => {
+      if (currentForm && currentForm.contains(script)) {
+        currentForm.removeChild(script);
+      }
+    };
+  }, [paymentButtonId]);
+
+  return <form ref={formRef} className="w-full flex justify-center"></form>;
+};
 
 const ServicePricing = ({ data }) => {
   if (!data) return null;
@@ -56,9 +82,13 @@ const ServicePricing = ({ data }) => {
               </p>
 
               {/* Button */}
-              <button className="w-full h-12 md:h-14 rounded-2xl text-xl md:text-2xl font-medium leading-none bg-[#6364FF] text-white transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-[#6038FE] group-hover:to-[#9565E5] group-hover:shadow-[0px_4px_38.2px_0px_#8658EC94]">
-                Get Started
-              </button>
+              {plan.paymentButtonId ? (
+                <RazorpayButton paymentButtonId={plan.paymentButtonId} />
+              ) : (
+                <button className="w-full h-12 md:h-14 rounded-2xl text-xl md:text-2xl font-medium leading-none bg-[#6364FF] text-white transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-[#6038FE] group-hover:to-[#9565E5] group-hover:shadow-[0px_4px_38.2px_0px_#8658EC94]">
+                  Get Started
+                </button>
+              )}
 
               {/* Features Container */}
               <div className="w-full ml-0 md:ml-2 mt-8 md:mt-[53px]">

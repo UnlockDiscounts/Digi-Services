@@ -5,29 +5,28 @@ import BlogCard from "../components/BlogCard";
 import ArticlesHeroCurve1 from "../components/svg/ArticlesHeroCurve1";
 import ArticlesHeroCurve2 from "../components/svg/ArticlesHeroCurve2";
 
-// import { blogs } from "../data/dummyblogs"; 
-import { getAllBlogs } from "../api/blogService";
+import { blogs as dummyBlogs } from "../data/dummyBlogs";
+// import { getAllBlogs } from "../api/blogService";
 
 const Articles = () => {
   const [activeTab, setActiveTab] = useState("All Blogs");
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [blogs, setBlogs] = useState(dummyBlogs);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const data = await getAllBlogs();
-        console.log(blogData);
-        setBlogs(data);
-      } catch (error) {
-        console.error("Failed to fetch blogs:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchBlogs = async () => {
+  //     try {
+  //       const data = await getAllBlogs();
+  //       setBlogs(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch blogs:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchBlogs();
-  }, []);
+  //   fetchBlogs();
+  // }, []);
 
   const filteredBlogs =
     activeTab === "All Blogs"
@@ -113,8 +112,7 @@ const Articles = () => {
             {activeTab === "All Blogs" && filteredBlogs.length > 0 && (
               <div className="text-center mt-16">
                 <button className="w-[264px] h-14 px-[15px] py-2.5 rounded-3xl flex items-center justify-center gap-2.5 mx-auto bg-white border border-[#0412C0] shadow-[0px_1px_10px_0px_rgba(0,0,0,0.25)] text-2xl font-normal leading-none text-black transition-all duration-300 hover:bg-[#6364FF] hover:text-white hover:border-[#6364FF]">
-                  Load More Blogs{" "}
-                  <ChevronRight className="w-6 h-6" />
+                  Load More Blogs <ChevronRight className="w-6 h-6" />
                 </button>
               </div>
             )}
@@ -126,4 +124,3 @@ const Articles = () => {
 };
 
 export default Articles;
-

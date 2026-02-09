@@ -109,7 +109,8 @@ export const serviceDetails = {
       plans: [
         {
           name: "Starter",
-          price: "₹3,999",
+          paymentButtonId: "pl_SDyTBQ1ciJkKY3",
+          price: "₹26,000",
           features: [
             "1 Page",
             "Mobile Responsive",
@@ -119,7 +120,8 @@ export const serviceDetails = {
         },
         {
           name: "Standard",
-          price: "₹8,999",
+          paymentButtonId: "pl_SDycDVhVxXfGIM",
+          price: "₹35,500",
           features: [
             "5 Page",
             "SEO Setup",
@@ -129,7 +131,8 @@ export const serviceDetails = {
         },
         {
           name: "Premium",
-          price: "₹14,999",
+          paymentButtonId: "pl_SDydSPyCiMm4vP",
+          price: "₹46,000",
           features: [
             "10+ Page",
             "E-commerce Functionality",
@@ -285,7 +288,8 @@ export const serviceDetails = {
       plans: [
         {
           name: "Starter",
-          price: "₹7,999",
+          paymentButtonId: "pl_SDyeao4yh51ICW",
+          price: "₹18,000",
           features: [
             "Content (12 posts/months)",
             "Platforms (1-2)",
@@ -296,7 +300,8 @@ export const serviceDetails = {
         },
         {
           name: "Growth",
-          price: "₹14,999",
+          paymentButtonId: "pl_SDyg049a2n7tus",
+          price: "₹21,000",
           features: [
             "Content (20 posts/months)",
             "Platforms (2-3)",
@@ -307,7 +312,8 @@ export const serviceDetails = {
         },
         {
           name: "Pro",
-          price: "₹24,999",
+          paymentButtonId: "pl_SDyggw5BLtWzwl",
+          price: "₹25,000",
           features: [
             "Content (30 posts/months)",
             "Platforms (3-4)",
@@ -465,7 +471,8 @@ export const serviceDetails = {
       plans: [
         {
           name: "Entry",
-          price: "₹1,499",
+          paymentButtonId: "pl_SDysOzpvTv2OYC",
+          price: "₹2,000",
           features: [
             "Text Resume",
             "ATS Optimized",
@@ -475,7 +482,8 @@ export const serviceDetails = {
         },
         {
           name: "Professional",
-          price: "₹3,999",
+          paymentButtonId: "pl_SDytEp34Ru0TBw",
+          price: "₹4,000",
           features: [
             "Visual Resume",
             "Cover Letter",
@@ -485,7 +493,8 @@ export const serviceDetails = {
         },
         {
           name: "Executive",
-          price: "₹6,999",
+          paymentButtonId: "pl_SDytpmbc1812f4",
+          price: "₹6,000",
           features: [
             "Senior Resume",
             "LinkedIn Optimization",

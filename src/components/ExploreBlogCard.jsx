@@ -8,11 +8,18 @@ const ExploreBlogCard = ({ blog }) => {
       {/* Image Container */}
       <div className="w-full relative p-3 pb-0 grid place-items-center">
         <div className="relative w-full h-54 overflow-hidden rounded-lg">
-          <img 
-            src={blog.images?.[0] || ""} 
-            alt={blog.header} 
-            className="w-full h-full object-cover" 
-          />
+          {(() => {
+            const MainImage = blog.images?.[0]; // Get the first image (Component or URL)
+            return typeof MainImage === "function" ? (
+              <MainImage className="w-full h-full object-cover" />
+            ) : (
+              <img
+                src={MainImage || ""}
+                alt={blog.header}
+                className="w-full h-full object-cover"
+              />
+            );
+          })()}
 
           {/* Read More Button */}
           <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10">

@@ -1,29 +1,26 @@
-
-import { Facebook, Linkedin, Instagram, Twitter } from 'lucide-react';
-import { useState } from 'react';
+import { Facebook, Linkedin, Instagram, Twitter } from "lucide-react";
+import { useState } from "react";
 
 export default function Footer() {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    message: '',
+    fullName: "",
+    email: "",
+    message: "",
   });
 
   const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData(prev => ({
-    ...prev,
-    [name]: value,
-  }));
-};
-
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  console.log('Form submitted:', formData);
-  setFormData({ fullName: '', email: '', message: '' });
-};
-
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    setFormData({ fullName: "", email: "", message: "" });
+  };
 
   return (
     <footer className="bg-gradient-to-r from-[#719CFF] to-[#A872FF]">
@@ -34,7 +31,8 @@ export default function Footer() {
               Let's Work Together
             </h2>
             <p className="text-white/90 mb-8 max-w-md leading-relaxed">
-              We deliver top-notch services from Website Development, Social Media Management, and Content Creation to Resume Building.
+              We deliver top-notch services from Website Development, Social
+              Media Management, and Content Creation to Resume Building.
             </p>
 
             <div className="flex gap-4 mb-12">
@@ -66,30 +64,47 @@ export default function Footer() {
 
             <div className="grid grid-cols-2 gap-12 mb-8">
               <div>
-                <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Quick Links
+                </h3>
                 <ul className="space-y-3">
                   <li>
-                    <a href="#" className="text-white/80 hover:text-white transition-colors">
+                    <a
+                      href="/"
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
                       Home
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="text-white/80 hover:text-white transition-colors">
+                    <a
+                      href="/about"
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
                       About Us
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="text-white/80 hover:text-white transition-colors">
+                    <a
+                      href="/services"
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
                       Our Services
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="text-white/80 hover:text-white transition-colors">
+                    <a
+                      href="/articles"
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
                       Blogs
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="text-white/80 hover:text-white transition-colors">
+                    <a
+                      href="/contact"
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
                       Contact Us
                     </a>
                   </li>
@@ -97,20 +112,31 @@ export default function Footer() {
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-white mb-4">Services</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Services
+                </h3>
                 <ul className="space-y-3">
                   <li>
-                    <a href="#" className="text-white/80 hover:text-white transition-colors">
+                    <a
+                      href="/services/website-development"
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
                       Website Development
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="text-white/80 hover:text-white transition-colors">
+                    <a
+                      href="/services/social-media-management"
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
                       Social Media Management
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="text-white/80 hover:text-white transition-colors">
+                    <a
+                      href="/services/resume-building"
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
                       Resume Building
                     </a>
                   </li>
@@ -173,10 +199,16 @@ export default function Footer() {
           </p>
 
           <div className="flex gap-8 mt-4 md:mt-0">
-            <a href="#" className="text-white/80 hover:text-white transition-colors text-sm">
+            <a
+              href="#"
+              className="text-white/80 hover:text-white transition-colors text-sm"
+            >
               Terms & Conditions
             </a>
-            <a href="#" className="text-white/80 hover:text-white transition-colors text-sm">
+            <a
+              href="#"
+              className="text-white/80 hover:text-white transition-colors text-sm"
+            >
               Privacy Policy
             </a>
           </div>

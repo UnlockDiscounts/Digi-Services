@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getAllServices, getAllCards, getAllWork } from "../api/serviceService";
+import {
+  getAllServices,
+  getAllCards,
+  getAllWork,
+  getAllTestimonials,
+  getAllFAQs,
+} from "../api/serviceService";
 
 import ServiceFeatures from "../components/services/ServiceFeatures";
 import ServiceSolutions from "../components/services/ServiceSolutions";
@@ -25,6 +31,14 @@ const SECTION_HEADERS = {
       title: "Highlight real impact with our curated",
       highlight: "Portfolio Showcase",
     },
+    testimonial: {
+      title: "Showcase success with genuine",
+      highlight: "Customer experiences",
+    },
+    faq: {
+      title: "Get clarity through our most asked",
+      highlight: "Client Questions",
+    },
   },
   "social-media-management": {
     features: {
@@ -39,6 +53,14 @@ const SECTION_HEADERS = {
       title: "See our results in",
       highlight: "Social Media Success",
     },
+    testimonial: {
+      title: "Hear from our happy",
+      highlight: "Social Media Clients",
+    },
+    faq: {
+      title: "Common questions about",
+      highlight: "Social Media Management",
+    },
   },
   "resume-building": {
     features: {
@@ -50,6 +72,11 @@ const SECTION_HEADERS = {
       highlight: "Career Solutions",
     },
     portfolio: { title: "View our professional", highlight: "Resume Samples" },
+    testimonial: { title: "Success stories from", highlight: "Job Seekers" },
+    faq: {
+      title: "Frequently asked questions about",
+      highlight: "Resume Writing",
+    },
   },
 };
 
@@ -63,6 +90,8 @@ const ServiceDetail = () => {
   const [featuresData, setFeaturesData] = useState(null);
   const [solutionsData, setSolutionsData] = useState(null);
   const [portfolioData, setPortfolioData] = useState(null);
+  const [testimonialData, setTestimonialData] = useState(null);
+  const [faqData, setFaqData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Helper to make slug from Title
@@ -73,11 +102,14 @@ const ServiceDetail = () => {
     const fetchServiceData = async () => {
       setLoading(true);
       try {
-        const [allServices, allCards, allWork] = await Promise.all([
-          getAllServices(),
-          getAllCards(),
-          getAllWork(),
-        ]);
+        const [allServices, allCards, allWork, allTestimonials, allFAQs] =
+          await Promise.all([
+            getAllServices(),
+            getAllCards(),
+            getAllWork(),
+            getAllTestimonials(),
+            getAllFAQs(),
+          ]);
 
         const found = allServices.find(
           (s) => makeSlug(s.title) === serviceType,
@@ -143,6 +175,38 @@ const ServiceDetail = () => {
               });
             }
           }
+
+          // Testimonial Logic
+          const validTestimonials = allTestimonials.filter(
+            (t) => t.service === found._id,
+          );
+          if (validTestimonials.length > 0) {
+            setTestimonialData({
+              title: SECTION_HEADERS[serviceType]?.testimonial.title || "",
+              highlight:
+                SECTION_HEADERS[serviceType]?.testimonial.highlight || "",
+              reviews: validTestimonials.map((t) => ({
+                id: t._id,
+                image: t.file,
+                text: t.description,
+                authorName: t.name,
+                authorRole: "", // Empty for now
+              })),
+            });
+          }
+
+          // FAQ Logic
+          const validFAQs = allFAQs.filter((f) => f.service === found._id);
+          if (validFAQs.length > 0) {
+            setFaqData({
+              title: SECTION_HEADERS[serviceType]?.faq.title || "",
+              highlight: SECTION_HEADERS[serviceType]?.faq.highlight || "",
+              questions: validFAQs.map((f) => ({
+                question: f.question,
+                answer: f.answer,
+              })),
+            });
+          }
         }
       } catch (error) {
         console.error("Failed to fetch service detail:", error);
@@ -158,10 +222,8 @@ const ServiceDetail = () => {
     return <div className="text-center pt-32">Service Not Found</div>;
   }
 
-  // Sections below are currently relying on dummyData
-  const testimonial = dummyData?.testimonial || null;
+  // Section below is currently relying on dummyData
   const pricing = dummyData?.pricing || null;
-  const faq = dummyData?.faq || null;
 
   return (
     <div className="w-full">
@@ -214,7 +276,15 @@ const ServiceDetail = () => {
       )}
 
       {/* Testimonial Section */}
-      {testimonial && <ServiceTestimonial data={testimonial} />}
+      {!loading && testimonialData ? (
+        <ServiceTestimonial data={testimonialData} />
+      ) : (
+        !loading && (
+          <div className="text-center py-10 text-gray-500">
+            Testimonials not found
+          </div>
+        )
+      )}
 
       {/* Pricing Section */}
       {pricing && <ServicePricing data={pricing} />}
@@ -231,7 +301,13 @@ const ServiceDetail = () => {
       )}
 
       {/* FAQ Section */}
-      {faq && <ServiceFAQ data={faq} />}
+      {!loading && faqData ? (
+        <ServiceFAQ data={faqData} />
+      ) : (
+        !loading && (
+          <div className="text-center py-10 text-gray-500">FAQs not found</div>
+        )
+      )}
     </div>
   );
 };

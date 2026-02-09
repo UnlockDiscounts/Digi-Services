@@ -6,16 +6,23 @@ const BlogCard = ({ blog }) => {
   return (
     <div className="bg-white rounded-2xl overflow-hidden flex flex-col h-auto min-h-[438px] w-full max-w-[377px] mx-auto hover:shadow-2xl transition-shadow duration-300">
       <div className="w-full pt-3 px-2.5">
-        <img
-          src={blog.images?.[0] || ""}
-          alt={blog.header}
-          className="w-full h-54 object-cover rounded-lg bg-[#B5B5B5]"
-        />
+        {(() => {
+          const MainImage = blog.images?.[0];
+          return typeof MainImage === "function" ? (
+            <MainImage className="w-full h-54 object-cover rounded-lg bg-[#B5B5B5]" />
+          ) : (
+            <img
+              src={MainImage || ""}
+              alt={blog.header}
+              className="w-full h-54 object-cover rounded-lg bg-[#B5B5B5]"
+            />
+          );
+        })()}
       </div>
 
       <div className="pb-7 pt-0 flex flex-col flex-1 items-center">
         <p className="mt-[9px] w-full max-w-[262px] mx-auto text-xs font-normal leading-none text-center text-[#00000080]">
-          {/* {blog.author || " "} */} 
+          {/* {blog.author || " "} */}
           {blog.createdAt ? new Date(blog.createdAt).toLocaleDateString() : ""}
         </p>
 
