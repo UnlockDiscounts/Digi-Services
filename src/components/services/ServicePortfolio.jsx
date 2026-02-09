@@ -21,7 +21,13 @@ const ServicePortfolio = ({ data }) => {
               key={index}
               className="w-full md:w-[498px] h-auto md:h-[300px] aspect-video md:aspect-auto overflow-hidden md:rounded-none"
             >
-              {PortfolioComponent ? (
+              {typeof PortfolioComponent === "string" ? (
+                <img
+                  src={PortfolioComponent}
+                  alt={`Portfolio ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              ) : PortfolioComponent ? (
                 <PortfolioComponent className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
