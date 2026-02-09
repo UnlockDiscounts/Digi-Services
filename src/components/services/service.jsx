@@ -1,11 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Plus, Search, ListFilter, Settings, CheckCircle, Circle } from 'lucide-react';
 import { ServiceModal } from './ServiceModal';
 import { MoreFilters } from './MoreFilters';
-import { getServices, deleteService, updateServiceStatus } from '../../services/servicesApi';
-import service1 from "../../assets/service1.svg";
-import service2 from "../../assets/service2.svg";
-import service3 from "../../assets/service3.svg";
 
 export default function Service() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,7 +10,7 @@ export default function Service() {
   const [isMoreFiltersOpen, setIsMoreFiltersOpen] = useState(false);
   const [sortBy, setSortBy] = useState('newest');
   const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   // Filter and sort services
@@ -41,52 +37,21 @@ export default function Service() {
       return 0;
     });
 
-  // Fetch services from API on mount
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        setLoading(true);
-        const data = await getServices();
-        if (data && Array.isArray(data)) {
-          setServices(data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch services:', error);
-        setErrorMessage('Failed to load services from server');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchServices();
-  }, []);
-
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this service?')) {
-      try {
-        setErrorMessage('');
-        await deleteService(id);
-        setServices(services.filter(s => (s._id || s.id) !== id));
-      } catch (error) {
-        console.error('Failed to delete service:', error);
-        setErrorMessage('Failed to delete service. Please try again.');
-      }
+      setErrorMessage('');
+      setServices(services.filter(s => (s._id || s.id) !== id));
     }
   };
 
-  const handleToggleStatus = async (service) => {
-    try {
-      setErrorMessage('');
-      const newStatus = (service.status || 'active') === 'active' ? 'inactive' : 'active';
-      const updated = await updateServiceStatus(service._id || service.id, newStatus);
-      setServices(services.map(s => 
-        (s._id || s.id) === (service._id || service.id) 
-          ? { ...s, status: newStatus, ...updated }
-          : s
-      ));
-    } catch (error) {
-      console.error('Failed to toggle service status:', error);
-      setErrorMessage('Failed to update service status. Please try again.');
-    }
+  const handleToggleStatus = (service) => {
+    setErrorMessage('');
+    const newStatus = (service.status || 'active') === 'active' ? 'inactive' : 'active';
+    setServices(services.map(s =>
+      (s._id || s.id) === (service._id || service.id)
+        ? { ...s, status: newStatus }
+        : s
+    ));
   };
 
   const handleEdit = (service) => {

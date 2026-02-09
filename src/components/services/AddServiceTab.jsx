@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { getServices, createService, updateService, deleteService } from '../../services/servicesApi';
+import { useState } from 'react';
 
 export default function AddServiceTab({ onNext }) {
   const [services, setServices] = useState([]);
@@ -12,25 +11,6 @@ export default function AddServiceTab({ onNext }) {
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
-  // Fetch services on mount
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        setLoading(true);
-        const data = await getServices();
-        if (data && Array.isArray(data)) {
-          setServices(data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch services:', error);
-        setErrorMessage('Failed to load services from server');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchServices();
-  }, []);
-
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -39,42 +19,34 @@ export default function AddServiceTab({ onNext }) {
     }
   };
 
-  const handleSave = async () => {
-    if (serviceCategory && serviceTitle && description) {
-      try {
-        setErrorMessage('');
-        setLoading(true);
-
-        const serviceData = {
-          category: serviceCategory,
-          title: serviceTitle,
-          description: description,
-          files: selectedFile ? [selectedFile] : [],
-        };
-
-        if (editingId) {
-          // UPDATE existing service
-          const updated = await updateService(editingId, serviceData);
-          const updatedServices = services.map(s =>
-            (s._id || s.id) === editingId
-              ? { ...updated, id: updated._id || updated.id }
-              : s
-          );
-          setServices(updatedServices);
-        } else {
-          // CREATE new service
-          const newService = await createService(serviceData);
-          setServices([...services, { ...newService, id: newService._id || newService.id }]);
-        }
-
-        clearForm();
-      } catch (error) {
-        console.error('Failed to save service:', error);
-        setErrorMessage('Failed to save service. Please try again.');
-      } finally {
-        setLoading(false);
-      }
+  const handleSave = () => {
+    if (!serviceCategory || !serviceTitle || !description) {
+      setErrorMessage('Please fill out all required fields.');
+      return;
     }
+
+    setErrorMessage('');
+    setLoading(true);
+
+    const serviceData = {
+      id: editingId || `${Date.now()}`,
+      category: serviceCategory,
+      title: serviceTitle,
+      description: description,
+      files: selectedFile ? [selectedFile.name] : [],
+    };
+
+    if (editingId) {
+      const updatedServices = services.map(s =>
+        (s._id || s.id) === editingId ? { ...s, ...serviceData } : s
+      );
+      setServices(updatedServices);
+    } else {
+      setServices([...services, serviceData]);
+    }
+
+    clearForm();
+    setLoading(false);
   };
 
   const loadService = (service) => {
@@ -95,21 +67,14 @@ export default function AddServiceTab({ onNext }) {
     setEditingId(null);
   };
 
-  const handleDelete = async (id) => {
-    try {
-      setErrorMessage('');
-      setLoading(true);
-      await deleteService(id);
-      setServices(services.filter(s => (s._id || s.id) !== id));
-      if (editingId === id) {
-        clearForm();
-      }
-    } catch (error) {
-      console.error('Failed to delete service:', error);
-      setErrorMessage('Failed to delete service. Please try again.');
-    } finally {
-      setLoading(false);
+  const handleDelete = (id) => {
+    setErrorMessage('');
+    setLoading(true);
+    setServices(services.filter(s => (s._id || s.id) !== id));
+    if (editingId === id) {
+      clearForm();
     }
+    setLoading(false);
   };
 
   return (

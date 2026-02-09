@@ -92,7 +92,7 @@ const App = () => {
       {/* ================= ADMIN ROUTES ================= */}
       <Route path="/admin" element={<AdminLayout isLoggedIn={isLoggedIn} />}>
         {isLoggedIn ?
-          <Route index element={<Sidebar />} /> :
+          <Route index element={<Sidebar onLogout={() => setIsLoggedIn(false)} />} /> :
           <Route index element={<UnlockDiscountsLoginpage onLoginSuccess={handleLoginSuccess} />} />}
       </Route>
 
