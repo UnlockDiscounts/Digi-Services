@@ -22,6 +22,7 @@ const Blog = () => {
       try {
         // Fetch the single blog
         const blogData = await getBlogById(id);
+        console.log(blogData);
         setBlog(blogData);
 
         // Fetch all blogs for "Explore More"
