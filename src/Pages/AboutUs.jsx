@@ -333,9 +333,9 @@ useEffect(() => {
           <div className="relative h-[749px] md:h-[749px] h-[500px] w-[1440px] md:w-[1440px] w-full flex-shrink-0 px-4 md:px-0">
 
               <div className="absolute left-0 md:left-[600px] top-[139px] md:top-[139px] top-[20px] w-full md:w-[870px] h-[471px] md:h-[471px] h-[400px] overflow-hidden px-2 md:px-0">
-              <motion.div className="flex gap-[31px] absolute "animate={{ x: -servicesScroll * 363}}>
+              <motion.div className="flex gap-[65px] absolute "animate={{ x: -servicesScroll * 363}}>
                 {services.map((service, idx) => (
-                  <div key={idx} className="bg-white h-[471px] rounded-[8px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-lg">
+                  <div key={idx} className="bg-white h-[471px] rounded-[6px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-lg">
                     <h3 className="font-bold text-[26px] text-center mt-[18px] px-4" style={{ color: service.color }}>{service.title}</h3>
                     <p className="font-medium text-[18px] text-black text-center mt-4 px-4">{service.description}</p>
                     <div className="absolute bottom-0 left-[36px] h-[297px] w-[258px] overflow-hidden">
