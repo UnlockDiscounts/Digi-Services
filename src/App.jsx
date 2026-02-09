@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
+import { useLocation } from 'react-router-dom'; 
 
 import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage.jsx";
-import Articles from "./pages/Articles.jsx";
-import Blog from "./pages/Blog.jsx";
-import ServiceCategory from "./pages/ServiceCategory";
-import ServiceDetail from "./pages/ServiceDetail";
+import Articles from "./Pages/Articles.jsx";
+import Blog from "./Pages/Blog.jsx";
+import ServiceCategory from "./Pages/ServiceCategory.jsx";
+import ServiceDetail from "./Pages/ServiceDetail.jsx";
 import Sidebar from "./components/sidebar/sidebar.jsx";
 import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
-import AboutUs from "./Pages/AboutUs";
-import ContactUs from "./Pages/ContactUs";
+import AboutUs from "./Pages/AboutUs.jsx";
+import ContactUs from "./Pages/ContactUs.jsx";
 
 import Navbar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
@@ -51,13 +52,13 @@ const App = () => {
   };
 
   return (
+    <>
     <Routes>
 
       {/* ================= CLIENT ROUTES ================= */}
       <Route element={<ClientLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact" element={<ContactUs />} />
 
         {/* Blog / Articles */}
         <Route path="/articles" element={<Articles />} />
@@ -68,6 +69,19 @@ const App = () => {
         <Route path="/services/:serviceType" element={<ServiceDetail />} />
 
       </Route>
+
+      
+      <Route path="/contact" element={
+      <div className="relative min-h-screen"> 
+      <div className="absolute top-3 left-0 w-full z-50">
+      <Navbar />
+      </div>
+    
+      {/* ContactUs page */}
+      <ContactUs />
+      </div>
+       } />
+
 
       {/* ================= ADMIN ROUTES ================= */}
       <Route path="/admin" element={<AdminLayout />}>
@@ -80,6 +94,9 @@ const App = () => {
       <Route path="*" element={<div>404 - Not Found</div>} />
 
     </Routes>
+
+
+</>
   );
 };
 

@@ -1,9 +1,38 @@
 import { useState, useEffect } from "react";
 
 const ServiceTestimonial = ({ data }) => {
-  if (!data) return null;
-  const { title, highlight, reviews } = data;
+  
+  const [dynamicData, setDynamicData] = useState(null);  
+  const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('https://digiservices-backend.onrender.com/api/v1/testimonials');
+        if (!response.ok) throw new Error('API failed');
+        const apiData = await response.json();
+        if (apiData && apiData.reviews?.length > 0) {
+          setDynamicData(apiData);  // API data
+        } else {
+          throw new Error('No API data');
+        }
+      } catch (error) {
+        console.error('API failed, using prop fallback:', error);
+        setDynamicData(data);  //original prop data
+      } finally {
+        setLoading(false);
+      }
+      };
+
+    fetchData();  
+  }, []);  
+
+
+if (loading || !dynamicData) return null;
+
+  const { title, highlight, reviews } = dynamicData;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -11,6 +40,8 @@ const ServiceTestimonial = ({ data }) => {
     }, 2000);
     return () => clearInterval(interval);
   }, [reviews.length]);
+
+
 
   return (
     <section className="w-full py-16 px-4 md:px-16 bg-white flex flex-col items-center">

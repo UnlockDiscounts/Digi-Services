@@ -1,16 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";  
 
 import FaqPlus from "../svg/FaqPlus";
 import FaqClose from "../svg/FaqClose";
 
-const ServiceFAQ = ({ data }) => {
-  if (!data) return null;
-  const { title, highlight, questions } = data;
+
+const ServiceFAQ = ({ data: propData }) => {
+  const [faqData, setFaqData] = useState(null);  //  state for API data
+  const [loading, setLoading] = useState(true);  //  loading state
   const [openIndex, setOpenIndex] = useState(null);
+
+  //  API fetch with fallback
+  useEffect(() => {
+    const fetchFAQ = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('https://digiservices-backend.onrender.com/api/v1/faqs');  
+        if (!response.ok) throw new Error('API failed');
+        const apiData = await response.json();
+        if (apiData && apiData.questions?.length > 0) {
+          setFaqData(apiData);
+        } else {
+          throw new Error('No API data');
+        }
+      } catch (error) {
+        console.error('API failed, using prop fallback:', error);
+        setFaqData(propData); 
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFAQ();
+  }, []);
+
+  if (loading || !faqData) return null;  // ADDED: loading check
+
+  const { title, highlight, questions } = faqData;  // Uses API or fallback
+
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
 
   return (
     <section className="w-full pt-12 md:pt-20 pb-12 px-4 md:px-16 bg-white flex flex-col items-center">

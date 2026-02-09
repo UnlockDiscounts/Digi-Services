@@ -4,6 +4,10 @@ import { ChevronDown } from "lucide-react";
 import svgPaths from "../assets/svgPaths.js";
 import React from 'react';
 
+import ArticlesHeroCurve1 from "../components/svg/ArticlesHeroCurve1";
+import ArticlesHeroCurve2 from "../components/svg/ArticlesHeroCurve2";
+
+
 // Assets
 import imgchart from "../assets/chart.svg";
 import imggraph from "../assets/graph.svg";
@@ -57,7 +61,19 @@ const AboutUs = () => {
   const [hoveredValueCard, setHoveredValueCard] = useState(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
-  const testimonials = [
+//const [testimonials, setTestimonials] = useState([]);
+//const [loading, setLoading] = useState(true);
+
+
+useEffect(() => {
+    fetch('https://digiservices-backend.onrender.com/api/v1/testimonials')
+      .then(res => res.json())
+      .then(setTestimonials);
+  }, []);
+  
+
+
+  const [testimonials, setTestimonials] = useState([
     {
       text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations.",
       name: "Rahul Mehta",
@@ -76,7 +92,7 @@ const AboutUs = () => {
       role: "CEO, XYZ",
       image: imgman,
     },
-  ];
+  ]);
 
   const services = [
     { title: "GST Filing", description: "Accurate and timely GST return filing services...", image: imgImage51, color: "#6364ff" },
@@ -125,6 +141,17 @@ const AboutUs = () => {
         className="relative h-[510px] w-full overflow-hidden"
         style={{ backgroundImage: "linear-gradient(83.9195deg, rgb(254, 203, 242) 1.8178%, rgb(145, 123, 255) 47.22%, rgb(7, 55, 255) 92.159%)" }}
       >
+        
+    {/* <div className="w-full flex justify-center items-center py-4 sm:py-6 lg:py-6 px-4 lg:px-15">
+          <Navbar />
+        </div> */}
+
+       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <ArticlesHeroCurve1 className="absolute rotate-[-20deg] md:rotate-0 -top-10 left-[-60px] md:bottom-auto md:top-0 md:-left-2.5 w-[150%] md:w-auto h-auto opacity-60 md:opacity-100" />
+          <ArticlesHeroCurve2 className="absolute top-[90px] md:top-[100px] right-[-50px] w-full md:w-auto h-auto opacity-60 md:opacity-100" />
+        </div>
+
+
         <motion.h1
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -149,7 +176,7 @@ const AboutUs = () => {
 
       {/* Animated Image Gallery */}
       <div className="w-full py-12 px-4">
-        <div className="relative mx-auto overflow-hidden rounded-3xl shadow-2xl bg-gray-50 flex-shrink-0 w-full max-w-[1130px] aspect-[1130/981]">
+        <div className="relative mx-auto overflow-hidden rounded-3xl  bg-transparent flex-shrink-0 w-full max-w-[1130px] aspect-[1130/981]">
           
           {/* Top-left */}
           <div className="absolute left-0 top-0 overflow-hidden w-[54%] h-[41%]">
@@ -198,14 +225,14 @@ const AboutUs = () => {
           </div>
 
           {/* Bottom-right */}
-          <div className="absolute right-0 bottom-0 overflow-hidden w-[43%] h-[36%]">
+          <div className="absolute right-0 bottom-0 overflow-hidden w-[43%] h-[40%]">
             <motion.div
               className="flex"
-              animate={{ x: -(currentIndex * 483) }}
+              animate={{ x: -(currentIndex * 608) }}
               transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
             >
               {[...bottomRightImages, bottomRightImages[0]].map((imgSrc, i) => (
-                <div key={i} className="flex-shrink-0 w-[490px] h-full p-4">
+                <div key={i} className="flex-shrink-0 w-[608px] h-full p-4">
                   <img src={imgSrc} alt="" className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all" />
                 </div>
               ))}
@@ -213,9 +240,11 @@ const AboutUs = () => {
           </div>
 
           {/* Center divider */}
-          <div className="absolute h-full bg-white z-10 opacity-80 w-[3.5%]" style={{ left: '53.8%' }}></div>
+          <div className="absolute h-full bg-white z-10 opacity-80 " style={{ left: '53.8%' }}></div>
         </div>
       </div>
+
+
 
       {/* Vision & Mission */}
       <AnimatedSection className="flex flex-col gap-[48px] items-center px-6 md:px-[64px] py-[32px] w-full max-w-[1440px] mx-auto mt-12">
@@ -301,9 +330,10 @@ const AboutUs = () => {
       {/* Services Carousel */}
       <AnimatedSection className="bg-white py-20 w-full max-w-[1440px] mx-auto overflow-hidden relative">
         <div className="w-full overflow-x-auto scrollbar-hide">
-          <div className="relative h-[749px] w-[1440px] flex-shrink-0">
-            <div className="absolute left-[525px] top-[139px] w-[870px] h-[471px] overflow-hidden">
-              <motion.div className="flex gap-[31px] absolute" animate={{ x: -servicesScroll * 363 }}>
+          <div className="relative h-[749px] md:h-[749px] h-[500px] w-[1440px] md:w-[1440px] w-full flex-shrink-0 px-4 md:px-0">
+
+              <div className="absolute left-0 md:left-[600px] top-[139px] md:top-[139px] top-[20px] w-full md:w-[870px] h-[471px] md:h-[471px] h-[400px] overflow-hidden px-2 md:px-0">
+              <motion.div className="flex gap-[31px] absolute "animate={{ x: -servicesScroll * 363}}>
                 {services.map((service, idx) => (
                   <div key={idx} className="bg-white h-[471px] rounded-[8px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-lg">
                     <h3 className="font-bold text-[26px] text-center mt-[18px] px-4" style={{ color: service.color }}>{service.title}</h3>
@@ -315,15 +345,17 @@ const AboutUs = () => {
                 ))}
               </motion.div>
             </div>
-            <div className="absolute left-[137px] top-0 h-[749px] w-[525px] rounded-[16px] overflow-hidden">
-              <img src={imginterview} className="absolute inset-0 object-cover size-full" alt="Interview" />
-              <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(145deg, rgba(254, 203, 242, 0.9), rgba(3, 52, 255, 0.9))" }} />
-              <div className="relative z-10 h-full flex flex-col items-center justify-center px-12 text-white">
-                <p className="font-bold text-[40px] text-center mb-6">Our Comprehensive Services</p>
-                <p className="text-[24px] text-center">We combine expertise with personalized service for all your digital needs.</p>
-              </div>
-            </div>
-          </div>
+            
+
+       <div className="hidden md:block absolute left-[137px] top-0 h-[749px] w-[500px] rounded-[16px] overflow-hidden">
+       <img src={imginterview} className="absolute inset-0 object-cover size-full" alt="Interview" />
+       <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(145deg, rgba(254, 203, 242, 0.9), rgba(3, 52, 255, 0.9))" }} />
+       <div className="relative z-10 h-full flex flex-col items-center justify-center px-12 text-white">
+       <p className="font-bold text-[40px] text-center mb-6 md:text-[40px] text-2xl sm:text-3xl">Our Comprehensive Services</p>
+       <p className="text-[24px] text-center md:text-[24px] text-lg sm:text-xl">We combine expertise with personalized service for all your digital needs.</p>
+       </div>
+       </div>
+        </div>
         </div>
 
         <motion.button
@@ -331,11 +363,13 @@ const AboutUs = () => {
           disabled={servicesScroll === 0}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className={`absolute left-1/2 top-[850px] z-[30] size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all -translate-x-[90px] ${
+
+          className={`absolute left-1/2 top-[850px] z-[30] size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all -translate-x-[80px] ${
             servicesScroll === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer shadow-lg'
           }`}
           style={{ rotate: '180deg'}}
         >
+
           <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
             <path d={svgPaths.p9338b00} fill="black" />
           </svg>
@@ -355,8 +389,8 @@ const AboutUs = () => {
         </motion.button>
       </AnimatedSection>
 
-      {/* Testimonials */}
-      <div className="min-h-[600px] py-20 bg-gray-100 flex items-center justify-center p-4">
+
+    <div className="min-h-[600px] py-20 bg-gray-100 flex items-center justify-center p-4">
         <AnimatedSection className="bg-[rgba(172,173,188,0.2)] py-12 w-full max-w-[1305px] mx-auto overflow-hidden rounded-2xl">
           <h2 className="font-medium text-[32px] md:text-[48px] text-black text-center mb-12 px-4 leading-tight">
             Client Testimonials
@@ -399,6 +433,7 @@ const AboutUs = () => {
           </div>
         </AnimatedSection>
       </div>
+
 
       {/* Commitment Section */}
       <AnimatedSection className="flex flex-col gap-8 px-4 sm:px-6 md:px-8 lg:px-[64px] py-8 w-full lg:w-[1440px] mx-auto my-12 sm:my-16">

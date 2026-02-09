@@ -5,6 +5,7 @@ const ServiceOverviewCard = ({ service }) => {
   // Create slug from title
   const slug = title.toLowerCase().replace(/\s+/g, '-');
 
+
   return (
     <div className="group relative bg-white rounded-2xl w-full max-w-[400px] h-auto min-h-[400px] md:h-[500px] py-6 px-3 md:px-8 gap-[27px] overflow-hidden transition-all duration-300 shadow-[0px_1px_3px_0px_#0000004D,0px_4px_8px_3px_#00000026]">
       {/* DEFAULT VIEW (Image + Title) */}
