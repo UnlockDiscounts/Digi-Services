@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { getAllServices, getAllCards, getAllWork } from "../api/serviceService";
 
 import ServiceFeatures from "../components/services/ServiceFeatures";
 import ServiceSolutions from "../components/services/ServiceSolutions";
@@ -9,15 +11,157 @@ import ServiceFAQ from "../components/services/ServiceFAQ";
 
 import { serviceDetails } from "../data/serviceDetails";
 
+const SECTION_HEADERS = {
+  "website-development": {
+    features: {
+      title: "Transform your business with",
+      highlight: "Innovative Technologies",
+    },
+    solutions: {
+      title: "Achieve your business goals with",
+      highlight: "Website Development Solutions",
+    },
+    portfolio: {
+      title: "Highlight real impact with our curated",
+      highlight: "Portfolio Showcase",
+    },
+  },
+  "social-media-management": {
+    features: {
+      title: "Supercharge your brand with",
+      highlight: "Strategic Social Media",
+    },
+    solutions: {
+      title: "Grow your audience with",
+      highlight: "Social Media Solutions",
+    },
+    portfolio: {
+      title: "See our results in",
+      highlight: "Social Media Success",
+    },
+  },
+  "resume-building": {
+    features: {
+      title: "Craft your career with",
+      highlight: "Expert Resume Services",
+    },
+    solutions: {
+      title: "Secure your dream job with",
+      highlight: "Career Solutions",
+    },
+    portfolio: { title: "View our professional", highlight: "Resume Samples" },
+  },
+};
+
 const ServiceDetail = () => {
   const { serviceType } = useParams();
-  const serviceData = serviceDetails[serviceType];
 
-  if (!serviceData) {
+  // Static/Dummy Data
+  const dummyData = serviceDetails[serviceType];
+
+  const [apiData, setApiData] = useState(null);
+  const [featuresData, setFeaturesData] = useState(null);
+  const [solutionsData, setSolutionsData] = useState(null);
+  const [portfolioData, setPortfolioData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Helper to make slug from Title
+  const makeSlug = (text) => text.toLowerCase().replace(/\s+/g, "-");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const fetchServiceData = async () => {
+      setLoading(true);
+      try {
+        const [allServices, allCards, allWork] = await Promise.all([
+          getAllServices(),
+          getAllCards(),
+          getAllWork(),
+        ]);
+
+        const found = allServices.find(
+          (s) => makeSlug(s.title) === serviceType,
+        );
+
+        if (found) {
+          setApiData(found);
+
+          // Filter Cards for this Service
+          const validCards = allCards.filter((c) => c.service === found._id);
+
+          // Flatten all sections from all matching cards
+          const allSections = validCards.flatMap((c) => c.sections || []);
+
+          // Features Logic (Filter sections with 'Features' in title)
+          const featureSections = allSections.filter(
+            (s) =>
+              s.sectionTitle &&
+              s.sectionTitle.toLowerCase().includes("features"),
+          );
+          if (featureSections.length > 0) {
+            setFeaturesData({
+              title: SECTION_HEADERS[serviceType]?.features.title || "",
+              highlight: SECTION_HEADERS[serviceType]?.features.highlight || "",
+              cards: featureSections.map((s, i) => ({
+                id: "0" + (i + 1),
+                title: s.title,
+                tools: s.description,
+              })),
+            });
+          }
+
+          // Solutions Logic (Filter sections with 'Solutions' in title)
+          const solutionSections = allSections.filter(
+            (s) =>
+              s.sectionTitle &&
+              s.sectionTitle.toLowerCase().includes("solutions"),
+          );
+          if (solutionSections.length > 0) {
+            setSolutionsData({
+              title: SECTION_HEADERS[serviceType]?.solutions.title || "",
+              highlight:
+                SECTION_HEADERS[serviceType]?.solutions.highlight || "",
+              cards: solutionSections.map((s) => ({
+                title: s.title,
+                description: s.description,
+              })),
+            });
+          }
+
+          // Portfolio/Work Logic
+          const validWork = allWork.filter((w) => w.service === found._id);
+
+          if (validWork.length > 0) {
+            // Flatten all files from all work items to create one gallery
+            const allImages = validWork.flatMap((w) => w.files || []);
+            if (allImages.length > 0) {
+              setPortfolioData({
+                title: SECTION_HEADERS[serviceType]?.portfolio.title || "",
+                highlight:
+                  SECTION_HEADERS[serviceType]?.portfolio.highlight || "",
+                items: allImages.map((imgUrl) => ({ image: imgUrl })),
+              });
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch service detail:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServiceData();
+  }, [serviceType]);
+
+  if (!loading && !apiData && !dummyData) {
     return <div className="text-center pt-32">Service Not Found</div>;
   }
 
-  const { hero, features } = serviceData;
+  // Sections below are currently relying on dummyData
+  const testimonial = dummyData?.testimonial || null;
+  const pricing = dummyData?.pricing || null;
+  const faq = dummyData?.faq || null;
 
   return (
     <div className="w-full">
@@ -30,10 +174,10 @@ const ServiceDetail = () => {
         }}
       >
         <h1 className="font-semibold text-3xl md:text-5xl leading-[1.4] text-white text-center max-w-[1177px] mx-auto">
-          {hero.title}
+          {loading ? "Loading..." : apiData?.title}
         </h1>
         <p className="font-normal text-xl md:text-2xl leading-[1.4] text-white text-center max-w-[1177px] mx-auto mt-6 md:mt-9 px-4 md:px-0">
-          {hero.subtitle}
+          {loading ? "" : apiData?.description}
         </p>
 
         {/* Buttons Container */}
@@ -48,22 +192,46 @@ const ServiceDetail = () => {
       </section>
 
       {/* Features Section */}
-      <ServiceFeatures data={features} />
+      {!loading && featuresData ? (
+        <ServiceFeatures data={featuresData} />
+      ) : (
+        !loading && (
+          <div className="text-center py-10 text-gray-500">
+            Features not found
+          </div>
+        )
+      )}
 
       {/* Solutions Section */}
-      <ServiceSolutions data={serviceData.solutions} />
+      {!loading && solutionsData ? (
+        <ServiceSolutions data={solutionsData} />
+      ) : (
+        !loading && (
+          <div className="text-center py-10 text-gray-500">
+            Solutions not found
+          </div>
+        )
+      )}
 
       {/* Testimonial Section */}
-      <ServiceTestimonial data={serviceData.testimonial} />
+      {testimonial && <ServiceTestimonial data={testimonial} />}
 
       {/* Pricing Section */}
-      <ServicePricing data={serviceData.pricing} />
+      {pricing && <ServicePricing data={pricing} />}
 
       {/* Portfolio Section */}
-      <ServicePortfolio data={serviceData.portfolio} />
+      {!loading && portfolioData ? (
+        <ServicePortfolio data={portfolioData} />
+      ) : (
+        !loading && (
+          <div className="text-center py-10 text-gray-500">
+            Portfolio not found
+          </div>
+        )
+      )}
 
       {/* FAQ Section */}
-      <ServiceFAQ data={serviceData.faq} />
+      {faq && <ServiceFAQ data={faq} />}
     </div>
   );
 };

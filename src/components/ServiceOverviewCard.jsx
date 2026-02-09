@@ -1,5 +1,9 @@
+import { Link } from "react-router-dom";
+
 const ServiceOverviewCard = ({ service }) => {
   const { title, description, Icon } = service;
+  // Create slug from title
+  const slug = title.toLowerCase().replace(/\s+/g, '-');
 
   return (
     <div className="group relative bg-white rounded-2xl w-full max-w-[400px] h-auto min-h-[400px] md:h-[500px] py-6 px-3 md:px-8 gap-[27px] overflow-hidden transition-all duration-300 shadow-[0px_1px_3px_0px_#0000004D,0px_4px_8px_3px_#00000026]">
@@ -7,9 +11,10 @@ const ServiceOverviewCard = ({ service }) => {
       <div className="absolute inset-0 flex flex-col items-center justify-start pt-6 px-6 md:px-8 gap-[27px] transition-opacity duration-300 opacity-100 group-hover:opacity-0 pointer-events-none group-hover:pointer-events-none">
         {/* Image Container (Top) */}
         <div className="w-full h-[180px] md:h-56 overflow-hidden rounded-t-2xl">
-          <Icon
-            className="w-full h-full object-cover"
-            preserveAspectRatio="xMidYMid slice"
+           <img 
+            src={service.files?.[0] || ""} 
+            alt={title} 
+            className="w-full h-full object-cover" 
           />
         </div>
 
@@ -32,9 +37,11 @@ const ServiceOverviewCard = ({ service }) => {
         </p>
 
         {/* Bottom: Explore Button */}
-        <button className="w-[120px] h-12 py-2 px-5 gap-2.5 rounded-2xl bg-[#6364FF] text-white flex items-center justify-center font-medium">
-          Explore
-        </button>
+        <Link to={`/services/${slug}`}>
+          <button className="w-[120px] h-12 py-2 px-5 gap-2.5 rounded-2xl bg-[#6364FF] text-white flex items-center justify-center font-medium">
+            Explore
+          </button>
+        </Link>
       </div>
     </div>
   );
