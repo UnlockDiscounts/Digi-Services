@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
-import { useLocation } from 'react-router-dom'; 
 
 import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage";
+import WelcomePage from "./welcomePage.jsx";
 import Articles from "./pages/Articles";
 import Blog from "./pages/Blog";
 import ServiceCategory from "./pages/ServiceCategory";
@@ -34,12 +34,27 @@ const ClientLayout = () => {
 };
 
 /* ---------------- ADMIN LAYOUT ---------------- */
-const AdminLayout = () => {
-  return (
-    <div className="flex min-h-screen">
-      <main className="flex-1">
+const AdminLayout = ({ isLoggedIn }) => {
+  if (isLoggedIn) {
+    return (
+      <div className="min-h-screen w-full">
         <Outlet />
-      </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-200">
+      <div className="app-layout w-full  bg-white flex flex-col md:flex-row md:h-[1024px]">
+        <div className="w-full md:w-1/2 md:h-full">
+          <WelcomePage />
+        </div>
+        <div className="w-full md:w-1/2 flex items-center justify-center">
+          <div className="auth-container flex justify-center">
+            <Outlet />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -84,9 +99,9 @@ const App = () => {
 
 
       {/* ================= ADMIN ROUTES ================= */}
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/admin" element={<AdminLayout isLoggedIn={isLoggedIn} />}>
         {isLoggedIn ?
-          <Route index element={<Sidebar />} /> :
+          <Route index element={<Sidebar onLogout={() => setIsLoggedIn(false)} />} /> :
           <Route index element={<UnlockDiscountsLoginpage onLoginSuccess={handleLoginSuccess} />} />}
       </Route>
 

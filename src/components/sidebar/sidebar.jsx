@@ -12,10 +12,17 @@ import LogoutPopup from "./logout.jsx";
 import Blogs from "../blogs/blogs.jsx";
 import Service from "../services/service.jsx";
 
-export default function Sidebar({ activeItem: initialActive = "Services" }) {
+export default function Sidebar({ activeItem: initialActive = "Services", onLogout }) {
   const [showLogout, setShowLogout] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeItem, setActiveItem] = useState(initialActive);
+
+  const handleLogout = () => {
+    setShowLogout(false);
+    if (onLogout) {
+      onLogout();
+    }
+  };
 
   const menuItems = [
     { name: "Blogs", icon: SquarePen }, // Corrected icon for writing/blogs
@@ -100,7 +107,7 @@ export default function Sidebar({ activeItem: initialActive = "Services" }) {
           {/* Logout Popup */}
           {showLogout && (
             <div className={`absolute bottom-full mb-2 w-[251px] ${isCollapsed ? "left-0" : "left-1/2 -translate-x-1/2"}`}>
-              <LogoutPopup />
+              <LogoutPopup onLogout={handleLogout} />
             </div>
           )}
         </div>
