@@ -28,7 +28,7 @@ const handleSubmit = async (e) => {
   setStatus('');
 
   try {
-    const response = await fetch('https://digiservices-backend.onrender.com/api/v1/contact', {
+    const response = await fetch('https://digiservices-backend-6hc3.onrender.com/api/v1/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
