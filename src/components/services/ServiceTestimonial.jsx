@@ -65,8 +65,12 @@ const ServiceTestimonial = () => {
             >
               {/* Image Placeholder (Left) */}
               <div className="w-[326px] h-[175px] md:w-[511px] md:h-[341.34px] bg-gray-200 rounded-[20px] md:rounded-lg opacity-100 flex-shrink-0 flex items-center justify-center text-gray-400 overflow-hidden">
-                {review.image ? (
-                  <review.image className="w-full h-full object-cover" />
+                {typeof review.image === "string" ? (
+                  <img
+                    src={review.image}
+                    alt={review.authorName}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <svg
                     className="w-24 h-24"
@@ -96,9 +100,9 @@ const ServiceTestimonial = () => {
                   <h4 className="w-full text-2xl font-semibold text-[#473CF0] leading-none tracking-normal opacity-100 block">
                     {review.authorName}
                   </h4>
-                  <p className="w-full text-base font-normal text-black leading-none tracking-normal opacity-100 block">
+                  {/* <p className="w-full text-base font-normal text-black leading-none tracking-normal opacity-100 block">
                     {review.authorRole}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>

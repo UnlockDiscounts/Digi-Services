@@ -1,28 +1,7 @@
-import { useState, useEffect } from 'react';
-import { getCards, createCard, updateCard } from '../../services/cardsApi';
+import { useState } from 'react';
+import axios from 'axios';
 
 export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  // Fetch existing cards on mount
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        setLoading(true);
-        const data = await getCards();
-        if (data && Array.isArray(data)) {
-          setCardItems(data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch cards:', error);
-        setErrorMessage('Failed to load cards from server');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCards();
-  }, [setCardItems]);
   const sections = [
     { id: 1, name: 'Section 1' },
     { id: 2, name: 'Section 2' },
@@ -33,45 +12,58 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
   const [sectionTitle, setSectionTitle] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [editingId, setEditingId] = useState(null); // Track which item is being edited
+  const [editingId, setEditingId] = useState(null); 
+  const [loading, setLoading] = useState(false);
 
   // Filter items ONLY for the active section
   const currentSectionItems = cardItems.filter(item => item.sectionId === activeSection);
 
   const handleSave = async () => {
     if (sectionTitle && title && description) {
-      try {
-        setErrorMessage('');
-        setLoading(true);
-        
-        const section = {
-          sectionTitle,
-          title,
-          description,
-        };
+      setLoading(true);
 
-        if (editingId) {
-          // UPDATE existing item
-          const cardData = { sections: [section] };
-          const updated = await updateCard(editingId, cardData);
-          const updatedItems = cardItems.map(item => 
-            (item.id || item._id) === editingId 
-              ? { ...updated, id: updated._id || updated.id } 
-              : item
-          );
-          setCardItems(updatedItems);
-        } else {
-          // ADD new item - send sections array as API expects
-          const cardData = { sections: [section] };
-          const newCard = await createCard(cardData);
-          setCardItems([...cardItems, { ...newCard, id: newCard._id || newCard.id }]);
+      // Constructing the payload exactly like your API body example
+      const payload = {
+        service: localStorage.getItem('serviceId'), // Use the stored service ID
+        sections: [
+          {
+            sectionTitle,
+            title,
+            description
+          }
+        ]
+      };
+
+      try {
+        const response = await axios.post(
+          'https://digiservices-backend-6hc3.onrender.com/api/v1/cards',
+          payload
+        );
+
+        if (response.status === 201 || response.status === 200) {
+          // If update, replace item; if new, add to list
+          if (editingId) {
+            const updatedItems = cardItems.map(item => 
+              item.id === editingId 
+                ? { ...item, sectionTitle, title, description } 
+                : item
+            );
+            setCardItems(updatedItems);
+          } else {
+            const newItem = {
+              id: response.data._id || Date.now(), // Use API ID for the preview
+              sectionId: activeSection,
+              sectionTitle,
+              title,
+              description,
+            };
+            setCardItems([...cardItems, newItem]);
+          }
+          clearForm();
         }
-        
-        // Reset form and editing state
-        clearForm();
       } catch (error) {
-        console.error('Failed to save card:', error);
-        setErrorMessage('Failed to save card. Please try again.');
+        console.error('API Error:', error.response?.data || error.message);
+        alert('Failed to save card data.');
       } finally {
         setLoading(false);
       }
@@ -82,7 +74,7 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
     setSectionTitle(item.sectionTitle);
     setTitle(item.title);
     setDescription(item.description);
-    setEditingId(item._id || item.id); // Set this ID so "Save" knows to update instead of add
+    setEditingId(item.id); 
   };
 
   const clearForm = () => {
@@ -102,7 +94,7 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
             key={section.id}
             onClick={() => {
               setActiveSection(section.id);
-              clearForm(); // Clear inputs when switching sections
+              clearForm();
             }}
             className={`flex items-center justify-center px-[16px] py-[8px] relative rounded-[8px] w-[184px] cursor-pointer ${
               activeSection === section.id ? 'bg-[#6364ff]' : ''
@@ -156,14 +148,14 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
           <div className="relative flex-1 h-[52px]">
             {currentSectionItems.map((item, index) => (
               <div 
-                key={item._id || item.id}
-                onClick={() => loadItem(item)} // CLICKING THE NUMBER LOADS DATA
+                key={item.id}
+                onClick={() => loadItem(item)} 
                 style={{ left: `${index * 80}px` }} 
                 className={`absolute flex items-center justify-center h-[52px] w-[64px] rounded-[8px] border-2 cursor-pointer transition-colors ${
-                  editingId === (item._id || item.id) ? 'border-[#6364ff] bg-[#6364ff]/10' : 'border-[rgba(102,102,102,0.75)]'
+                  editingId === item.id ? 'border-[#6364ff] bg-[#6364ff]/10' : 'border-[rgba(102,102,102,0.75)]'
                 }`}
               >
-                <p className={`text-[24px] font-['Poppins'] ${editingId === (item._id || item.id) ? 'text-[#6364ff]' : 'text-[rgba(102,102,102,0.75)]'}`}>
+                <p className={`text-[24px] font-['Poppins'] ${editingId === item.id ? 'text-[#6364ff]' : 'text-[rgba(102,102,102,0.75)]'}`}>
                   {index + 1}
                 </p>
               </div>
@@ -173,24 +165,21 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
           <button
             onClick={handleSave}
             disabled={loading}
-            className="bg-[#6364ff] h-[56px] w-[184px] rounded-[15px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#6364ff] h-[56px] w-[184px] rounded-[15px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee] transition-colors disabled:bg-gray-400"
           >
             {loading ? 'Saving...' : (editingId ? 'Update' : 'Save')}
           </button>
         </div>
-        
-        {errorMessage && (
-          <p className="text-red-500 text-[16px] mt-2">{errorMessage}</p>
-        )}
-      </div>
 
-      {/* Footer Navigation */}
-      <button
-        onClick={onNext}
-        className="absolute bg-[#6364ff] h-[56px] rounded-[15px] w-[184px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee] transition-colors right-[79px] bottom-[32px]"
-      >
-        Next
-      </button>
+        <div className="w-full flex justify-end">
+          <button
+            onClick={onNext}
+            className="bg-[#6364ff] h-[56px] rounded-[15px] w-[184px] text-white text-[24px] font-['Poppins'] hover:bg-[#5253ee]"
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

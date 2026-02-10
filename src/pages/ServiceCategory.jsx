@@ -2,26 +2,26 @@ import { useState, useEffect } from "react";
 import ServiceOverviewCard from "../components/ServiceOverviewCard";
 import ServiceProcessAutomation from "../components/ServiceProcessAutomation";
 
-import { getServices } from "../services/servicesApi";
+// import { servicesData } from "../data/servicesData";
+import { serviceProcessData } from "../data/serviceProcessData";
+import { getAllServices } from "../api/serviceService";
 
 const ServiceCategory = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        setLoading(true);
-        const data = await getServices();
-        setServices(data || []);
-      } catch (err) {
-        console.error('Failed to fetch services:', err);
-        setError('Failed to load services');
+        const data = await getAllServices();
+        setServices(data);
+      } catch (error) {
+        console.error("Failed to fetch services:", error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchServices();
   }, []);
   return (
@@ -82,18 +82,23 @@ const ServiceCategory = () => {
 
         <div className="w-full max-w-[1440px] mx-auto min-h-auto md:min-h-[500px] px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-8">
           {loading ? (
-            <p className="text-center py-10 text-gray-600">Loading services...</p>
-          ) : error ? (
-            <p className="text-center py-10 text-red-600">{error}</p>
-          ) : services.length > 0 ? (
-            services.map((service) => (
-              <ServiceOverviewCard key={service._id || service.id} service={service} />
-            ))
+            <div className="w-full text-center text-xl">Loading services...</div>
           ) : (
-            <p className="text-center py-10 text-gray-600">No services available</p>
+            services.map((service) => (
+              <ServiceOverviewCard key={service._id} service={service} />
+            ))
           )}
         </div>
       </section>
+
+      {/* WEBSITE DEVELOPMENT */}
+      <ServiceProcessAutomation data={serviceProcessData.websiteDevelopment} />
+
+      {/* SOCIAL MEDIA MANAGEMENT */}
+      <ServiceProcessAutomation data={serviceProcessData.socialMedia} />
+
+      {/* RESUME BUILDING */}
+      <ServiceProcessAutomation data={serviceProcessData.resumeBuilding} />
     </div>
   );
 };
