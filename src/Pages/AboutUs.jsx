@@ -65,11 +65,11 @@ const AboutUs = () => {
 //const [loading, setLoading] = useState(true);
 
 
-useEffect(() => {
-    fetch('https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials')
-      .then(res => res.json())
-      .then(setTestimonials);
-  }, []);
+// useEffect(() => {
+//     fetch('https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials')
+//       .then(res => res.json())
+//       .then(setTestimonials);
+//   }, []);
   
 
 
