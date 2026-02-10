@@ -66,7 +66,7 @@ const AboutUs = () => {
 
 
 useEffect(() => {
-    fetch('https://digiservices-backend.onrender.com/api/v1/testimonials')
+    fetch('https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials')
       .then(res => res.json())
       .then(setTestimonials);
   }, []);
