@@ -5,7 +5,7 @@ import BlogCard from "../components/BlogCard";
 import ArticlesHeroCurve1 from "../components/svg/ArticlesHeroCurve1";
 import ArticlesHeroCurve2 from "../components/svg/ArticlesHeroCurve2";
 
-import { blogs as dummyBlogs } from "../data/dummyBlogs";
+import { blogs as dummyBlogs } from "../data/dummyblogs";
 // import { getAllBlogs } from "../api/blogService";
 
 const Articles = () => {
