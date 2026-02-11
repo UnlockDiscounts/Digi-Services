@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import ExploreBlogCard from "../components/ExploreBlogCard";
+import ExploreBlogCard from "../components/ExploreBlogCard.jsx";
 // import StackSlider from "../components/StackSlider";
 // import FinalThoughtsImage from "../components/FinalThoughtsImage";
 
 // import { blogDetails } from "../data/dummyBlogContent";
 // import { blogs } from "../data/dummyblogs";
-import { blogs as dummyBlogs } from "../data/dummyBlogs";
-// import { getBlogById, getAllBlogs } from "../api/blogService";
+import { blogs as dummyBlogs } from "../data/dummyBlogs.js";
+// import { getBlogById, getAllBlogs } from "../api/blogService.js";
 
 const Blog = () => {
   const { id } = useParams();
