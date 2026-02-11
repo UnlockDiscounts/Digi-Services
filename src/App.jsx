@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
-import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage.jsx";
+import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage.jsx.jsx";
 import WelcomePage from "./welcomePage.jsx";
-import Articles from "./pages/Articles";
-import Blog from "./pages/Blog";
-import ServiceCategory from "./pages/ServiceCategory";
-import ServiceDetail from "./pages/ServiceDetail";
-import Sidebar from "./components/sidebar/sidebar";
-import { LandingPage } from "./components/LandingPage/LandingPage";
-import AboutUs from "./pages/AboutUs.jsx";
-import ContactUs from "./pages/ContactUs.jsx";
+import Articles from "./pages/Articles.jsx";
+import Blog from "./pages/Blog.jsx";
+import ServiceCategory from "./pages/ServiceCategory.jsx";
+import ServiceDetail from "./pages/ServiceDetail.jsx";
+import Sidebar from "./components/sidebar/sidebar.jsx";
+import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
+import AboutUs from "./pages/AboutUs.jsx.jsx";
+import ContactUs from "./pages/ContactUs.jsx.jsx";
 
 import Navbar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
