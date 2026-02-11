@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
 import imgFrame1321317465 from "../../assets/blog.png";
-import { AddBlogModal } from './AddBlogModal';
-import { SaveDraftModal } from './SaveDraftModal';
-import { BlogCard } from './BlogCard';
-import { MoreFilters } from './MoreFilters';
+import { AddBlogModal } from './AddBlogModal.jsx';
+import { SaveDraftModal } from './SaveDraftModal.jsx';
+import { BlogCard } from './BlogCard.jsx';
+import { MoreFilters } from './MoreFilters.jsx';
 import {
   createPost,
   deletePost,
   getPosts,
   updatePost,
-} from "../../services/blogApi";
+} from "../../services/blogApi.js";
 
 export default function Blogs() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
