@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { ChevronRight } from "lucide-react";
 
-import BlogCard from "../components/BlogCard";
+import BlogCard from "../components/BlogCard.jsx";
 import ArticlesHeroCurve1 from "../components/svg/ArticlesHeroCurve1";
 import ArticlesHeroCurve2 from "../components/svg/ArticlesHeroCurve2";
 
-import { blogs as dummyBlogs } from "../data/dummyblogs";
+import { blogs as dummyBlogs } from "../data/dummyblogs.js";
 // import { getAllBlogs } from "../api/blogService";
 
 const Articles = () => {

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import ServiceOverviewCard from "../components/ServiceOverviewCard";
-import ServiceProcessAutomation from "../components/ServiceProcessAutomation";
+import ServiceOverviewCard from "../components/ServiceOverviewCard.jsx";
+import ServiceProcessAutomation from "../components/ServiceProcessAutomation.jsx";
 
 // import { servicesData } from "../data/servicesData";
-import { serviceProcessData } from "../data/serviceProcessData";
-import { getAllServices } from "../api/serviceService";
+import { serviceProcessData } from "../data/serviceProcessData.js";
+import { getAllServices } from "../api/serviceService.js";
 
 const ServiceCategory = () => {
   const [services, setServices] = useState([]);

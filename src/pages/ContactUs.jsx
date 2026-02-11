@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import Navbar from '../components/NavBar';
+import Navbar from '../components/NavBar.jsx';
 import { motion } from "motion/react";
 
 const ContactUs = () => {
@@ -192,6 +192,7 @@ const handleSubmit = async (e) => {
 };
 
 export default ContactUs;
+
 
 
 
