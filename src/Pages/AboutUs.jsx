@@ -61,16 +61,6 @@ const AboutUs = () => {
   const [hoveredValueCard, setHoveredValueCard] = useState(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
-//const [testimonials, setTestimonials] = useState([]);
-//const [loading, setLoading] = useState(true);
-
-
-// useEffect(() => {
-//     fetch('https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials')
-//       .then(res => res.json())
-//       .then(setTestimonials);
-//   }, []);
-  
 
 
   const [testimonials, setTestimonials] = useState([
