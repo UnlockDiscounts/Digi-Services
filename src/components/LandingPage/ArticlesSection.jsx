@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { blogs } from "../../data/dummyblogs.js";
-import { SvgArrowIcon } from "../../components/svg";
+import { SvgArrowIcon } from "../../components/svg/ArrowIcon.jsx";
 
 export function ArticlesSection() {
   // Use the top 3 blogs from dummy data
