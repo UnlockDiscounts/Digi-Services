@@ -16,7 +16,7 @@ import {
   SvgBlog15,
 } from "../components/svg";
 
-export const SvgBlogs = [
+export const Blogs = [
   {
     _id: "0",
     header:
