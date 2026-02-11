@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
-import { blogs } from "../../data/dummyBlogs";
-import { ArrowIcon } from "../../components/svg";
+import { blogs } from "../../data/dummyblogs.js";
+import { SvgArrowIcon } from "../../components/svg";
 
 export function ArticlesSection() {
   // Use the top 3 blogs from dummy data
@@ -61,7 +61,7 @@ export function ArticlesSection() {
                     <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 w-max">
                       <div className="bg-white px-3 py-1 rounded-[16px] shadow-lg text-[#473cf0] text-sm font-['Poppins'] font-medium flex items-center gap-0 group-hover:gap-2 transition-all duration-300">
                         Read more
-                        <ArrowIcon className="w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 transition-all duration-300" />
+                        <SvgArrowIcon className="w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 transition-all duration-300" />
                       </div>
                     </div>
                   </div>
