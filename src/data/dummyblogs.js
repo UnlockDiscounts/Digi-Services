@@ -1,20 +1,18 @@
-import {
-  SvgBlog1,
-  SvgBlog2,
-  SvgBlog3,
-  SvgBlog4,
-  SvgBlog5,
-  SvgBlog6,
-  SvgBlog7,
-  SvgBlog8,
-  SvgBlog9,
-  SvgBlog10,
-  SvgBlog11,
-  SvgBlog12,
-  SvgBlog13,
-  SvgBlog14,
-  SvgBlog15,
-} from "../components/svg";
+import SvgBlog1 from "../components/svg/Blog1.jsx";
+import SvgBlog2 from "../components/svg/Blog2.jsx";
+import SvgBlog3 from "../components/svg/Blog3.jsx";
+import SvgBlog4 from "../components/svg/Blog4.jsx";
+import SvgBlog5 from "../components/svg/Blog5.jsx";
+import SvgBlog6 from "../components/svg/Blog6.jsx";
+import SvgBlog7 from "../components/svg/Blog7.jsx";
+import SvgBlog8 from "../components/svg/Blog8.jsx";
+import SvgBlog9 from "../components/svg/Blog9.jsx";
+import SvgBlog10 from "../components/svg/Blog10.jsx";
+import SvgBlog11 from "../components/svg/Blog11.jsx";
+import SvgBlog12 from "../components/svg/Blog12.jsx";
+import SvgBlog13 from "../components/svg/Blog13.jsx";
+import SvgBlog14 from "../components/svg/Blog14.jsx";
+import SvgBlog15 from "../components/svg/Blog15.jsx";
 
 export const Blogs = [
   {
