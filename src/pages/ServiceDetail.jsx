@@ -6,16 +6,16 @@ import {
   getAllWork,
   getAllTestimonials,
   getAllFAQs,
-} from "../api/serviceService";
+} from "../api/serviceService.js";
 
-import ServiceFeatures from "../components/services/ServiceFeatures";
-import ServiceSolutions from "../components/services/ServiceSolutions";
-import ServiceTestimonial from "../components/services/ServiceTestimonial";
-import ServicePricing from "../components/services/ServicePricing";
-import ServicePortfolio from "../components/services/ServicePortfolio";
-import ServiceFAQ from "../components/services/ServiceFAQ";
+import ServiceFeatures from "../components/services/ServiceFeatures.jsx";
+import ServiceSolutions from "../components/services/ServiceSolutions.jsx";
+import ServiceTestimonial from "../components/services/ServiceTestimonial.jsx";
+import ServicePricing from "../components/services/ServicePricing.jsx";
+import ServicePortfolio from "../components/services/ServicePortfolio.jsx";
+import ServiceFAQ from "../components/services/ServiceFAQ.jsx";
 
-import { serviceDetails } from "../data/serviceDetails";
+import { serviceDetails } from "../data/serviceDetails.js";
 
 const SECTION_HEADERS = {
   "website-development": {
