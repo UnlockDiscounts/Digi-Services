@@ -2,7 +2,7 @@ import { Menu, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "../assets/logo.svg";
 import { Link } from "react-router-dom";
-import { getAllServices } from "../api/serviceService";
+import { getAllServices } from "../api/serviceService.js";
 
 export default function NavBar() {
   const [isServicesOpen, setIsServicesOpen] = useState(false);

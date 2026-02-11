@@ -1,52 +1,52 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import svgr from 'vite-plugin-svgr';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import svgr from "vite-plugin-svgr";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: [['babel-plugin-react-compiler']],
+        plugins: [["babel-plugin-react-compiler"]],
       },
     }),
     tailwindcss(),
-    svgr()
+    svgr(),
   ],
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-components': [
-            './src/components/NavBar.jsx',
-            './src/components/Footer.jsx',
-            './src/components/sidebar/sidebar.jsx'
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "ui-components": [
+            "./src/components/NavBar.jsx",
+            "./src/components/Footer.jsx",
+            "./src/components/sidebar/sidebar.jsx",
           ],
-          'landing': [
-            './src/components/LandingPage/LandingPage.tsx',
-            './src/components/LandingPage/HeroSection.jsx',
-            './src/components/LandingPage/AboutSection.jsx',
-            './src/components/LandingPage/ServicesSection.jsx',
-            './src/components/LandingPage/PricingSection.jsx',
-            './src/components/LandingPage/TestimonialsSection.jsx',
-            './src/components/LandingPage/ArticlesSection.jsx',
-            './src/components/LandingPage/ComparisonSection.jsx'
+          landing: [
+            "./src/components/LandingPage/LandingPage.tsx",
+            "./src/components/LandingPage/HeroSection.jsx",
+            "./src/components/LandingPage/AboutSection.jsx",
+            "./src/components/LandingPage/ServicesSection.jsx",
+            "./src/components/LandingPage/PricingSection.jsx",
+            "./src/components/LandingPage/TestimonialsSection.jsx",
+            "./src/components/LandingPage/ArticlesSection.jsx",
+            "./src/components/LandingPage/ComparisonSection.jsx",
           ],
-          'services': [
-            './src/Pages/ServiceCategory.jsx',
-            './src/Pages/ServiceDetail.jsx',
-            './src/components/services/service.jsx'
+          services: [
+            "./src/pages/ServiceCategory.jsx",
+            "./src/pages/ServiceDetail.jsx",
+            "./src/components/services/service.jsx",
           ],
-          'blogs': [
-            './src/Pages/Articles.jsx',
-            './src/Pages/Blog.jsx',
-            './src/components/blogs/blogs.jsx'
-          ]
-        }
-      }
+          blogs: [
+            "./src/pages/Articles.jsx",
+            "./src/pages/Blog.jsx",
+            "./src/components/blogs/blogs.jsx",
+          ],
+        },
+      },
     },
-    chunkSizeWarningLimit: 1000
-  }
-})
+    chunkSizeWarningLimit: 1000,
+  },
+});

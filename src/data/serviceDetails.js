@@ -1,10 +1,10 @@
-import PortfolioWeb1 from "../components/svg/PortfolioWeb1";
-import PortfolioWeb2 from "../components/svg/PortfolioWeb2";
-import PortfolioWeb3 from "../components/svg/PortfolioWeb3";
-import PortfolioWeb4 from "../components/svg/PortfolioWeb4";
+import PortfolioWeb1 from "../components/svg/PortfolioWeb1.jsx";
+import PortfolioWeb2 from "../components/svg/PortfolioWeb2.jsx";
+import PortfolioWeb3 from "../components/svg/PortfolioWeb3.jsx";
+import PortfolioWeb4 from "../components/svg/PortfolioWeb4.jsx";
 // import Testimonial1 from "../components/svg/Testimonial1";
-import Testimonial2 from "../components/svg/Testimonial2";
-import Testimonial3 from "../components/svg/Testimonial3";
+import Testimonial2 from "../components/svg/Testimonial2.jsx";
+import Testimonial3 from "../components/svg/Testimonial3.jsx";
 
 export const serviceDetails = {
   "website-development": {
