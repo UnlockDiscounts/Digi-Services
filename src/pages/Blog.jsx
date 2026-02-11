@@ -7,7 +7,7 @@ import ExploreBlogCard from "../components/ExploreBlogCard.jsx";
 
 // import { blogDetails } from "../data/dummyBlogContent";
 // import { blogs } from "../data/dummyblogs";
-import { blogs as dummyBlogs } from "../data/dummyBlogs.js";
+import { blogs as dummyBlogs } from "../data/dummyblogs.js";
 // import { getBlogById, getAllBlogs } from "../api/blogService.js";
 
 const Blog = () => {
