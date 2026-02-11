@@ -1,5 +1,6 @@
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://digiservices-backend-6hc3.onrender.com";
 
 export const BLOGS_ENDPOINT =
   import.meta.env.VITE_BLOGS_ENDPOINT || `${API_BASE_URL}/api/v1/blog`;
@@ -33,11 +34,7 @@ const unwrapList = (payload) => {
   if (Array.isArray(payload)) return payload;
   if (!payload || typeof payload !== "object") return [];
   return (
-    payload.blogs ||
-    payload.posts ||
-    payload.data ||
-    payload.results ||
-    []
+    payload.blogs || payload.posts || payload.data || payload.results || []
   );
 };
 
@@ -50,8 +47,8 @@ export const normalizeBlog = (blog) => {
   const images = Array.isArray(imagesRaw)
     ? imagesRaw
     : imagesRaw
-      ? [imagesRaw]
-      : [];
+    ? [imagesRaw]
+    : [];
   const image =
     blog.image || blog.coverImage || blog.thumbnail || images[0] || null;
 
@@ -80,7 +77,7 @@ export const getPosts = async () => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to fetch blogs (${response.status})`
+      error?.message || `Failed to fetch blogs (${response.status})`,
     );
   }
 
@@ -100,7 +97,7 @@ export const getPostById = async (id) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to fetch blog (${response.status})`
+      error?.message || `Failed to fetch blog (${response.status})`,
     );
   }
 
@@ -119,7 +116,7 @@ const buildBlogFormData = (data) => {
   if (data?.status) payload.append("status", data.status);
 
   const imageFiles = (data?.images || []).filter(
-    (image) => image instanceof File
+    (image) => image instanceof File,
   );
   imageFiles.forEach((file) => payload.append("images", file));
 
@@ -135,7 +132,7 @@ export const createPost = async (data) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to create blog (${response.status})`
+      error?.message || `Failed to create blog (${response.status})`,
     );
   }
 
@@ -153,7 +150,7 @@ export const updatePost = async (id, data) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to update blog (${response.status})`
+      error?.message || `Failed to update blog (${response.status})`,
     );
   }
 
@@ -173,7 +170,7 @@ export const deletePost = async (id) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to delete blog (${response.status})`
+      error?.message || `Failed to delete blog (${response.status})`,
     );
   }
 

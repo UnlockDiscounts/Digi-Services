@@ -31,7 +31,7 @@ export const getFAQs = async () => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to fetch FAQs (${response.status})`
+      error?.message || `Failed to fetch FAQs (${response.status})`,
     );
   }
 
@@ -50,7 +50,7 @@ export const getFAQById = async (id) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to fetch FAQ (${response.status})`
+      error?.message || `Failed to fetch FAQ (${response.status})`,
     );
   }
 
@@ -74,7 +74,7 @@ export const createFAQ = async (data) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to create FAQ (${response.status})`
+      error?.message || `Failed to create FAQ (${response.status})`,
     );
   }
 
@@ -97,7 +97,7 @@ export const updateFAQ = async (id, data) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to update FAQ (${response.status})`
+      error?.message || `Failed to update FAQ (${response.status})`,
     );
   }
 
@@ -115,7 +115,7 @@ export const deleteFAQ = async (id) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to delete FAQ (${response.status})`
+      error?.message || `Failed to delete FAQ (${response.status})`,
     );
   }
 

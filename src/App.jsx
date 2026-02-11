@@ -10,7 +10,7 @@ import ServiceDetail from "./pages/ServiceDetail.jsx";
 import Sidebar from "./components/sidebar/sidebar.jsx";
 import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
 import AboutUs from "./pages/AboutUs.jsx";
-// import ContactUs from "./pages/ContactUs.jsx";
+import ContactUs from "./pages/ContactUs.jsx";
 
 import Navbar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
@@ -60,7 +60,7 @@ const AdminLayout = ({ isLoggedIn }) => {
 };
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
@@ -93,7 +93,7 @@ const App = () => {
       </div>
     
       {/* ContactUs page */}
-      {/* <ContactUs /> */}
+      <ContactUs />
       </div>
        } />
 
