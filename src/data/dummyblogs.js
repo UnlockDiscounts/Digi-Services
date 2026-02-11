@@ -14,7 +14,7 @@ import SvgBlog13 from "../components/svg/Blog13.jsx";
 import SvgBlog14 from "../components/svg/Blog14.jsx";
 import SvgBlog15 from "../components/svg/Blog15.jsx";
 
-export const Blogs = [
+export const blogs = [
   {
     _id: "0",
     header:
