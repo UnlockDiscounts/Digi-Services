@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
-import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage.jsx";
+import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage";
 import WelcomePage from "./welcomePage.jsx";
 import Articles from "./pages/Articles.jsx";
 import Blog from "./pages/Blog.jsx";
 import ServiceCategory from "./pages/ServiceCategory.jsx";
 import ServiceDetail from "./pages/ServiceDetail.jsx";
-import Sidebar from "./components/sidebar/sidebar.jsx";
+import Sidebar from "./components/sidebar/sidebar";
 import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
 import AboutUs from "./pages/AboutUs.jsx";
 import ContactUs from "./pages/ContactUs.jsx";
