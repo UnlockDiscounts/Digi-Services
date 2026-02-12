@@ -166,71 +166,83 @@ const AboutUs = () => {
 
       {/* Animated Image Gallery */}
       <div className="w-full py-12 px-4">
-        <div className="relative mx-auto overflow-hidden rounded-3xl  bg-transparent flex-shrink-0 w-full max-w-[1130px] aspect-[1130/981]">
+        <div className="relative mx-auto overflow-hidden bg-transparent flex-shrink-0 w-full max-w-[1130px] aspect-[1130/981]">
           
           {/* Top-left */}
-          <div className="absolute left-0 top-0 overflow-hidden w-[54%] h-[41%]">
-            <motion.div
-              className="flex"
-              animate={{ x: -(currentIndex * 608) }}
-              transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
-              onAnimationComplete={handleAnimationComplete}
-            >
-              {[...topLeftImages, topLeftImages[0]].map((imgSrc, i) => (
-                <div key={i} className="flex-shrink-0 w-[608px] h-full p-4">
-                  <img src={imgSrc} alt="" className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all" />
-                </div>
-              ))}
-            </motion.div>
+          <div className="absolute left-0 top-0 w-[53.8%] h-[41%]">
+            <div className="w-full h-full overflow-hidden isolation-isolate" style={{ clipPath: "inset(0)" }}>
+              <motion.div
+                className="flex w-full h-full"
+                animate={{ x: `-${currentIndex * 100}%` }}
+                transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+                onAnimationComplete={handleAnimationComplete}
+              >
+                {[...topLeftImages, topLeftImages[0]].map((imgSrc, i) => (
+                  <div key={i} className="flex-shrink-0 w-full h-full p-4">
+                    <img src={imgSrc} alt="" className="w-full h-full object-cover shadow-lg hover:scale-[1.02] transition-all" />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
 
           {/* Top-right */}
-          <div className="absolute right-0 top-0 overflow-hidden w-[43%] h-[60%]">
-            <motion.div
-              className="flex flex-col"
-              animate={{ y: -(currentIndex * 587) }}
-              transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
-            >
-              {[...topRightImages, topRightImages[0]].map((imgSrc, i) => (
-                <div key={i} className="flex-shrink-0 w-[490px] h-[587px] p-4">
-                  <img src={imgSrc} alt="" className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all" />
-                </div>
-              ))}
-            </motion.div>
+          <div className="absolute right-0 top-0 w-[46.2%] h-[60%]">
+            <div className="w-full h-full overflow-hidden isolation-isolate" style={{ clipPath: "inset(0)" }}>
+              <motion.div
+                className="flex flex-col w-full h-full"
+                animate={{ y: `-${currentIndex * 100}%` }}
+                transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+              >
+                {[...topRightImages, topRightImages[0]].map((imgSrc, i) => (
+                  <div key={i} className="flex-shrink-0 w-full h-full p-4">
+                    <img src={imgSrc} alt="" className="w-full h-full object-cover shadow-lg hover:scale-[1.02] transition-all" />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
 
           {/* Bottom-left */}
-          <div className="absolute left-0 bottom-0 overflow-hidden w-[54%] h-[57%]">
-            <motion.div
-              className="flex flex-col"
-              animate={{ y: -(currentIndex * 558) }}
-              transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
-            >
-              {[...bottomLeftImages, bottomLeftImages[0]].map((imgSrc, i) => (
-                <div key={i} className="flex-shrink-0 w-[608px] h-[558px] p-4">
-                  <img src={imgSrc} alt="" className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all" />
-                </div>
-              ))}
-            </motion.div>
+          <div className="absolute left-0 bottom-0 w-[53.8%] h-[59%]">
+            <div className="w-full h-full overflow-hidden isolation-isolate" style={{ clipPath: "inset(0)" }}>
+              <motion.div
+                className="flex flex-col w-full h-full"
+                animate={{ y: `-${currentIndex * 100}%` }}
+                transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+              >
+                {[...bottomLeftImages, bottomLeftImages[0]].map((imgSrc, i) => (
+                  <div key={i} className="flex-shrink-0 w-full h-full p-4">
+                    <img src={imgSrc} alt="" className="w-full h-full object-cover shadow-lg hover:scale-[1.02] transition-all" />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
 
           {/* Bottom-right */}
-          <div className="absolute right-0 bottom-0 overflow-hidden w-[43%] h-[40%]">
-            <motion.div
-              className="flex"
-              animate={{ x: -(currentIndex * 608) }}
-              transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
-            >
-              {[...bottomRightImages, bottomRightImages[0]].map((imgSrc, i) => (
-                <div key={i} className="flex-shrink-0 w-[608px] h-full p-4">
-                  <img src={imgSrc} alt="" className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all" />
-                </div>
-              ))}
-            </motion.div>
+          <div className="absolute right-0 bottom-0 w-[46.2%] h-[40%]">
+            <div className="w-full h-full overflow-hidden isolation-isolate" style={{ clipPath: "inset(0)" }}>
+              <motion.div
+                className="flex w-full h-full"
+                animate={{ x: `-${currentIndex * 100}%` }}
+                transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+              >
+                {[...bottomRightImages, bottomRightImages[0]].map((imgSrc, i) => (
+                  <div key={i} className="flex-shrink-0 w-full h-full p-4">
+                    <img src={imgSrc} alt="" className="w-full h-full object-cover shadow-lg hover:scale-[1.02] transition-all" />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
 
           {/* Center divider */}
-          <div className="absolute h-full bg-white z-10 opacity-80 " style={{ left: '53.8%' }}></div>
+          <div className="absolute h-full bg-white z-10 opacity-100" style={{ left: '53.8%', width: '32px', transform: 'translateX(-50%)' }}></div>
+          {/* Horizontal Gap Reinforcement */}
+          <div className="absolute w-[53.8%] bg-white z-10 opacity-100" style={{ top: '41%', height: '16px', left: 0, transform: 'translateY(-50%)' }}></div>
+          {/* Horizontal Gap Reinforcement */}
+          <div className="absolute w-[46.2%] bg-white z-10 opacity-100" style={{ top: '60%', right: 0, height: '32px', transform: 'translateY(-50%)' }}></div>
         </div>
       </div>
 
@@ -322,8 +334,8 @@ const AboutUs = () => {
         <div className="w-full overflow-x-auto scrollbar-hide">
           <div className="relative h-[749px] md:h-[749px] h-[500px] w-[1440px] md:w-[1440px] w-full flex-shrink-0 px-4 md:px-0">
 
-              <div className="absolute left-0 md:left-[600px] top-[139px] md:top-[139px] top-[20px] w-full md:w-[870px] h-[471px] md:h-[471px] h-[400px] overflow-hidden px-2 md:px-0">
-              <motion.div className="flex gap-[65px] absolute "animate={{ x: -servicesScroll * 363}}>
+              <div className="absolute left-0 md:left-[670px] top-[139px] md:top-[139px] top-[20px] w-full md:w-[1100px] h-[471px] md:h-[471px] h-[400px] overflow-hidden px-2 md:px-0">
+              <motion.div className="flex gap-[65px] absolute "animate={{ x: -servicesScroll * 396}}>
                 {services.map((service, idx) => (
                   <div key={idx} className="bg-white h-[471px] rounded-[6px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-lg">
                     <h3 className="font-bold text-[26px] text-center mt-[18px] px-4" style={{ color: service.color }}>{service.title}</h3>
