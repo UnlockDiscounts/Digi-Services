@@ -1,8 +1,8 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 export const TESTIMONIALS_ENDPOINT =
-  import.meta.env.VITE_TESTIMONIALS_ENDPOINT || `${API_BASE_URL}/api/v1/testimonials`;
+  import.meta.env.VITE_TESTIMONIALS_ENDPOINT ||
+  `${API_BASE_URL}/api/v1/testimonials`;
 
 const parseJson = async (response) => {
   const text = await response.text();
@@ -31,7 +31,7 @@ export const getTestimonials = async () => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to fetch testimonials (${response.status})`
+      error?.message || `Failed to fetch testimonials (${response.status})`,
     );
   }
 
@@ -50,7 +50,7 @@ export const getTestimonialById = async (id) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to fetch testimonial (${response.status})`
+      error?.message || `Failed to fetch testimonial (${response.status})`,
     );
   }
 
@@ -75,7 +75,7 @@ export const createTestimonial = async (data) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to create testimonial (${response.status})`
+      error?.message || `Failed to create testimonial (${response.status})`,
     );
   }
 
@@ -99,7 +99,7 @@ export const updateTestimonial = async (id, data) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to update testimonial (${response.status})`
+      error?.message || `Failed to update testimonial (${response.status})`,
     );
   }
 
@@ -117,7 +117,7 @@ export const deleteTestimonial = async (id) => {
   if (!response.ok) {
     const error = await parseJson(response);
     throw new Error(
-      error?.message || `Failed to delete testimonial (${response.status})`
+      error?.message || `Failed to delete testimonial (${response.status})`,
     );
   }
 

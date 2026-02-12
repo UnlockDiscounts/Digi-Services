@@ -43,9 +43,20 @@ export default function WorkExampleTab({ workExamples, setWorkExamples, onNext }
     }
   };
 
-  const handleRemoveExample = (id) => {
-    // Note: You might want to add an API DELETE call here later
-    setWorkExamples(workExamples.filter(item => item.id !== id));
+  const handleRemoveExample = async (id) => {
+    // Implementation of the delete API functionality
+    if (window.confirm('Are you sure you want to delete this work example?')) {
+      try {
+        const response = await axios.delete(`https://digiservices-backend-6hc3.onrender.com/api/v1/works/${id}`);
+        
+        if (response.status === 200 || response.status === 204) {
+          setWorkExamples(workExamples.filter(item => item.id !== id));
+        }
+      } catch (error) {
+        console.error('Delete Error:', error.response?.data || error.message);
+        alert('Failed to delete work example from server.');
+      }
+    }
   };
 
   return (

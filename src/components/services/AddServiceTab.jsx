@@ -1,15 +1,13 @@
 import { useState } from 'react';
+import axios from 'axios'; // Ensure axios is installed
 
 export default function AddServiceTab({ onNext }) {
-  const [services, setServices] = useState([]);
   const [serviceCategory, setServiceCategory] = useState('');
   const [serviceTitle, setServiceTitle] = useState('');
   const [description, setDescription] = useState('');
   const [fileName, setFileName] = useState('No file chosen');
   const [selectedFile, setSelectedFile] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [editingId, setEditingId] = useState(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
@@ -19,71 +17,44 @@ export default function AddServiceTab({ onNext }) {
     }
   };
 
-  const handleSave = () => {
-    if (!serviceCategory || !serviceTitle || !description) {
-      setErrorMessage('Please fill out all required fields.');
-      return;
+  const handleNextClick = async () => {
+    setLoading(true);
+    
+    // Prepare the form data exactly as shown in your Postman screenshot
+    const formData = new FormData();
+    formData.append('category', serviceCategory);
+    formData.append('title', serviceTitle);
+    formData.append('description', description);
+    if (selectedFile) {
+      formData.append('files', selectedFile);
     }
 
-    setErrorMessage('');
-    setLoading(true);
-
-    const serviceData = {
-      id: editingId || `${Date.now()}`,
-      category: serviceCategory,
-      title: serviceTitle,
-      description: description,
-      files: selectedFile ? [selectedFile.name] : [],
-    };
-
-    if (editingId) {
-      const updatedServices = services.map(s =>
-        (s._id || s.id) === editingId ? { ...s, ...serviceData } : s
+    try {
+      const response = await axios.post(
+        'https://digiservices-backend-6hc3.onrender.com/api/v1/services',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
-      setServices(updatedServices);
-    } else {
-      setServices([...services, serviceData]);
+
+      // Axios returns the response in the .data property
+      if (response.status === 201 || response.status === 200) {
+        console.log('Success:', response.data);
+        onNext(); 
+      }
+    } catch (error) {
+      console.error('API Error:', error.response?.data || error.message);
+      alert('Failed to create service. Check console for details.');
+    } finally {
+      setLoading(false);
     }
-
-    clearForm();
-    setLoading(false);
-  };
-
-  const loadService = (service) => {
-    setServiceCategory(service.category);
-    setServiceTitle(service.title);
-    setDescription(service.description);
-    setFileName(service.files?.[0] || service.file || 'No file chosen');
-    setSelectedFile(null);
-    setEditingId(service._id || service.id);
-  };
-
-  const clearForm = () => {
-    setServiceCategory('');
-    setServiceTitle('');
-    setDescription('');
-    setFileName('No file chosen');
-    setSelectedFile(null);
-    setEditingId(null);
-  };
-
-  const handleDelete = (id) => {
-    setErrorMessage('');
-    setLoading(true);
-    setServices(services.filter(s => (s._id || s.id) !== id));
-    if (editingId === id) {
-      clearForm();
-    }
-    setLoading(false);
   };
 
   return (
     <div className="relative h-full flex items-center justify-center">
-      {errorMessage && (
-        <p className="absolute top-2 left-1/2 -translate-x-1/2 text-red-600 text-sm z-10">
-          {errorMessage}
-        </p>
-      )}
       {/* Service Category Input */}
       <div className="absolute content-stretch flex flex-col h-[63px] items-center justify-center left-[79px] px-[16px] py-[8px] rounded-[8px] top-[32px] w-[1093px]">
         <div aria-hidden="true" className="absolute border-2 border-[rgba(102,102,102,0.75)] border-solid inset-[-1px] pointer-events-none rounded-[9px]" />
@@ -139,72 +110,14 @@ export default function AddServiceTab({ onNext }) {
 
       {/* Next Button */}
       <button
-        onClick={onNext}
-        className="absolute bg-[#6364ff] content-stretch flex h-[56px] items-center justify-center px-[17px] py-[16px] right-[79px] rounded-[15px] top-[468px] w-[184px] cursor-pointer hover:bg-[#5253ee] transition-colors"
-      >
-        <p className="css-ew64yg leading-[normal] not-italic relative shrink-0 text-[24px] text-white">Next</p>
-      </button>
-
-      {/* Save Service Button */}
-      <button
-        onClick={handleSave}
+        onClick={handleNextClick}
         disabled={loading}
-        className="absolute bg-[#6364ff] content-stretch flex h-[56px] items-center justify-center px-[17px] py-[16px] left-[79px] rounded-[15px] top-[468px] w-[184px] cursor-pointer hover:bg-[#5253ee] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="absolute bg-[#6364ff] content-stretch flex h-[56px] items-center justify-center px-[17px] py-[16px] right-[79px] rounded-[15px] top-[468px] w-[184px] cursor-pointer hover:bg-[#5253ee] transition-colors disabled:bg-gray-400"
       >
-        <p className="text-[24px] text-white">
-          {loading ? 'Saving...' : (editingId ? 'Update' : 'Save')}
+        <p className="css-ew64yg leading-[normal] not-italic relative shrink-0 text-[24px] text-white">
+          {loading ? 'Submitting...' : 'Next'}
         </p>
       </button>
-
-      {/* Services List */}
-      {services.length > 0 && (
-        <div className="absolute left-[79px] top-[550px] w-[1093px]">
-          <p className="text-[18px] font-['Poppins'] text-[rgba(102,102,102,0.75)] mb-3">Existing Services:</p>
-          <div className="flex flex-wrap gap-4">
-            {services.map((service) => (
-              <div
-                key={service._id || service.id}
-                onClick={() => loadService(service)}
-                className={`flex items-center justify-between px-[16px] py-[8px] rounded-[8px] border-2 cursor-pointer transition-all group ${
-                  editingId === (service._id || service.id)
-                    ? 'border-[#6364ff] bg-[#6364ff]/10'
-                    : 'border-[rgba(102,102,102,0.75)]'
-                }`}
-              >
-                <p className={`text-[14px] font-['Poppins'] ${
-                  editingId === (service._id || service.id)
-                    ? 'text-[#6364ff]'
-                    : 'text-[rgba(102,102,102,0.75)]'
-                }`}>
-                  {service.title}
-                </p>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (confirm(`Delete service "${service.title}"?`)) {
-                      handleDelete(service._id || service.id);
-                    }
-                  }}
-                  disabled={loading}
-                  className="ml-2 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-50"
-                >
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* New Entry Helper */}
-      {editingId && (
-        <button
-          onClick={clearForm}
-          className="absolute left-[79px] bottom-[20px] text-[#6364ff] underline font-['Poppins'] text-[16px]"
-        >
-          + Add New Service
-        </button>
-      )}
     </div>
   );
 }

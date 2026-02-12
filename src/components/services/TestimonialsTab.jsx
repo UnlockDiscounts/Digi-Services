@@ -21,9 +21,8 @@ export default function TestimonialsTab({ testimonials, setTestimonials, onNext 
     if (name && description) {
       setLoading(true);
       
-      // Using FormData for multipart/form-data as seen in your Postman screenshot
       const formData = new FormData();
-      formData.append('service', localStorage.getItem('serviceId')); // Hardcoded from your example
+      formData.append('service', localStorage.getItem('serviceId')); 
       formData.append('name', name);
       formData.append('description', description);
       
@@ -32,20 +31,31 @@ export default function TestimonialsTab({ testimonials, setTestimonials, onNext 
       }
 
       try {
-        // API Endpoint from your Postman screenshot
-        const response = await axios.post(
-          'https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials',
-          formData,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' }
-          }
-        );
+        let response;
+        
+        if (editingId) {
+          // IMPLEMENT UPDATE: PUT request to the specific testimonial ID
+          response = await axios.put(
+            `https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials/${editingId}`,
+            formData,
+            {
+              headers: { 'Content-Type': 'multipart/form-data' }
+            }
+          );
+        } else {
+          // CREATE NEW: POST request
+          response = await axios.post(
+            'https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials',
+            formData,
+            {
+              headers: { 'Content-Type': 'multipart/form-data' }
+            }
+          );
+        }
 
         if (response.status === 201 || response.status === 200) {
-          console.log('Testimonial Saved:', response.data);
-
           if (editingId) {
-            // UPDATE local state for preview
+            // UPDATE local state
             const updated = testimonials.map((t) =>
               t.id === editingId 
                 ? { ...t, name, description, imageFile: fileName } 
@@ -53,7 +63,7 @@ export default function TestimonialsTab({ testimonials, setTestimonials, onNext 
             );
             setTestimonials(updated);
           } else {
-            // ADD new entry to local state for preview
+            // ADD new entry to local state
             const newTestimonial = {
               id: response.data._id || Date.now(),
               name,
@@ -76,7 +86,7 @@ export default function TestimonialsTab({ testimonials, setTestimonials, onNext 
   const loadTestimonial = (item) => {
     setName(item.name);
     setDescription(item.description);
-    setFileName(item.imageFile);
+    setFileName(item.imageFile || 'Uploaded File');
     setEditingId(item.id);
   };
 

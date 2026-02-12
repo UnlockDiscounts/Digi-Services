@@ -13,17 +13,27 @@ export default function FAQsTab({ faqs, setFaqs, onNext }) {
 
       // JSON payload as per your Postman screenshot
       const payload = {
-        service: localStorage.getItem('serviceId'), // Hardcoded service ID from your example
+        service: localStorage.getItem('serviceId'), 
         question: question,
         answer: answer
       };
 
       try {
-        // API Endpoint from your Postman screenshot
-        const response = await axios.post(
-          'https://digiservices-backend-6hc3.onrender.com/api/v1/faqs',
-          payload
-        );
+        let response;
+        
+        if (editingId) {
+          // IMPLEMENT UPDATE: API Endpoint for PUT from your screenshot (68)
+          response = await axios.put(
+            `https://digiservices-backend-6hc3.onrender.com/api/v1/faqs/${editingId}`,
+            payload
+          );
+        } else {
+          // CREATE NEW: API Endpoint for POST from your screenshot (54)
+          response = await axios.post(
+            'https://digiservices-backend-6hc3.onrender.com/api/v1/faqs',
+            payload
+          );
+        }
 
         if (response.status === 201 || response.status === 200) {
           if (editingId) {
@@ -89,7 +99,7 @@ export default function FAQsTab({ faqs, setFaqs, onNext }) {
         />
       </div>
 
-      {/* Save Button */}
+      {/* Save/Update Button */}
       <div className="absolute content-stretch flex items-center left-[calc(50%-1px)] top-[278px] translate-x-[-50%]">
         <button
           onClick={handleSave}

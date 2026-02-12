@@ -35,10 +35,21 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
       };
 
       try {
-        const response = await axios.post(
-          'https://digiservices-backend-6hc3.onrender.com/api/v1/cards',
-          payload
-        );
+        let response;
+
+        if (editingId) {
+          // IMPLEMENT UPDATE: PUT request to the specific card ID
+          response = await axios.put(
+            `https://digiservices-backend-6hc3.onrender.com/api/v1/cards/${editingId}`,
+            payload
+          );
+        } else {
+          // CREATE NEW: POST request
+          response = await axios.post(
+            'https://digiservices-backend-6hc3.onrender.com/api/v1/cards',
+            payload
+          );
+        }
 
         if (response.status === 201 || response.status === 200) {
           // If update, replace item; if new, add to list
