@@ -55,10 +55,10 @@ const ServicePricing = ({ data }) => {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className="group relative w-full h-auto md:h-[676px] flex flex-col pt-8 md:pt-[39px] px-6 md:px-[31px] pb-8 md:pb-0 rounded-2xl bg-white text-gray-900 shadow-lg hover:shadow-2xl transition-shadow duration-300"
+              className="group relative w-full h-auto md:h-[676px] flex flex-col pt-8 md:pt-[39px] px-6 md:px-[31px] pb-8 md:pb-0 rounded-2xl overflow-hidden bg-white text-gray-900 shadow-lg hover:shadow-2xl transition-shadow duration-300"
             >
               {/* Hover Vector Background */}
-              <div className="absolute top-[-4.07px] left-[22px] w-[378px] h-[292px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 hidden md:block">
+              <div className="absolute top-0 right-0 w-[378px] h-[292px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 hidden md:block">
                 <ServicePricingVector className="w-full h-full" />
               </div>
 
