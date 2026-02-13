@@ -1,4 +1,5 @@
 import React from 'react'
+import logo from "./assets/logo.svg"
 
 
 export default function WelcomePage() {
@@ -6,7 +7,7 @@ export default function WelcomePage() {
     <div className="w-full min-h-screen  bg-[linear-gradient(180deg,#FDCBF2_0%,#907AFF_50%,#0435FF_100%)] flex flex-col items-center justify-center gap-6">
       <div className="flex justify-center w-[150px] h-[150px] mb-4">
         <img
-          src="src/assets/unlockdiscountlogo.png"
+          src={logo}
           alt="Logo"
           className="w-[150px] h-[150px]"
         />

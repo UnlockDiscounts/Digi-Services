@@ -12,7 +12,7 @@ import LogoutPopup from "./logout.jsx";
 import Blogs from "../blogs/blogs.jsx";
 import Service from "../services/service.jsx";
 
-export default function Sidebar({ activeItem: initialActive = "Services", onLogout }) {
+export default function Sidebar({ activeItem: initialActive = "Blogs", onLogout }) {
   const [showLogout, setShowLogout] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeItem, setActiveItem] = useState(initialActive);
@@ -26,7 +26,7 @@ export default function Sidebar({ activeItem: initialActive = "Services", onLogo
 
   const menuItems = [
     { name: "Blogs", icon: SquarePen }, // Corrected icon for writing/blogs
-    { name: "Services", icon: Settings }, // Corrected icon for services/tools
+    // { name: "Services", icon: Settings }, // Corrected icon for services/tools
   ];
 
   return (
@@ -120,7 +120,7 @@ export default function Sidebar({ activeItem: initialActive = "Services", onLogo
         }`}
       >
         <div className="p-8">
-            {activeItem === "Services" && <div><Service /></div>}
+            {/* {activeItem === "Services" && <div><Service /></div>} */}
             {activeItem === "Blogs" && <div><Blogs /></div>}
         </div>
       </div>

@@ -21,6 +21,7 @@ export default function Service() {
       try {
         setLoading(true);
         const response = await axios.get('https://digiservices-backend-6hc3.onrender.com/api/v1/services');
+        console.log(response.data);
         // Map the API structure to our local state needs
         const formattedServices = response.data.map(service => ({
           id: service._id,
