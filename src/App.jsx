@@ -9,8 +9,8 @@ import ServiceCategory from "./pages/ServiceCategory.jsx";
 import ServiceDetail from "./pages/ServiceDetail.jsx";
 import Sidebar from "./components/sidebar/sidebar";
 import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
-import AboutUs from "./pages/AboutUs.jsx";
-import ContactUs from "./pages/ContactUs.jsx";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
 
 import Navbar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
