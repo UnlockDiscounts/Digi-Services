@@ -57,10 +57,10 @@ const handleSubmit = async (e) => {
       {/* Full viewport gradient background */}
       <div className="fixed inset-0 bg-gradient-to-br from-[#F8C7F3]  h-screen overflow-hidden via-[#917BFF] to-[#0737FF] z-0" />
       
-      <div className="relative z-10 min-h-screen overflow-hidden flex 1 flex-col">
+      <div className="relative z-10 min-h-screen overflow-y-auto overflow-x-hidden flex flex-col">
         
         {/* Navbar - DEAD CENTER */}
-        <div className="w-full flex justify-center items-center py-4 sm:py-6 lg:py-6 px-4 lg:px-15">
+        <div className="w-full flex justify-center items-center py-4 sm:py-6 px-4">
           {/* <Navbar /> */}
         </div>
 
@@ -69,19 +69,18 @@ const handleSubmit = async (e) => {
   initial={{ opacity: 0, y: -30 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.6, delay: 0.4 }}
-  className="font-bold text-2xl sm:text-3xl md:text-5xl lg:text-[48px] text-white text-center 
-             px-4 lg:px-0 w-full lg:w-[min(1377px,95%)] mx-auto
-              pt-24 pb-12 sm:pt-28 sm:pb-10 lg:pt-32 lg:pb-20 
-             lg:max-w-[1377px] lg:mx-auto"
+  className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-white text-center 
+             px-4 w-full max-w-[1377px] mx-auto
+             pt-16 pb-8 sm:pt-20 sm:pb-10 md:pt-24 md:pb-12 lg:pt-32 lg:pb-16"
 >
   Get In Touch With Us
 </motion.p>
 
 
         {/* Card - DEAD CENTER */}
-        <div className="flex-1 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-50 pb-8 sm:pb-12 lg:pb-12 mt-10 sm:mt-10 md:mt-[60px] overflow-hidden lg:mt-[80px]">
-          <div className="w-full max-w-[95vw] lg:max-w-5xl mx-auto">
-            <div className="flex flex-col lg:flex-row rounded-none shadow-2xl overflow-hidden mx-auto">
+        <div className="flex-1 flex items-start sm:items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 pb-8 sm:pb-12 lg:pb-16">
+          <div className="w-full max-w-[95vw] sm:max-w-[85vw] lg:max-w-5xl mx-auto">
+            <div className="flex flex-col lg:flex-row rounded-lg sm:rounded-2xl shadow-2xl overflow-hidden">
               
               {/* Left purple card */}
               <div className="lg:w-1/2 bg-[#8A72EB] text-white px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-8 flex flex-col justify-center">
