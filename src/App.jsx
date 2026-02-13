@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
-import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage.jsx";
+import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage";
+import WelcomePage from "./welcomePage.jsx";
 import Articles from "./pages/Articles.jsx";
 import Blog from "./pages/Blog.jsx";
-import ServiceCategory from "./pages/ServiceCategory";
-import ServiceDetail from "./pages/ServiceDetail";
-import Sidebar from "./components/sidebar/sidebar.jsx";
+import ServiceCategory from "./pages/ServiceCategory.jsx";
+import ServiceDetail from "./pages/ServiceDetail.jsx";
+import Sidebar from "./components/sidebar/sidebar";
 import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
@@ -33,12 +34,25 @@ const ClientLayout = () => {
 };
 
 /* ---------------- ADMIN LAYOUT ---------------- */
-const AdminLayout = () => {
-  return (
-    <div className="flex min-h-screen">
-      <main className="flex-1">
+const AdminLayout = ({ isLoggedIn }) => {
+  if (isLoggedIn) {
+    return (
+      <div className="min-h-screen w-full">
         <Outlet />
-      </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full h-screen bg-white flex flex-col md:flex-row overflow-hidden m-0 p-0">
+      <div className="w-full md:w-1/2 flex">
+        <WelcomePage />
+      </div>
+      <div className="w-full md:w-1/2 flex items-center justify-center bg-white">
+        <div className="auth-container flex items-center justify-center w-full">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 };
@@ -46,18 +60,20 @@ const AdminLayout = () => {
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  
+
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
   };
 
   return (
+    <>
     <Routes>
 
       {/* ================= CLIENT ROUTES ================= */}
       <Route element={<ClientLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact" element={<ContactUs />} />
 
         {/* Blog / Articles */}
         <Route path="/articles" element={<Articles />} />
@@ -69,10 +85,23 @@ const App = () => {
 
       </Route>
 
+      
+      <Route path="/contact" element={
+      <div className="relative min-h-screen"> 
+      <div className="absolute top-3 left-0 w-full z-50">
+      <Navbar />
+      </div>
+    
+      {/* ContactUs page */}
+      <ContactUs />
+      </div>
+       } />
+
+
       {/* ================= ADMIN ROUTES ================= */}
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/admin" element={<AdminLayout isLoggedIn={isLoggedIn} />}>
         {isLoggedIn ?
-          <Route index element={<Sidebar />} /> :
+          <Route index element={<Sidebar onLogout={() => setIsLoggedIn(false)} />} /> :
           <Route index element={<UnlockDiscountsLoginpage onLoginSuccess={handleLoginSuccess} />} />}
       </Route>
 
@@ -80,6 +109,9 @@ const App = () => {
       <Route path="*" element={<div>404 - Not Found</div>} />
 
     </Routes>
+
+
+</>
   );
 };
 

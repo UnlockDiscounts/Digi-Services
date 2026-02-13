@@ -1,6 +1,6 @@
-import SvgService1 from "../components/svg/Service1";
-import SvgService2 from "../components/svg/Service2";
-import SvgService3 from "../components/svg/Service3";
+import SvgService1 from "../components/svg/Service1.jsx";
+import SvgService2 from "../components/svg/Service2.jsx";
+import SvgService3 from "../components/svg/Service3.jsx";
 
 export const servicesData = [
   {

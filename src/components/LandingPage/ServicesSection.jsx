@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import website from "../../assets/website.svg";
 import media from "../../assets/media.svg";
 import resume from "../../assets/resume.svg";
@@ -9,20 +10,23 @@ const services = [
     title: "Website Development",
     description: "Build a website that works as hard as you do.",
     image: website,
-    delay: 0.2
+    delay: 0.2,
+    link: "/services/website-development",
   },
   {
     title: "Social Media Management",
     description: "Stay relevant, consistent, and ahead of trends.",
     image: media,
-    delay: 0.4
+    delay: 0.4,
+    link: "/services/social-media-management",
   },
   {
     title: "Resume Building",
     description: "Make a strong first impression, every time.",
     image: resume,
-    delay: 0.6
-  }
+    delay: 0.6,
+    link: "/services/resume-building",
+  },
 ];
 
 const floatingIcons = [
@@ -38,7 +42,7 @@ const floatingIcons = [
 
 export function ServicesSection() {
   return (
-    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section id="services" className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="container max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -52,7 +56,8 @@ export function ServicesSection() {
             Our Services
           </h2>
           <p className="font-['Poppins'] font-bold text-white text-xl sm:text-2xl lg:text-[36px] leading-[1.3] max-w-4xl mx-auto px-4">
-            Magnetic content. Modern websites. Career-winning resumes. All in one place.
+            Magnetic content. Modern websites. Career-winning resumes. All in
+            one place.
           </p>
         </motion.div>
 
@@ -65,24 +70,24 @@ export function ServicesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: service.delay, duration: 0.8 }}
-              whileHover={{ 
+              whileHover={{
                 y: -10,
-                boxShadow: "0 20px 60px rgba(99, 100, 255, 0.4)"
+                boxShadow: "0 20px 60px rgba(99, 100, 255, 0.4)",
               }}
-              className="bg-[#c7d3fc] rounded-[32px] overflow-hidden p-8 flex flex-col items-center text-center h-[480px] sm:h-[541px] relative group transition-shadow duration-300"
+              className="bg-[#c7d3fc] rounded-[24px] sm:rounded-[32px] overflow-hidden p-6 sm:p-8 flex flex-col items-center text-center h-[420px] sm:h-[480px] lg:h-[541px] relative group transition-shadow duration-300"
               style={{
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)"
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <motion.div 
+              <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: service.delay + 0.2, duration: 0.6 }}
                 className="w-[180px] h-[180px] sm:w-[215px] sm:h-[215px] mb-6 sm:mb-8"
               >
-                <img 
-                  src={service.image} 
+                <img
+                  src={service.image}
                   alt={service.title}
                   className="object-contain"
                 />
@@ -102,14 +107,16 @@ export function ServicesSection() {
                 {service.description}
               </p>
 
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-[#6364ff] text-white font-['Poppins'] font-semibold text-xl sm:text-2xl px-5 py-3 rounded-[24px] flex items-center gap-2 mt-6 group-hover:bg-[#5253ee] transition-colors"
-              >
-                Learn more
-                <ChevronRight className="w-6 h-6" />
-              </motion.button>
+              <Link to={service.link}>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-[#6364ff] text-white font-['Poppins'] font-semibold text-xl sm:text-2xl px-5 py-3 rounded-[24px] flex items-center gap-2 mt-6 group-hover:bg-[#5253ee] transition-colors"
+                >
+                  Learn more
+                  <ChevronRight className="w-6 h-6" />
+                </motion.button>
+              </Link>
             </motion.div>
           ))}
         </div>

@@ -1,129 +1,162 @@
-import {
-  Blog1,
-  Blog2,
-  Blog3,
-  Blog4,
-  Blog5,
-  Blog6,
-  Blog7,
-  Blog8,
-  Blog9,
-  Blog10,
-  Blog11,
-  Blog12,
-  Blog13,
-  Blog14,
-  Blog15,
-} from "../components/svg";
+import SvgBlog1 from "../components/svg/Blog1.jsx";
+import SvgBlog2 from "../components/svg/Blog2.jsx";
+import SvgBlog3 from "../components/svg/Blog3.jsx";
+import SvgBlog4 from "../components/svg/Blog4.jsx";
+import SvgBlog5 from "../components/svg/Blog5.jsx";
+import SvgBlog6 from "../components/svg/Blog6.jsx";
+import SvgBlog7 from "../components/svg/Blog7.jsx";
+import SvgBlog8 from "../components/svg/Blog8.jsx";
+import SvgBlog9 from "../components/svg/Blog9.jsx";
+import SvgBlog10 from "../components/svg/Blog10.jsx";
+import SvgBlog11 from "../components/svg/Blog11.jsx";
+import SvgBlog12 from "../components/svg/Blog12.jsx";
+import SvgBlog13 from "../components/svg/Blog13.jsx";
+import SvgBlog14 from "../components/svg/Blog14.jsx";
+import SvgBlog15 from "../components/svg/Blog15.jsx";
 
 export const blogs = [
   {
-    id: 0,
-    title:
+    _id: "0",
+    header:
       "7 Proven Tips to Transform Your Resume from Ordinary to Outstanding",
-    image: Blog1,
+    category: "Resume Building",
+    images: [SvgBlog1],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description:
+      "Is your resume getting lost in the black hole of applicant tracking systems (ATS)? You're not alone. Most resumes are rejected before a human ever sees them. But with a few strategic tweaks, you can turn your ordinary resume into an interview magnet. Start by tailoring your resume to the specific job description—generic applications rarely succeed. Use keywords from the job posting to show you're the perfect fit. Instead of just listing duties, focus on achievements. Quantify your impact with numbers and percentages wherever possible (e.g., 'Increased sales by 20%'). Keep formatting simple and clean to ensure ATS compatibility; avoid complex tables or graphics that confuse screening software. Finally, proofread meticulously. A single typo can undermine your professionalism. By following these tips, you'll significantly increase your chances of landing an interview and securing your dream job.",
   },
   {
-    id: 1,
-    title: "5 Website Design Fails That Drive Visitors Away",
-    image: Blog2,
+    _id: "1",
+    header: "5 Website Design Fails That Drive Visitors Away",
+    category: "Website Development",
+    images: [SvgBlog2],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description:
+      "You have less than 3 seconds to capture a visitor's attention. If your website makes critical design mistakes, they'll bounce before you can say 'conversion'. A slow loading speed is the biggest dealbreaker; optimize your images and code to ensure lightning-fast performance. Cluttered navigation is another major issue—if users can't find what they're looking for instantly, they'll leave. Ensure your menu is simple and intuitive. Lack of mobile responsiveness is also fatal in today's mobile-first world; if your site doesn't look great on a phone, you're ignoring over half your audience. Poor use of whitespace and inconsistent fonts can make your content hard to read. Investing in good design isn't just about aesthetics—it's about usability and user experience. Fix these errors to keep visitors engaged and improve your conversion rates.",
   },
   {
-    id: 2,
-    title: "9 Proven Social Media Growth Hacks to Go From Zero to Hero",
-    image: Blog3,
+    _id: "2",
+    header: "9 Proven Social Media Growth Hacks to Go From Zero to Hero",
+    category: "Social Media Management",
+    images: [SvgBlog3],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description:
+      "Growing a social media following from scratch can feel daunting, but with the right strategy, it's entirely possible to build a thriving community. Consistency is key—post regularly to keep your audience engaged and signal to algorithms that your account is active. But don't just broadcast; engage. Social media is a two-way street. Reply to comments, ask questions, and build genuine relationships with your followers. Leverage video content, especially short-form videos like Reels and TikToks, as they currently dominate reach on most platforms. Collaborate with others in your niche to tap into existing audiences. Use analytics to understand what content resonates best and refine your strategy accordingly. Authenticity wins over perfection—show the human side of your brand. Start applying these hacks today and watch your engagement soar.",
   },
   {
-    id: 3,
-    title: "7 Common GST Errors That Can Destroy Your Business Reputation",
-    image: Blog4,
+    _id: "3",
+    header: "7 Common GST Errors That Can Destroy Your Business Reputation",
+    category: "Website Development",
+    images: [SvgBlog4],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
   {
-    id: 4,
-    title: "12 Powerful ITR Filing Secrets to Unlock Maximum Tax Refunds",
-    image: Blog5,
+    _id: "4",
+    header: "12 Powerful ITR Filing Secrets to Unlock Maximum Tax Refunds",
+    category: "Resume Building",
+    images: [SvgBlog5],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
   {
-    id: 5,
-    title: "The Dark Side of Ignoring ITR Deadlines: 5 Alarming Truths",
-    image: Blog6,
+    _id: "5",
+    header: "The Dark Side of Ignoring ITR Deadlines: 5 Alarming Truths",
+    category: "Website Development",
+    images: [SvgBlog6],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
   {
-    id: 6,
-    title:
+    _id: "6",
+    header:
       "GST Competitive Advantage: Unlock Profitability and Business Success",
-    image: Blog7,
+    category: "Social Media Management",
+    images: [SvgBlog7],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
   {
-    id: 7,
-    title:
+    _id: "7",
+    header:
       "10 Social Media Mistakes to Avoid That Can Ruin Your Online Reputation",
-    image: Blog8,
+    category: "Social Media Management",
+    images: [SvgBlog8],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description:
+      "Social media is a powerful tool, but it can be a double-edged sword. One wrong move can damage your brand's reputation instantly. Ignoring negative feedback is a common mistake; deleting comments or getting defensive makes you look unprofessional. Instead, address valid complaints publicly and professionally to show you care. Inconsistent branding across platforms confuses your audience—ensure your voice and visuals are unified. buying followers is another pitfall; it inflates numbers but kills engagement and credibility. Overselling is also a turn-off; follow the 80/20 rule where 80% of content adds value and only 20% promotes your products. Finally, failing to monitor your mentions means you might miss urgent issues or opportunities. Avoid these pitfalls to build a strong, trustworthy online presence that supports your business goals.",
   },
   {
-    id: 8,
-    title: "4 Smart Fixes for Quick Mobile Website Optimization",
-    image: Blog9,
+    _id: "8",
+    header: "4 Smart Fixes for Quick Mobile Website Optimization",
+    category: "Website Development",
+    images: [SvgBlog9],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description:
+      "In an era where mobile traffic often exceeds desktop traffic, having a mobile-optimized website is non-negotiable. If your site is hard to use on a phone, users will leave instantly. Start by simplifying your navigation. A hamburger menu saves space and keeps the interface clean. Ensure touch targets (buttons and links) are large enough to be easily tapped with a thumb—aim for at least 44x44 pixels. Compressing images is crucial for speed; heavy images kill load times on mobile networks. Use responsive design frameworks to ensure layout elements stack and resize gracefully on smaller screens. Finally, avoid pop-ups that cover the main content, as they are frustrating on small devices and can hurt your SEO. These smart fixes improve usability, boost SEO rankings, and keep mobile visitors happy.",
   },
   {
-    id: 9,
-    title: "5 Powerful Words for Resume Building That Get You Hired",
-    image: Blog10,
+    _id: "9",
+    header: "5 Powerful Words for Resume Building That Get You Hired",
+    category: "Resume Building",
+    images: [SvgBlog10],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
   {
-    id: 10,
-    title: "Resume Success Formula: How to Land Interviews Faster",
-    image: Blog11,
+    _id: "10",
+    header: "Resume Success Formula: How to Land Interviews Faster",
+    category: "Resume Building",
+    images: [SvgBlog11],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
   {
-    id: 11,
-    title: "7 Resume Mistakes to Avoid That Turn Recruiters Away",
-    image: Blog12,
+    _id: "11",
+    header: "7 Resume Mistakes to Avoid That Turn Recruiters Away",
+    category: "Resume Building",
+    images: [SvgBlog12],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
   {
-    id: 12,
-    title: "The Hidden Dangers of Outdated Websites",
-    image: Blog13,
+    _id: "12",
+    header: "The Hidden Dangers of Outdated Websites",
+    category: "Website Development",
+    images: [SvgBlog13],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
   {
-    id: 13,
-    title:
+    _id: "13",
+    header:
       "7 Secrets Behind High-Performance Website Solutions That Google Loves",
-    image: Blog14,
+    category: "Website Development",
+    images: [SvgBlog14],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
   {
-    id: 14,
-    title: "10 Resume Killer That Are Costing Your Dream Jobs",
-    image: Blog15,
+    _id: "14",
+    header: "10 Resume Killer That Are Costing Your Dream Jobs",
+    category: "Resume Building",
+    images: [SvgBlog15],
     author: "bestifyhub@gmail.com",
     date: "September 17, 2025",
+    description: "",
   },
 ];

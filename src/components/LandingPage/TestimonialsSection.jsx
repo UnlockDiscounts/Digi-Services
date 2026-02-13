@@ -1,30 +1,32 @@
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import noimage from "../../assets/noimage.svg";
-
-const testimonials = [
-  {
-    name: "Rahul Mehta",
-    role: "Owner, F2 Studios",
-    image: noimage,
-    text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations."
-  },
-  {
-    name: "Riya Sharma",
-    role: "Student",
-    image: noimage,
-    text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations."
-  },
-  {
-    name: "Dinesh Kumar",
-    role: "CEO, XYZ",
-    image: noimage,
-    text: "Our team consists of certified tax experts, experienced web developers, and skilled resume writers who stay updated with the latest industry trends and regulations."
-  }
-];
+import { getTestimonials } from "../../services/testimonialsApi";
 
 export function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch testimonials from API on mount
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        setLoading(true);
+        const data = await getTestimonials();
+        if (data && Array.isArray(data)) {
+          setTestimonials(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch testimonials:', error);
+        // Fallback to empty array if API fails
+        setTestimonials([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   // Auto-slide functionality
   useEffect(() => {
@@ -44,9 +46,9 @@ export function TestimonialsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12 sm:mb-16"
+          className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16"
         >
-          <h2 className="font-['Poppins'] font-medium text-white text-3xl sm:text-[48px] leading-normal">
+          <h2 className="font-['Poppins'] font-medium text-white text-2xl sm:text-3xl md:text-4xl lg:text-[48px] leading-normal">
             Showcase success with genuine{" "}
             <span className="text-[#473cf0]">Customer experiences</span>
           </h2>
@@ -67,16 +69,16 @@ export function TestimonialsSection() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.2, duration: 0.8 }}
-                  className="w-full flex-shrink-0 px-2 sm:px-4"
+                  className="w-full flex-shrink-0 px-1 sm:px-2 md:px-3 lg:px-4"
                   style={{
                     filter: index !== currentIndex ? 'blur(2px)' : 'none',
                     opacity: index !== currentIndex ? 0.6 : 1
                   }}
                 >
-                  <div className="bg-white rounded-[16px] p-6 sm:p-8 flex flex-col md:flex-row gap-6 sm:gap-16 items-center max-w-5xl mx-auto">
+                  <div className="bg-white rounded-[12px] sm:rounded-[14px] md:rounded-[16px] p-5 sm:p-6 md:p-7 lg:p-8 flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-10 lg:gap-16 items-center max-w-5xl mx-auto">
                     {/* Image */}
                     <div className="w-full md:w-1/2 flex-shrink-0">
-                      <div className="aspect-[1200/801.583740234375] rounded-[8px] overflow-hidden">
+                      <div className="aspect-[1200/801.583740234375] rounded-[6px] sm:rounded-[7px] md:rounded-[8px] overflow-hidden">
                         <img 
                           src={testimonial.image} 
                           alt={testimonial.name}
@@ -86,15 +88,15 @@ export function TestimonialsSection() {
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1 space-y-4">
-                      <p className="font-['Poppins'] text-black text-lg sm:text-[20px] leading-normal">
+                    <div className="flex-1 space-y-3 sm:space-y-4">
+                      <p className="font-['Poppins'] text-black text-base sm:text-lg md:text-lg lg:text-[20px] leading-normal">
                         {testimonial.text}
                       </p>
                       <div>
-                        <p className="font-['Poppins'] font-semibold text-[#473cf0] text-xl sm:text-2xl">
+                        <p className="font-['Poppins'] font-semibold text-[#473cf0] text-lg sm:text-xl md:text-xl lg:text-2xl">
                           {testimonial.name}
                         </p>
-                        <p className="font-['Poppins'] text-black text-base sm:text-[16px]">
+                        <p className="font-['Poppins'] text-black text-sm sm:text-base md:text-[16px]">
                           {testimonial.role}
                         </p>
                       </div>
@@ -106,7 +108,7 @@ export function TestimonialsSection() {
           </div>
 
           {/* Page Indicators */}
-          <div className="flex justify-center gap-2 sm:gap-3 mt-8">
+          <div className="flex justify-center gap-2 sm:gap-2.5 md:gap-3 mt-6 sm:mt-7 md:mt-8">
             {testimonials.map((_, index) => (
               <button
                 key={index}
@@ -114,8 +116,8 @@ export function TestimonialsSection() {
                 className={`
                   rounded-[50px] transition-all
                   ${index === currentIndex 
-                    ? 'bg-[#9ca3af] w-[30px] h-[10px]' 
-                    : 'bg-[#d9d9d9] w-[10px] h-[10px]'
+                    ? 'bg-[#9ca3af] w-[24px] sm:w-[28px] md:w-[30px] h-[8px] sm:h-[9px] md:h-[10px]' 
+                    : 'bg-[#d9d9d9] w-[8px] sm:w-[9px] md:w-[10px] h-[8px] sm:h-[9px] md:h-[10px]'
                   }
                 `}
               />

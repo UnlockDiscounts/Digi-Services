@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
 import imgFrame1321317465 from "../../assets/blog.png";
-import { AddBlogModal } from './AddBlogModal';
-import { SaveDraftModal } from './SaveDraftModal';
-import { BlogCard } from './BlogCard';
-import { MoreFilters } from './MoreFilters';
+import { AddBlogModal } from './AddBlogModal.jsx';
+import { SaveDraftModal } from './SaveDraftModal.jsx';
+import { BlogCard } from './BlogCard.jsx';
+import { MoreFilters } from './MoreFilters.jsx';
+import {
+  createPost,
+  deletePost,
+  getPosts,
+  updatePost,
+} from "../../services/blogApi.js";
 
 export default function Blogs() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -14,83 +20,36 @@ export default function Blogs() {
   const [editingBlog, setEditingBlog] = useState(null);
   const [sortBy, setSortBy] = useState('newest');
 
-  const [blogs, setBlogs] = useState([
-    {
-      id: 1,
-      title: '5 Website Design Fails That Drivers Visitors Away',
-      author: 'Elon Musk',
-      date: 'September 17, 2025',
-      status: 'draft',
-      image: imgFrame1321317465,
-    },
-    {
-      id: 2,
-      title: '5 Website Design Fails That Drivers Visitors Away',
-      author: 'Elon Musk',
-      date: 'September 17, 2025',
-      status: 'published',
-      image: imgFrame1321317465,
-    },
-    {
-      id: 3,
-      title: '5 Website Design Fails That Drivers Visitors Away',
-      author: 'Elon Musk',
-      date: 'September 17, 2025',
-      status: 'draft',
-      image: imgFrame1321317465,
-    },
-    {
-      id: 4,
-      title: '5 Website Design Fails That Drivers Visitors Away',
-      author: 'Elon Musk',
-      date: 'September 17, 2025',
-      status: 'published',
-      image: imgFrame1321317465,
-    },
-    {
-      id: 5,
-      title: '5 Website Design Fails That Drivers Visitors Away',
-      author: 'Elon Musk',
-      date: 'September 17, 2025',
-      status: 'scheduled',
-      image: imgFrame1321317465,
-    },
-    {
-      id: 6,
-      title: '5 Website Design Fails That Drivers Visitors Away',
-      author: 'Elon Musk',
-      date: 'September 17, 2025',
-      status: 'archived',
-      image: imgFrame1321317465,
-    },
-    {
-      id: 7,
-      title: '5 Website Design Fails That Drivers Visitors Away',
-      author: 'Elon Musk',
-      date: 'September 17, 2025',
-      status: 'published',
-      image: imgFrame1321317465,
-    },
-    {
-      id: 8,
-      title: '5 Website Design Fails That Drivers Visitors Away',
-      author: 'Elon Musk',
-      date: 'September 17, 2025',
-      status: 'published',
-      image: imgFrame1321317465,
-    },
-    {
-      id: 9,
-      title: '5 Website Design Fails That Drivers Visitors Away',
-      author: 'Elon Musk',
-      date: 'September 17, 2025',
-      status: 'published',
-      image: imgFrame1321317465,
-    },
-  ]);
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All Status');
+
+  // Filter and sort blogs
+  const filteredBlogs = blogs
+    .filter(blog => {
+      // Search filter
+      const matchesSearch = blog.header?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           blog.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           blog.description?.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      // Status filter
+      const matchesStatus = statusFilter === 'All Status' || 
+                           blog.status === statusFilter.toLowerCase();
+      
+      return matchesSearch && matchesStatus;
+    })
+    .sort((a, b) => {
+      // Sort by date
+      if (sortBy === 'newest') {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else if (sortBy === 'oldest') {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+      return 0;
+    });
 
   const handleAddPost = () => {
     setEditingBlog(null);
@@ -102,9 +61,17 @@ export default function Blogs() {
     setIsAddModalOpen(true);
   };
 
-  const handleDeletePost = (blogId) => {
-    if (confirm('Are you sure you want to delete this blog post?')) {
-      setBlogs(blogs.filter(blog => blog.id !== blogId));
+  const handleDeletePost = async (blogId) => {
+    if (!confirm('Are you sure you want to delete this blog post?')) {
+      return;
+    }
+
+    try {
+      setErrorMessage('');
+      await deletePost(blogId);
+      setBlogs((prev) => prev.filter((blog) => blog.id !== blogId));
+    } catch (error) {
+      setErrorMessage(error?.message || 'Failed to delete blog post.');
     }
   };
 
@@ -114,22 +81,26 @@ export default function Blogs() {
     setIsSaveDraftModalOpen(true);
   };
 
-  const handleSaveDraft = () => {
-    if (pendingFormData) {
-      const newBlog = {
-        id: blogs.length + 1,
-        title: pendingFormData.title || 'Untitled Post',
-        author: 'Current User',
-        date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-        status: 'draft',
-        image: pendingFormData.images?.[0] || imgFrame1321317465,
-        description: pendingFormData.description,
-        category: pendingFormData.category,
-      };
-      setBlogs([newBlog, ...blogs]);
+  const handleSaveDraft = async () => {
+    if (!pendingFormData) {
+      setIsSaveDraftModalOpen(false);
+      setPendingFormData(null);
+      return;
     }
-    setIsSaveDraftModalOpen(false);
-    setPendingFormData(null);
+
+    try {
+      setErrorMessage('');
+      const createdBlog = await createPost({
+        ...pendingFormData,
+        status: 'draft',
+      });
+      setBlogs((prev) => [createdBlog, ...prev]);
+    } catch (error) {
+      setErrorMessage(error?.message || 'Failed to save draft.');
+    } finally {
+      setIsSaveDraftModalOpen(false);
+      setPendingFormData(null);
+    }
   };
 
   const handleDiscardDraft = () => {
@@ -137,38 +108,60 @@ export default function Blogs() {
     setPendingFormData(null);
   };
 
-  const handlePublishPost = (formData) => {
-    if (editingBlog) {
-      // Update existing blog
-      setBlogs(blogs.map(blog => 
-        blog.id === editingBlog.id 
-          ? {
-              ...blog,
-              title: formData.title || 'Untitled Post',
-              status: formData.status || 'published',
-              image: formData.images?.[0] || blog.image,
-              description: formData.description,
-              category: formData.category,
-            }
-          : blog
-      ));
-    } else {
-      // Create new blog
-      const newBlog = {
-        id: blogs.length + 1,
-        title: formData.title || 'Untitled Post',
-        author: 'Current User',
-        date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-        status: formData.status || 'published',
-        image: formData.images?.[0] || imgFrame1321317465,
-        description: formData.description,
-        category: formData.category,
-      };
-      setBlogs([newBlog, ...blogs]);
+  const handlePublishPost = async (formData) => {
+    try {
+      setErrorMessage('');
+      if (editingBlog) {
+        const updatedBlog = await updatePost(editingBlog.id, formData);
+        setBlogs((prev) =>
+          prev.map((blog) => (blog.id === updatedBlog.id ? updatedBlog : blog))
+        );
+      } else {
+        const createdBlog = await createPost({
+          ...formData,
+          status: formData.status || 'published',
+        });
+        setBlogs((prev) => [createdBlog, ...prev]);
+      }
+      setIsAddModalOpen(false);
+      setEditingBlog(null);
+    } catch (error) {
+      setErrorMessage(error?.message || 'Failed to publish blog.');
     }
-    setIsAddModalOpen(false);
-    setEditingBlog(null);
   };
+
+  useEffect(() => {
+    let isActive = true;
+
+    const fetchBlogs = async () => {
+      try {
+        setIsLoading(true);
+        setErrorMessage('');
+        const data = await getPosts();
+        if (isActive) {
+          setBlogs(
+            data.map((blog) => ({
+              ...blog,
+              image: blog.image || imgFrame1321317465,
+            }))
+          );
+        }
+      } catch (error) {
+        if (isActive) {
+          setErrorMessage(error?.message || 'Failed to load blogs.');
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchBlogs();
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-[#f5f5f5]">
@@ -211,7 +204,7 @@ export default function Blogs() {
             />
           </div>
           <div className="bg-white px-4 py-3 rounded-[8px] font-['Poppins',sans-serif]">
-            Total Blogs: <span className="font-semibold">250</span>
+            Total Blogs: <span className="font-semibold">{filteredBlogs.length}</span>
           </div>
           <select
             value={statusFilter}
@@ -240,16 +233,32 @@ export default function Blogs() {
           </div>
         </div>
 
+        {errorMessage && (
+          <p className="text-red-600 mb-4 font-['Poppins',sans-serif]">
+            {errorMessage}
+          </p>
+        )}
+
         {/* Blog Grid */}
         <div className="grid grid-cols-3 gap-6">
-          {blogs.map((blog) => (
-            <BlogCard 
-              key={blog.id} 
-              blog={blog}
-              onEdit={handleEditPost}
-              onDelete={handleDeletePost}
-            />
-          ))}
+          {isLoading ? (
+            <p className="col-span-3 text-center font-['Poppins',sans-serif]">
+              Loading blogs...
+            </p>
+          ) : filteredBlogs.length === 0 ? (
+            <p className="col-span-3 text-center text-gray-500 font-['Poppins',sans-serif]">
+              No blogs found matching your filters.
+            </p>
+          ) : (
+            filteredBlogs.map((blog) => (
+              <BlogCard
+                key={blog.id}
+                blog={blog}
+                onEdit={handleEditPost}
+                onDelete={handleDeletePost}
+              />
+            ))
+          )}
         </div>
       </div>
 

@@ -1,14 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronRight } from "lucide-react";
 
-import BlogCard from "../components/BlogCard";
+import BlogCard from "../components/BlogCard.jsx";
 import ArticlesHeroCurve1 from "../components/svg/ArticlesHeroCurve1";
 import ArticlesHeroCurve2 from "../components/svg/ArticlesHeroCurve2";
 
-import { blogs } from "../data/dummyblogs";
+import { blogs as dummyBlogs } from "../data/dummyblogs.js";
+// import { getAllBlogs } from "../api/blogService";
 
 const Articles = () => {
   const [activeTab, setActiveTab] = useState("All Blogs");
+  const [blogs, setBlogs] = useState(dummyBlogs);
+  const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   const fetchBlogs = async () => {
+  //     try {
+  //       const data = await getAllBlogs();
+  //       setBlogs(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch blogs:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchBlogs();
+  // }, []);
+
+  const filteredBlogs =
+    activeTab === "All Blogs"
+      ? blogs
+      : blogs.filter((blog) => blog.category === activeTab);
 
   return (
     <div>
@@ -66,22 +89,33 @@ const Articles = () => {
         </div>
 
         {/* CONDITIONALLY RENDER CONTENT */}
-        {activeTab === "All Blogs" && (
+        {loading ? (
+          <div className="text-center py-20 text-xl font-medium">
+            Loading blogs...
+          </div>
+        ) : (
           <>
             {/* BLOG GRID */}
             <div className="max-w-[1193px] mx-auto rounded-2xl grid gap-x-8 gap-y-8 md:gap-y-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
-              {blogs.map((blog) => (
-                <BlogCard key={blog.id} blog={blog} />
-              ))}
+              {filteredBlogs.length > 0 ? (
+                filteredBlogs.map((blog) => (
+                  <BlogCard key={blog._id} blog={blog} />
+                ))
+              ) : (
+                <div className="col-span-full text-center text-gray-500 text-xl py-10">
+                  No blogs found in this category.
+                </div>
+              )}
             </div>
 
             {/* LOAD MORE BLOGS BUTTON */}
-            <div className="text-center mt-16">
-              <button className="w-[264px] h-14 px-[15px] py-2.5 rounded-3xl flex items-center justify-center gap-2.5 mx-auto bg-white border border-[#0412C0] shadow-[0px_1px_10px_0px_rgba(0,0,0,0.25)] text-2xl font-normal leading-none text-black transition-all duration-300 hover:bg-[#6364FF] hover:text-white hover:border-[#6364FF]">
-                Load More Blogs{" "}
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
+            {activeTab === "All Blogs" && filteredBlogs.length > 0 && (
+              <div className="text-center mt-16">
+                <button className="w-[264px] h-14 px-[15px] py-2.5 rounded-3xl flex items-center justify-center gap-2.5 mx-auto bg-white border border-[#0412C0] shadow-[0px_1px_10px_0px_rgba(0,0,0,0.25)] text-2xl font-normal leading-none text-black transition-all duration-300 hover:bg-[#6364FF] hover:text-white hover:border-[#6364FF]">
+                  Load More Blogs <ChevronRight className="w-6 h-6" />
+                </button>
+              </div>
+            )}
           </>
         )}
       </section>

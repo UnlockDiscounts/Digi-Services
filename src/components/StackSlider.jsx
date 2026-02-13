@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 
-import { Stack1, Stack2, Stack3, Stack4 } from "./svg";
+import { SvgStack1 } from "./svg/Stack1";
+import { SvgStack2 } from "./svg/Stack2";
+import { SvgStack3 } from "./svg/Stack3";
+import { SvgStack4 } from "./svg/Stack4";
 
 const StackSlider = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -28,7 +31,7 @@ const StackSlider = () => {
             zIndex: isExpanded ? 10 : 10,
           }}
         >
-          <Stack1 className="w-[150px] md:w-[309px] h-auto" />
+          <SvgStack1 className="w-[150px] md:w-[309px] h-auto" />
         </div>
 
         {/* Item 2 (Left Inner) */}
@@ -42,7 +45,7 @@ const StackSlider = () => {
             zIndex: isExpanded ? 10 : 20,
           }}
         >
-          <Stack2 className="w-[150px] md:w-[309px] h-auto" />
+          <SvgStack2 className="w-[150px] md:w-[309px] h-auto" />
         </div>
 
         {/* Item 3 (Right Inner) */}
@@ -56,7 +59,7 @@ const StackSlider = () => {
             zIndex: isExpanded ? 10 : 30, // Center item often on top in stack
           }}
         >
-          <Stack3 className="w-[150px] md:w-[309px] h-auto" />
+          <SvgStack3 className="w-[150px] md:w-[309px] h-auto" />
         </div>
 
         {/* Item 4 (Right Outer) */}
@@ -71,7 +74,7 @@ const StackSlider = () => {
             zIndex: isExpanded ? 10 : 40,
           }}
         >
-          <Stack4 className="w-[150px] md:w-[309px] h-auto" />
+          <SvgStack4 className="w-[150px] md:w-[309px] h-auto" />
         </div>
       </div>
     </div>
