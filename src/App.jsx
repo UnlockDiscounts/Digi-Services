@@ -44,15 +44,13 @@ const AdminLayout = ({ isLoggedIn }) => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200">
-      <div className="app-layout w-full  bg-white flex flex-col md:flex-row md:h-[1024px]">
-        <div className="w-1/2 flex">
-          <WelcomePage />
-        </div>
-        <div className="w-full md:w-1/2 flex items-center justify-center">
-          <div className="auth-container flex items-center justify-center">
-            <Outlet />
-          </div>
+    <div className="w-full h-screen bg-white flex flex-col md:flex-row overflow-hidden m-0 p-0">
+      <div className="w-full md:w-1/2 flex">
+        <WelcomePage />
+      </div>
+      <div className="w-full md:w-1/2 flex items-center justify-center bg-white">
+        <div className="auth-container flex items-center justify-center w-full">
+          <Outlet />
         </div>
       </div>
     </div>

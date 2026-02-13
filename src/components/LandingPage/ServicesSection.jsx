@@ -42,7 +42,7 @@ const floatingIcons = [
 
 export function ServicesSection() {
   return (
-    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section id="services" className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="container max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -74,7 +74,7 @@ export function ServicesSection() {
                 y: -10,
                 boxShadow: "0 20px 60px rgba(99, 100, 255, 0.4)",
               }}
-              className="bg-[#c7d3fc] rounded-[32px] overflow-hidden p-8 flex flex-col items-center text-center h-[480px] sm:h-[541px] relative group transition-shadow duration-300"
+              className="bg-[#c7d3fc] rounded-[24px] sm:rounded-[32px] overflow-hidden p-6 sm:p-8 flex flex-col items-center text-center h-[420px] sm:h-[480px] lg:h-[541px] relative group transition-shadow duration-300"
               style={{
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
               }}

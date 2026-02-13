@@ -75,18 +75,20 @@ const ServiceCategory = () => {
       </section>
 
       {/* SERVICES WE PROVIDE SECTION */}
-      <section className="py-10 md:py-20">
-        <h3 className="text-3xl md:text-5xl font-medium text-black text-center mb-12">
+      <section className="py-8 sm:py-12 md:py-20">
+        <h3 className="text-2xl sm:text-3xl md:text-5xl font-medium text-black text-center mb-8 sm:mb-10 md:mb-12 px-4">
           Services We Provide
         </h3>
 
-        <div className="w-full max-w-[1440px] mx-auto min-h-auto md:min-h-[500px] px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
           {loading ? (
-            <div className="w-full text-center text-xl">Loading services...</div>
+            <div className="w-full text-center text-lg sm:text-xl py-12">Loading services...</div>
           ) : (
-            services.map((service) => (
-              <ServiceOverviewCard key={service._id} service={service} />
-            ))
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+              {services.map((service) => (
+                <ServiceOverviewCard key={service._id} service={service} />
+              ))}
+            </div>
           )}
         </div>
       </section>

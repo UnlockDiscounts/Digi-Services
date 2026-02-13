@@ -115,7 +115,7 @@ export default function NavBar() {
       {/* Mobile menu dropdown */}
 
       {isMobileMenuOpen && (
-        <div className="lg:hidden pb-4 space-y-3 bg-gradient-to-b from-blue-500/95 via-indigo-600/95 to-purple-600/95 border-t border-white/50 rounded-b-lg shadow-2xl backdrop-blur-md p-6 mt-1">
+        <div className="lg:hidden pb-4 space-y-3 bg-gradient-to-b from-blue-500/50 via-indigo-600/50 to-purple-600/95 border-t border-white/50 rounded-b-lg shadow-2xl backdrop-blur-md p-6 mt-1">
           <Link
             to="/"
             className="block text-white font-semibold text-lg hover:[#4F46E5/90] hover:rounded-xl transition-all py-3 px-4"
@@ -124,7 +124,7 @@ export default function NavBar() {
             Home
           </Link>
 
-          <div className="pl-6 space-y-2">
+          <div className="space-y-2">
             <details className="group">
               <summary className="text-white font-semibold py-3 px-4 cursor-pointer hover:bg-white/20 hover:rounded-xl transition-all flex items-center gap-3">
                 Services{" "}
