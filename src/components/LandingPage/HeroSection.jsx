@@ -1,6 +1,9 @@
 import { motion } from "motion/react";
 import { ChevronRight } from "lucide-react";
 import hero from "../../assets/hero.svg";
+import { Link } from "react-router-dom";
+
+
 
 export function HeroSection() {
   return (
@@ -74,6 +77,7 @@ export function HeroSection() {
   </button>
 
   {/* Button 2: Explore Services (Identical Roundedness & Hidden Bracket) */}
+  
   <button 
     onClick={() => {
       const servicesSection = document.getElementById('services');
@@ -83,9 +87,11 @@ export function HeroSection() {
     }}
     className="group relative bg-white text-black font-['Poppins'] font-medium text-xl sm:text-2xl px-8 py-4 rounded-[16px] hover:bg-gray-100 transition-all shadow-lg overflow-hidden min-w-[240px] cursor-pointer"
   >
+    <Link to="/services">
     <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-3 block">
       Explore Services
     </span>
+    </Link>
     
     {/* Bracket: Positioned absolutely so it takes up NO space when not hovered */}
     <motion.div
