@@ -61,6 +61,16 @@ const AboutUs = () => {
   const [hoveredValueCard, setHoveredValueCard] = useState(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
+//const [testimonials, setTestimonials] = useState([]);
+//const [loading, setLoading] = useState(true);
+
+
+// useEffect(() => {
+//     fetch('https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials')
+//       .then(res => res.json())
+//       .then(setTestimonials);
+//   }, []);
+  
 
 
   const [testimonials, setTestimonials] = useState([
@@ -128,7 +138,7 @@ const AboutUs = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative h-[510px] w-full overflow-hidden"
+        className="relative h-[350px] sm:h-[420px] md:h-[510px] w-full overflow-hidden"
         style={{ backgroundImage: "linear-gradient(83.9195deg, rgb(254, 203, 242) 1.8178%, rgb(145, 123, 255) 47.22%, rgb(7, 55, 255) 92.159%)" }}
       >
         
@@ -146,18 +156,18 @@ const AboutUs = () => {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="absolute font-bold text-[48px] text-white left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full px-4"
+          className="absolute font-bold text-[32px] sm:text-[40px] md:text-[48px] text-white left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full px-4"
         >
           ABOUT US
         </motion.h1>
       </motion.div>
 
       {/* Who We Are Section */}
-      <AnimatedSection className="bg-[rgba(172,173,188,0.2)] flex flex-col gap-[32px] items-center px-6 md:px-[64px] py-[32px] w-full">
-        <h2 className="font-medium text-[48px] text-black text-center w-full">
+      <AnimatedSection className="bg-[rgba(172,173,188,0.2)] flex flex-col gap-[24px] sm:gap-[32px] items-center px-4 sm:px-6 md:px-[64px] py-[24px] sm:py-[32px] w-full">
+        <h2 className="font-medium text-[32px] sm:text-[40px] md:text-[48px] text-black text-center w-full">
           Who We Are
         </h2>
-        <div className="font-['Poppins'] text-[23px] text-black w-full max-w-[1312px] mx-auto">
+        <div className="font-['Poppins'] text-[16px] sm:text-[20px] md:text-[23px] text-black w-full max-w-[1312px] mx-auto">
           <p className="mb-4 text-center md:text-left">At Unlock Digi Services, we are a passionate team of professionals dedicated to simplifying digital and financial services for individuals, freelancers, and small businesses across India.</p>
           <p className="mb-4 text-center md:text-left">Founded with the belief that quality services should be accessible and affordable to everyone, we bridge the gap between complex government processes and modern digital needs. Our team includes certified tax consultants, creative digital marketers, skilled developers, and expert resume writers.</p>
           <p>Whether you're a startup looking to build a professional brand, a job seeker preparing to impress recruiters, or a business owner managing taxes, we're here to make it easy, efficient, and stress-free.</p>
@@ -166,94 +176,82 @@ const AboutUs = () => {
 
       {/* Animated Image Gallery */}
       <div className="w-full py-12 px-4">
-        <div className="relative mx-auto overflow-hidden bg-transparent flex-shrink-0 w-full max-w-[1130px] aspect-[1130/981]">
+        <div className="relative mx-auto overflow-hidden rounded-3xl  bg-transparent flex-shrink-0 w-full max-w-[1130px] aspect-[1130/981]">
           
           {/* Top-left */}
-          <div className="absolute left-0 top-0 w-[53.8%] h-[41%]">
-            <div className="w-full h-full overflow-hidden isolation-isolate" style={{ clipPath: "inset(0)" }}>
-              <motion.div
-                className="flex w-full h-full"
-                animate={{ x: `-${currentIndex * 100}%` }}
-                transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
-                onAnimationComplete={handleAnimationComplete}
-              >
-                {[...topLeftImages, topLeftImages[0]].map((imgSrc, i) => (
-                  <div key={i} className="flex-shrink-0 w-full h-full p-4">
-                    <img src={imgSrc} alt="" className="w-full h-full object-cover shadow-lg hover:scale-[1.02] transition-all" />
-                  </div>
-                ))}
-              </motion.div>
-            </div>
+          <div className="absolute left-0 top-0 overflow-hidden w-[54%] h-[41%]">
+            <motion.div
+              className="flex"
+              animate={{ x: -(currentIndex * 608) }}
+              transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+              onAnimationComplete={handleAnimationComplete}
+            >
+              {[...topLeftImages, topLeftImages[0]].map((imgSrc, i) => (
+                <div key={i} className="flex-shrink-0 w-[608px] h-full p-4">
+                  <img src={imgSrc} alt="" className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all" />
+                </div>
+              ))}
+            </motion.div>
           </div>
 
           {/* Top-right */}
-          <div className="absolute right-0 top-0 w-[46.2%] h-[60%]">
-            <div className="w-full h-full overflow-hidden isolation-isolate" style={{ clipPath: "inset(0)" }}>
-              <motion.div
-                className="flex flex-col w-full h-full"
-                animate={{ y: `-${currentIndex * 100}%` }}
-                transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
-              >
-                {[...topRightImages, topRightImages[0]].map((imgSrc, i) => (
-                  <div key={i} className="flex-shrink-0 w-full h-full p-4">
-                    <img src={imgSrc} alt="" className="w-full h-full object-cover shadow-lg hover:scale-[1.02] transition-all" />
-                  </div>
-                ))}
-              </motion.div>
-            </div>
+          <div className="absolute right-0 top-0 overflow-hidden w-[43%] h-[60%]">
+            <motion.div
+              className="flex flex-col"
+              animate={{ y: -(currentIndex * 587) }}
+              transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+            >
+              {[...topRightImages, topRightImages[0]].map((imgSrc, i) => (
+                <div key={i} className="flex-shrink-0 w-[490px] h-[587px] p-4">
+                  <img src={imgSrc} alt="" className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all" />
+                </div>
+              ))}
+            </motion.div>
           </div>
 
           {/* Bottom-left */}
-          <div className="absolute left-0 bottom-0 w-[53.8%] h-[59%]">
-            <div className="w-full h-full overflow-hidden isolation-isolate" style={{ clipPath: "inset(0)" }}>
-              <motion.div
-                className="flex flex-col w-full h-full"
-                animate={{ y: `-${currentIndex * 100}%` }}
-                transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
-              >
-                {[...bottomLeftImages, bottomLeftImages[0]].map((imgSrc, i) => (
-                  <div key={i} className="flex-shrink-0 w-full h-full p-4">
-                    <img src={imgSrc} alt="" className="w-full h-full object-cover shadow-lg hover:scale-[1.02] transition-all" />
-                  </div>
-                ))}
-              </motion.div>
-            </div>
+          <div className="absolute left-0 bottom-0 overflow-hidden w-[54%] h-[57%]">
+            <motion.div
+              className="flex flex-col"
+              animate={{ y: -(currentIndex * 558) }}
+              transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+            >
+              {[...bottomLeftImages, bottomLeftImages[0]].map((imgSrc, i) => (
+                <div key={i} className="flex-shrink-0 w-[608px] h-[558px] p-4">
+                  <img src={imgSrc} alt="" className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all" />
+                </div>
+              ))}
+            </motion.div>
           </div>
 
           {/* Bottom-right */}
-          <div className="absolute right-0 bottom-0 w-[46.2%] h-[40%]">
-            <div className="w-full h-full overflow-hidden isolation-isolate" style={{ clipPath: "inset(0)" }}>
-              <motion.div
-                className="flex w-full h-full"
-                animate={{ x: `-${currentIndex * 100}%` }}
-                transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
-              >
-                {[...bottomRightImages, bottomRightImages[0]].map((imgSrc, i) => (
-                  <div key={i} className="flex-shrink-0 w-full h-full p-4">
-                    <img src={imgSrc} alt="" className="w-full h-full object-cover shadow-lg hover:scale-[1.02] transition-all" />
-                  </div>
-                ))}
-              </motion.div>
-            </div>
+          <div className="absolute right-0 bottom-0 overflow-hidden w-[43%] h-[40%]">
+            <motion.div
+              className="flex"
+              animate={{ x: -(currentIndex * 608) }}
+              transition={currentIndex === 0 ? { duration: 0 } : transitionProps}
+            >
+              {[...bottomRightImages, bottomRightImages[0]].map((imgSrc, i) => (
+                <div key={i} className="flex-shrink-0 w-[608px] h-full p-4">
+                  <img src={imgSrc} alt="" className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-[1.02] transition-all" />
+                </div>
+              ))}
+            </motion.div>
           </div>
 
           {/* Center divider */}
-          <div className="absolute h-full bg-white z-10 opacity-100" style={{ left: '53.8%', width: '32px', transform: 'translateX(-50%)' }}></div>
-          {/* Horizontal Gap Reinforcement */}
-          <div className="absolute w-[53.8%] bg-white z-10 opacity-100" style={{ top: '41%', height: '16px', left: 0, transform: 'translateY(-50%)' }}></div>
-          {/* Horizontal Gap Reinforcement */}
-          <div className="absolute w-[46.2%] bg-white z-10 opacity-100" style={{ top: '60%', right: 0, height: '32px', transform: 'translateY(-50%)' }}></div>
+          <div className="absolute h-full bg-white z-10 opacity-80 " style={{ left: '53.8%' }}></div>
         </div>
       </div>
 
 
 
       {/* Vision & Mission */}
-      <AnimatedSection className="flex flex-col gap-[48px] items-center px-6 md:px-[64px] py-[32px] w-full max-w-[1440px] mx-auto mt-12">
-        <h2 className="font-bold text-[48px] text-black text-center w-full">
+      <AnimatedSection className="flex flex-col gap-[32px] sm:gap-[48px] items-center px-4 sm:px-6 md:px-[64px] py-[24px] sm:py-[32px] w-full max-w-[1440px] mx-auto mt-8 sm:mt-12">
+        <h2 className="font-bold text-[28px] sm:text-[36px] md:text-[48px] text-black text-center w-full px-4">
           Our <span className="text-[#6364ff]">Vision</span> & <span className="text-[#6364ff]">Mission</span>
         </h2>
-        <div className="text-[24px] text-black w-full text-center md:text-left">
+        <div className="text-[16px] sm:text-[20px] md:text-[24px] text-black w-full text-center md:text-left px-4">
           <p className="mb-4">At Unlock Digi Services, our vision is to be India's most trusted and accessible partner for digital and compliance services...</p>
           <p className="mb-4">Our mission is to simplify complex processes like and business compliance by offering expert-led solutions...</p>
           <p>Driven by a client-first approach, we prioritize accuracy, reliability, and fast delivery in everything we do.</p>
@@ -262,7 +260,7 @@ const AboutUs = () => {
         {/* Values Cards */}
         <motion.div
           variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}
-          className="flex flex-col lg:flex-row gap-[48px] items-center justify-center w-full"
+          className="flex flex-col lg:flex-row gap-[24px] sm:gap-[32px] md:gap-[48px] items-center justify-center w-full px-4"
         >
           {[
             { icon: svgPaths.p32972e90, title: "Result- Driven", description: "We focus on delivering measurable outcomes that drive your business forward." },
@@ -271,7 +269,7 @@ const AboutUs = () => {
           ].map((value, idx) => (
             <motion.div
               key={idx} variants={fadeInUp} onHoverStart={() => setHoveredValueCard(idx)} onHoverEnd={() => setHoveredValueCard(null)}
-              className="bg-white flex flex-col items-center px-[16px] py-[99px] rounded-[16px] w-full max-w-[342px] relative overflow-hidden cursor-pointer shadow-lg"
+              className="bg-white flex flex-col items-center px-[12px] sm:px-[16px] py-[60px] sm:py-[80px] md:py-[99px] rounded-[16px] w-full max-w-[342px] relative overflow-hidden cursor-pointer shadow-lg"
             >
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: hoveredValueCard === idx ? 1 : 0 }} transition={{ duration: 0.3 }}
                 className="absolute inset-0" style={{ backgroundImage: "linear-gradient(135deg, rgba(99, 100, 255, 0.9) 0%, rgba(145, 123, 255, 0.9) 50%, rgba(254, 203, 242, 0.9) 100%)" }} />
@@ -290,15 +288,15 @@ const AboutUs = () => {
       </AnimatedSection>
 
       {/* Why Clients Choose Us */}
-      <AnimatedSection className="bg-[rgba(172,173,188,0.2)] flex flex-col gap-[32px] items-center px-6 md:px-[64px] py-[60px] w-full mt-12">
-        <div className="flex flex-col gap-[16px] items-center text-center w-full">
-          <h2 className="font-medium text-[48px] text-black">Why Clients Choose Us</h2>
-          <p className="text-[24px] text-black max-w-[900px]">We combine expertise with personalized service to deliver exceptional results.</p>
+      <AnimatedSection className="bg-[rgba(172,173,188,0.2)] flex flex-col gap-[24px] sm:gap-[32px] items-center px-4 sm:px-6 md:px-[64px] py-[40px] sm:py-[50px] md:py-[60px] w-full mt-8 sm:mt-12">
+        <div className="flex flex-col gap-[12px] sm:gap-[16px] items-center text-center w-full px-4">
+          <h2 className="font-medium text-[28px] sm:text-[36px] md:text-[48px] text-black">Why Clients Choose Us</h2>
+          <p className="text-[16px] sm:text-[20px] md:text-[24px] text-black max-w-[900px]">We combine expertise with personalized service to deliver exceptional results.</p>
         </div>
 
         <motion.div
           variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-[1152px]"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full max-w-[1152px] px-4"
         >
           {[
             { icon: svgPaths.p3feda500, title: "Expert Professionals", description: "Our team consists of certified tax experts..." },
@@ -310,7 +308,7 @@ const AboutUs = () => {
           ].map((feature, idx) => (
             <motion.div
               key={idx} variants={fadeInUp} onHoverStart={() => setHoveredCard(idx)} onHoverEnd={() => setHoveredCard(null)}
-              className="bg-white h-[312px] rounded-[16px] flex flex-col items-center justify-center relative overflow-hidden cursor-pointer shadow-sm"
+              className="bg-white h-[280px] sm:h-[312px] rounded-[16px] flex flex-col items-center justify-center relative overflow-hidden cursor-pointer shadow-sm">
             >
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: hoveredCard === idx ? 1 : 0 }} transition={{ duration: 0.3 }}
                 className="absolute inset-0" style={{ backgroundImage: "linear-gradient(135deg, rgba(99, 100, 255, 0.9) 0%, rgba(145, 123, 255, 0.9) 50%, rgba(254, 203, 242, 0.9) 100%)" }} />
@@ -330,17 +328,19 @@ const AboutUs = () => {
       </AnimatedSection>
 
       {/* Services Carousel */}
-      <AnimatedSection className="bg-white py-20 w-full max-w-[1440px] mx-auto overflow-hidden relative">
+      <AnimatedSection className="bg-white py-12 md:py-24 lg:py-32 w-full max-w-[1440px] mx-auto overflow-hidden relative px-4 md:px-0">
         <div className="w-full overflow-x-auto scrollbar-hide">
-          <div className="relative h-[749px] md:h-[749px] h-[500px] w-[1440px] md:w-[1440px] w-full flex-shrink-0 px-4 md:px-0">
+          <div className="relative h-[680px] md:h-[920px] w-full md:w-[1440px] flex-shrink-0 px-4 md:px-0">
 
-              <div className="absolute left-0 md:left-[670px] top-[139px] md:top-[139px] top-[20px] w-full md:w-[1100px] h-[471px] md:h-[471px] h-[400px] overflow-hidden px-2 md:px-0">
-              <motion.div className="flex gap-[65px] absolute "animate={{ x: -servicesScroll * 396}}>
+              <div className="absolute left-0 md:left-[600px] top-[20px] md:top-[100px] w-full md:w-[870px] h-[530px] md:h-[620px] overflow-hidden px-2 md:px-0">
+              <motion.div className="flex gap-[65px] absolute" animate={{ x: -servicesScroll * 363 }}>
                 {services.map((service, idx) => (
-                  <div key={idx} className="bg-white h-[471px] rounded-[6px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-lg">
-                    <h3 className="font-bold text-[26px] text-center mt-[18px] px-4" style={{ color: service.color }}>{service.title}</h3>
-                    <p className="font-medium text-[18px] text-black text-center mt-4 px-4">{service.description}</p>
-                    <div className="absolute bottom-0 left-[36px] h-[297px] w-[258px] overflow-hidden">
+                  <div key={idx} className="bg-white h-[480px] md:h-[550px] rounded-[16px] w-[280px] md:w-[331px] flex-shrink-0 relative overflow-hidden shadow-[0px_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0px_8px_20px_rgba(0,0,0,0.12)] transition-shadow duration-300 my-2 md:my-4">
+                    <div className="flex flex-col h-full pt-6 md:pt-8 px-4 md:px-6 pb-2 md:pb-4">
+                      <h3 className="font-bold text-[18px] md:text-[24px] text-center mb-2 md:mb-4 leading-tight" style={{ color: service.color }}>{service.title}</h3>
+                      <p className="font-medium text-[13px] md:text-[16px] text-black text-center mb-4 md:mb-8 flex-grow line-clamp-2 md:line-clamp-3">{service.description}</p>
+                    </div>
+                    <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 h-[240px] md:h-[340px] w-[230px] md:w-[310px] overflow-hidden rounded-lg">
                       <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
                     </div>
                   </div>
@@ -349,12 +349,12 @@ const AboutUs = () => {
             </div>
             
 
-       <div className="hidden md:block absolute left-[137px] top-0 h-[749px] w-[500px] rounded-[16px] overflow-hidden">
+       <div className="hidden md:block absolute left-[137px] top-0 h-[920px] w-[440px] lg:w-[500px] rounded-[20px] overflow-hidden">
        <img src={imginterview} className="absolute inset-0 object-cover size-full" alt="Interview" />
        <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(145deg, rgba(254, 203, 242, 0.9), rgba(3, 52, 255, 0.9))" }} />
-       <div className="relative z-10 h-full flex flex-col items-center justify-center px-12 text-white">
-       <p className="font-bold text-[40px] text-center mb-6 md:text-[40px] text-2xl sm:text-3xl">Our Comprehensive Services</p>
-       <p className="text-[24px] text-center md:text-[24px] text-lg sm:text-xl">We combine expertise with personalized service for all your digital needs.</p>
+       <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 text-white">
+       <p className="font-bold text-[40px] text-center mb-8 md:text-[40px] text-2xl sm:text-3xl leading-tight">Our Comprehensive Services</p>
+       <p className="text-[24px] text-center md:text-[24px] text-lg sm:text-xl leading-relaxed">We combine expertise with personalized service for all your digital needs.</p>
        </div>
        </div>
         </div>
@@ -365,15 +365,13 @@ const AboutUs = () => {
           disabled={servicesScroll === 0}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-
-          className={`absolute left-1/2 top-[850px] z-[30] size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all -translate-x-[80px] ${
-            servicesScroll === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer shadow-lg'
+          className={`absolute left-1/2 top-[700px] md:top-[1020px] z-[30] size-[32px] md:size-[40px] rounded-full border-2 border-gray-800 flex items-center justify-center bg-white transition-all -translate-x-[60px] md:-translate-x-[70px] ${
+            servicesScroll === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer shadow-md hover:shadow-lg'
           }`}
-          style={{ rotate: '180deg'}}
+          style={{ rotate: '180deg' }}
         >
-
-          <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
-            <path d={svgPaths.p9338b00} fill="black" />
+          <svg width="12" height="18" viewBox="0 0 10 16" fill="none">
+            <path d={svgPaths.p9338b00} fill="currentColor" className="text-gray-800" />
           </svg>
         </motion.button>
         <motion.button
@@ -381,20 +379,20 @@ const AboutUs = () => {
           disabled={servicesScroll === services.length - 1}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className={`absolute left-1/2 top-[850px] z-[30] size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all -translate-x-[30px] ${
-            servicesScroll === services.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer shadow-lg'
+          className={`absolute left-1/2 top-[700px] md:top-[1020px] z-[30] size-[32px] md:size-[40px] rounded-full border-2 border-gray-800 flex items-center justify-center bg-white transition-all -translate-x-[20px] ${
+            servicesScroll === services.length - 1 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer shadow-md hover:shadow-lg'
           }`}
         >
-          <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
-            <path d={svgPaths.pe4e7700} fill="black" />
+          <svg width="12" height="18" viewBox="0 0 10 16" fill="none">
+            <path d={svgPaths.pe4e7700} fill="currentColor" className="text-gray-800" />
           </svg>
         </motion.button>
       </AnimatedSection>
 
 
-    <div className="min-h-[600px] py-20 bg-gray-100 flex items-center justify-center p-4">
-        <AnimatedSection className="bg-[rgba(172,173,188,0.2)] py-12 w-full max-w-[1305px] mx-auto overflow-hidden rounded-2xl">
-          <h2 className="font-medium text-[32px] md:text-[48px] text-black text-center mb-12 px-4 leading-tight">
+    <div className="min-h-[400px] sm:min-h-[500px] md:min-h-[600px] py-12 sm:py-16 md:py-20 bg-gray-100 flex items-center justify-center p-4">
+        <AnimatedSection className="bg-[rgba(172,173,188,0.2)] py-8 sm:py-10 md:py-12 w-full max-w-[1305px] mx-auto overflow-hidden rounded-xl sm:rounded-2xl">
+          <h2 className="font-medium text-[24px] sm:text-[32px] md:text-[40px] lg:text-[48px] text-black text-center mb-8 sm:mb-10 md:mb-12 px-4 leading-tight">
             Client Testimonials
           </h2>
           <div className="w-full px-4 md:px-0">
