@@ -329,18 +329,34 @@ const AboutUs = () => {
 
       {/* Services Carousel */}
       <AnimatedSection className="bg-white py-12 md:py-24 lg:py-32 w-full max-w-[1440px] mx-auto overflow-hidden relative px-4 md:px-0">
-        <div className="w-full overflow-x-auto scrollbar-hide">
-          <div className="relative h-[680px] md:h-[920px] w-full md:w-[1440px] flex-shrink-0 px-4 md:px-0">
+        {/* Mobile: Vertical Stack */}
+        <div className="md:hidden flex flex-col gap-6 w-full max-w-[340px] mx-auto">
+          {services.map((service, idx) => (
+            <div key={idx} className="bg-white h-[480px] rounded-[16px] w-full relative overflow-hidden shadow-[0px_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0px_8px_20px_rgba(0,0,0,0.12)] transition-shadow duration-300">
+              <div className="flex flex-col h-full pt-6 px-4 pb-2">
+                <h3 className="font-bold text-[18px] text-center mb-2 leading-tight" style={{ color: service.color }}>{service.title}</h3>
+                <p className="font-medium text-[13px] text-black text-center mb-4 flex-grow line-clamp-2">{service.description}</p>
+              </div>
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 h-[240px] w-[230px] overflow-hidden rounded-lg">
+                <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+              </div>
+            </div>
+          ))}
+        </div>
 
-              <div className="absolute left-0 md:left-[600px] top-[20px] md:top-[100px] w-full md:w-[870px] h-[530px] md:h-[620px] overflow-hidden px-2 md:px-0">
+        {/* Desktop: Horizontal Carousel */}
+        <div className="hidden md:block w-full overflow-x-auto scrollbar-hide">
+          <div className="relative h-[920px] w-[1440px] flex-shrink-0">
+
+              <div className="absolute left-[600px] top-[100px] w-[870px] h-[620px] overflow-hidden">
               <motion.div className="flex gap-[65px] absolute" animate={{ x: -servicesScroll * 363 }}>
                 {services.map((service, idx) => (
-                  <div key={idx} className="bg-white h-[480px] md:h-[550px] rounded-[16px] w-[280px] md:w-[331px] flex-shrink-0 relative overflow-hidden shadow-[0px_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0px_8px_20px_rgba(0,0,0,0.12)] transition-shadow duration-300 my-2 md:my-4">
-                    <div className="flex flex-col h-full pt-6 md:pt-8 px-4 md:px-6 pb-2 md:pb-4">
-                      <h3 className="font-bold text-[18px] md:text-[24px] text-center mb-2 md:mb-4 leading-tight" style={{ color: service.color }}>{service.title}</h3>
-                      <p className="font-medium text-[13px] md:text-[16px] text-black text-center mb-4 md:mb-8 flex-grow line-clamp-2 md:line-clamp-3">{service.description}</p>
+                  <div key={idx} className="bg-white h-[550px] rounded-[16px] w-[331px] flex-shrink-0 relative overflow-hidden shadow-[0px_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0px_8px_20px_rgba(0,0,0,0.12)] transition-shadow duration-300 my-4">
+                    <div className="flex flex-col h-full pt-8 px-6 pb-4">
+                      <h3 className="font-bold text-[24px] text-center mb-4 leading-tight" style={{ color: service.color }}>{service.title}</h3>
+                      <p className="font-medium text-[16px] text-black text-center mb-8 flex-grow line-clamp-3">{service.description}</p>
                     </div>
-                    <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 h-[240px] md:h-[340px] w-[230px] md:w-[310px] overflow-hidden rounded-lg">
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 h-[340px] w-[310px] overflow-hidden rounded-lg">
                       <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
                     </div>
                   </div>
@@ -349,12 +365,12 @@ const AboutUs = () => {
             </div>
             
 
-       <div className="hidden md:block absolute left-[137px] top-0 h-[920px] w-[440px] lg:w-[500px] rounded-[20px] overflow-hidden">
+       <div className="absolute left-[137px] top-0 h-[920px] w-[440px] lg:w-[500px] rounded-[20px] overflow-hidden">
        <img src={imginterview} className="absolute inset-0 object-cover size-full" alt="Interview" />
        <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(145deg, rgba(254, 203, 242, 0.9), rgba(3, 52, 255, 0.9))" }} />
        <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 text-white">
-       <p className="font-bold text-[40px] text-center mb-8 md:text-[40px] text-2xl sm:text-3xl leading-tight">Our Comprehensive Services</p>
-       <p className="text-[24px] text-center md:text-[24px] text-lg sm:text-xl leading-relaxed">We combine expertise with personalized service for all your digital needs.</p>
+       <p className="font-bold text-[40px] text-center mb-8 text-2xl sm:text-3xl leading-tight">Our Comprehensive Services</p>
+       <p className="text-[24px] text-center text-lg sm:text-xl leading-relaxed">We combine expertise with personalized service for all your digital needs.</p>
        </div>
        </div>
         </div>
@@ -365,7 +381,7 @@ const AboutUs = () => {
           disabled={servicesScroll === 0}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className={`absolute left-1/2 top-[700px] md:top-[1020px] z-[30] size-[32px] md:size-[40px] rounded-full border-2 border-gray-800 flex items-center justify-center bg-white transition-all -translate-x-[60px] md:-translate-x-[70px] ${
+          className={`hidden md:flex absolute left-1/2 top-[1020px] z-[30] size-[40px] rounded-full border-2 border-gray-800 items-center justify-center bg-white transition-all -translate-x-[70px] ${
             servicesScroll === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer shadow-md hover:shadow-lg'
           }`}
           style={{ rotate: '180deg' }}
@@ -379,7 +395,7 @@ const AboutUs = () => {
           disabled={servicesScroll === services.length - 1}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className={`absolute left-1/2 top-[700px] md:top-[1020px] z-[30] size-[32px] md:size-[40px] rounded-full border-2 border-gray-800 flex items-center justify-center bg-white transition-all -translate-x-[20px] ${
+          className={`hidden md:flex absolute left-1/2 top-[1020px] z-[30] size-[40px] rounded-full border-2 border-gray-800 items-center justify-center bg-white transition-all -translate-x-[20px] ${
             servicesScroll === services.length - 1 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer shadow-md hover:shadow-lg'
           }`}
         >

@@ -1,10 +1,14 @@
 import { Facebook, Linkedin, Instagram, Twitter } from "lucide-react";
 import { useState } from "react";
+import ConversationForm from "./ConversationForm";
+import { createContact } from "../services/contactApi";
 
 export default function Footer() {
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
+    company: "",
     email: "",
+    contact: "",
     message: "",
   });
 
@@ -16,11 +20,51 @@ export default function Footer() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    setFormData({ fullName: "", email: "", message: "" });
+    try {
+      await createContact(formData);
+      setFormData({
+        name: "",
+        company: "",
+        email: "",
+        contact: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Failed to submit footer contact form:", error);
+    }
   };
+
+  const formFields = [
+    {
+      name: "name",
+      placeholder: "Full Name",
+      required: true,
+    },
+    {
+      name: "company",
+      placeholder: "Company Name",
+    },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Email Address",
+      required: true,
+    },
+    {
+      name: "contact",
+      type: "tel",
+      placeholder: "Contact Number",
+    },
+    {
+      name: "message",
+      type: "textarea",
+      placeholder: "Your Message",
+      rows: 4,
+      required: true,
+    },
+  ];
 
   return (
     <footer className="bg-gradient-to-r from-[#719CFF] to-[#A872FF]">
@@ -146,50 +190,13 @@ export default function Footer() {
           </div>
 
           <div>
-            <div className="mb-8">
-              <p className="text-white/80 text-sm font-semibold tracking-wider mb-2">
-                LET'S GROW YOUR BRAND ONLINE
-              </p>
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-8">
-                Start A Conversation
-              </h3>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                name="fullName"
-                placeholder="Full Name"
-                value={formData.fullName}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/60 transition-colors"
-              />
-
-              <input
-                type="email"
-                name="email"
-                placeholder="Email Address"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/60 transition-colors"
-              />
-
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                rows={4}
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/60 transition-colors resize-none"
-              />
-
-              <button
-                type="submit"
-                className="w-full px-6 py-3 bg-gradient-to-r from-[#5B4EE8] to-[#3D2F8C] text-white font-semibold rounded-lg hover:from-[#4B3FD8] hover:to-[#2D1F7C] transition-all"
-              >
-                Submit
-              </button>
-            </form>
+            <ConversationForm
+              variant="footer"
+              fields={formFields}
+              values={formData}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+            />
           </div>
         </div>
 

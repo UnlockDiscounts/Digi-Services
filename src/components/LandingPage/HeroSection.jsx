@@ -1,5 +1,4 @@
 import { motion } from "motion/react";
-import { ChevronRight } from "lucide-react";
 import hero from "../../assets/hero.svg";
 
 export function HeroSection() {
@@ -91,7 +90,9 @@ export function HeroSection() {
     <motion.div
       className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0"
     >
-      <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 stroke-[2]" />
+      <svg className="w-6 h-6 sm:w-8 sm:h-8" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 17.5a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15M7.293 10.001h5.417m0 0-2.084-2.083m2.084 2.083-2.084 2.084"/>
+      </svg>
     </motion.div>
   </button>
 </motion.div>

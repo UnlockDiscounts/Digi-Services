@@ -58,11 +58,11 @@ export function ArticlesSection() {
                     </motion.div>
 
                     {/* Read More Button */}
-                    <div className="absolute bottom-3 sm:bottom-3.5 md:bottom-4 left-1/2 -translate-x-1/2 z-10 w-max">
-                      <div className="bg-white px-2.5 sm:px-3 py-1 rounded-[14px] sm:rounded-[15px] md:rounded-[16px] shadow-lg text-[#473cf0] text-xs sm:text-sm font-['Poppins'] font-medium flex items-center gap-0 group-hover:gap-2 transition-all duration-300">
-                        Read more
-                        <SvgArrowIcon className="w-0 opacity-0 group-hover:w-3.5 group-hover:opacity-100 sm:group-hover:w-4 transition-all duration-300" />
-                      </div>
+                    <div className="absolute bottom-3 sm:bottom-3.5 md:bottom-4 left-1/2 -translate-x-1/2 z-10 w-max group/readbtn">
+                      <button className="bg-white px-2.5 sm:px-3 py-1 rounded-[14px] sm:rounded-[15px] md:rounded-[16px] shadow-lg text-[#473cf0] text-xs sm:text-sm font-['Poppins'] font-medium flex items-center gap-0 group-hover/readbtn:gap-2 transition-all duration-300 cursor-pointer">
+                        <span>Read more</span>
+                        <SvgArrowIcon className="w-6 h-6 origin-left transition-all duration-300 scale-0 group-hover/readbtn:scale-100" />
+                      </button>
                     </div>
                   </div>
 
