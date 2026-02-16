@@ -1,5 +1,45 @@
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
+import ServiceTestimonial from "../services/ServiceTestimonial";
+import { getAllTestimonials } from "../../api/serviceService";
+
+export function TestimonialsSection() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const result = await getAllTestimonials();
+        if (result && Array.isArray(result)) {
+          const formattedReviews = result.map((item) => ({
+            id: item._id,
+            authorName: item.name,
+            authorRole: "",
+            text: item.description,
+            image: item.file,
+          }));
+
+          setData({
+            title: "Showcase success with genuine",
+            highlight: "Customer experiences",
+            reviews: formattedReviews,
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch testimonials:", error);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
+
+  // Pass the transformed data to the component with transparent background
+  return <ServiceTestimonial data={data} isTransparent={true} />;
+}
+
+/*  Previous Testimonial Section Code
+import { motion } from "motion/react";
+import { useState, useEffect } from "react";
 import noimage from "../../assets/noimage.svg";
 import { getTestimonials } from "../../services/testimonialsApi";
 
@@ -40,7 +80,7 @@ export function TestimonialsSection() {
   return (
     <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="container max-w-7xl mx-auto">
-        {/* Section Title */}
+        {/* Section Title * /}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -54,7 +94,7 @@ export function TestimonialsSection() {
           </h2>
         </motion.div>
 
-        {/* Testimonials Carousel */}
+        {/* Testimonials Carousel * /}
         <div className="relative">
           <div className="overflow-hidden">
             <motion.div
@@ -76,7 +116,7 @@ export function TestimonialsSection() {
                   }}
                 >
                   <div className="bg-white rounded-[12px] sm:rounded-[14px] md:rounded-[16px] p-5 sm:p-6 md:p-7 lg:p-8 flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-10 lg:gap-16 items-center max-w-5xl mx-auto">
-                    {/* Image */}
+                    {/* Image * /}
                     <div className="w-full md:w-1/2 flex-shrink-0">
                       <div className="aspect-[1200/801.583740234375] rounded-[6px] sm:rounded-[7px] md:rounded-[8px] overflow-hidden">
                         <img 
@@ -87,7 +127,7 @@ export function TestimonialsSection() {
                       </div>
                     </div>
 
-                    {/* Content */}
+                    {/* Content * /}
                     <div className="flex-1 space-y-3 sm:space-y-4">
                       <p className="font-['Poppins'] text-black text-base sm:text-lg md:text-lg lg:text-[20px] leading-normal">
                         {testimonial.text}
@@ -107,7 +147,7 @@ export function TestimonialsSection() {
             </motion.div>
           </div>
 
-          {/* Page Indicators */}
+          {/* Page Indicators * /}
           <div className="flex justify-center gap-2 sm:gap-2.5 md:gap-3 mt-6 sm:mt-7 md:mt-8">
             {testimonials.map((_, index) => (
               <button
@@ -128,3 +168,4 @@ export function TestimonialsSection() {
     </section>
   );
 }
+*/

@@ -11,6 +11,10 @@ const ServiceCategory = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchServices = async () => {
       try {
         const data = await getAllServices();

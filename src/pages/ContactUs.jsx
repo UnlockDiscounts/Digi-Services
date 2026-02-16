@@ -1,40 +1,61 @@
-
-import React, { useState } from 'react';
-import Navbar from '../components/NavBar';
+import React, { useState } from "react";
+import Navbar from "../components/NavBar";
 import { motion } from "motion/react";
+import { createContact } from "../api/contactService";
 
 const ContactUs = () => {
-  const [formData, setFormData] = useState({ 
-    name: '', 
-    company: '', 
-    email: '', 
-    contact: '', 
-    message: '' 
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    email: "",
+    contact: "",
+    message: "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    try {
+      const payload = {
+        fullname: formData.name,
+        companyName: formData.company,
+        email: formData.email,
+        contactNumber: formData.contact,
+        message: formData.message,
+      };
+
+      await createContact(payload);
+
+      alert("Message sent successfully!");
+      setFormData({
+        name: "",
+        company: "",
+        email: "",
+        contact: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Failed to send message", error);
+      alert("Failed to send message. Please try again.");
+    }
   };
 
   return (
     <>
       {/* Full viewport gradient background */}
       <div className="fixed inset-0 bg-gradient-to-br from-[#F8C7F3] via-[#917BFF] to-[#0737FF] z-0" />
-      
+
       <div className="relative z-10 min-h-screen flex flex-col">
-        
         {/* Navbar - DEAD CENTER */}
         <div className="w-full flex justify-center items-center py-4 sm:py-6 lg:py-6 px-4 lg:px-15">
           {/* <Navbar /> */}
         </div>
 
         {/* Title - Responsive positioning */}
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -47,7 +68,6 @@ const ContactUs = () => {
         <div className="flex-1 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-50 pb-8 sm:pb-12 lg:pb-12 mt-16 sm:mt-20 md:mt-[200px] lg:mt-[200px]">
           <div className="w-full max-w-[95vw] lg:max-w-5xl mx-auto">
             <div className="flex flex-col lg:flex-row rounded-none shadow-2xl overflow-hidden mx-auto">
-              
               {/* Left purple card */}
               <div className="lg:w-1/2 bg-[#8A72EB] text-white px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 flex flex-col justify-center">
                 <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-4 sm:mb-6 lg:mb-6 leading-tight">
@@ -55,12 +75,24 @@ const ContactUs = () => {
                 </h2>
                 <div className="space-y-3 sm:space-y-4 lg:space-y-4 text-xs sm:text-sm lg:text-base">
                   <p className="font-semibold">How It's Works:</p>
-                  <p><span className="font-semibold ">Step 1:</span> Select the service you need.</p>
-                  <p><span className="font-semibold ">Step 2:</span> Share your details via WhatsApp or Email.</p>
-                  <p><span className="font-semibold ]">Step 3:</span> Your service will be delivered within 2–3 days.</p>
+                  <p>
+                    <span className="font-semibold ">Step 1:</span> Select the
+                    service you need.
+                  </p>
+                  <p>
+                    <span className="font-semibold ">Step 2:</span> Share your
+                    details via WhatsApp or Email.
+                  </p>
+                  <p>
+                    <span className="font-semibold ]">Step 3:</span> Your
+                    service will be delivered within 2–3 days.
+                  </p>
                   <p className="pt-3 sm:pt-4 lg:pt-4">
-                    Reach us at :{' '}
-                    <a href="mailto:info@unlockdigiservices.com" className="underline !text-white/100 font-semibold">
+                    Reach us at :{" "}
+                    <a
+                      href="mailto:info@unlockdigiservices.com"
+                      className="underline !text-white/100 font-semibold"
+                    >
                       info@unlockdigiservices.com
                     </a>
                   </p>
@@ -84,7 +116,10 @@ const ContactUs = () => {
                   </h3>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-3 sm:space-y-4"
+                >
                   <input
                     type="text"
                     name="name"
@@ -128,7 +163,7 @@ const ContactUs = () => {
                     className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#8A72EB]"
                     required
                   />
-                  
+
                   <button
                     type="submit"
                     className="w-full !bg-[#6364FF] !text-white py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-[#7a64d6] transition-colors"
@@ -146,8 +181,3 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
-
-
-
-
-

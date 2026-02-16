@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-const ServiceTestimonial = ({ data }) => {
+const ServiceTestimonial = ({ data, isTransparent = false }) => {
   if (!data) return null;
   const { title, highlight, reviews } = data;
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     if (!reviews || reviews.length === 0) return;
-    
+
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % reviews.length);
     }, 5000);
@@ -15,12 +15,24 @@ const ServiceTestimonial = ({ data }) => {
   }, [reviews?.length]);
 
   return (
-    <section className="w-full py-16 px-4 md:px-16 bg-white flex flex-col items-center">
+    <section
+      className={`w-full py-16 px-4 md:px-16 flex flex-col items-center ${
+        isTransparent ? "bg-transparent" : "bg-white"
+      }`}
+    >
       {/* Heading */}
       <div className="text-center mb-16">
-        <h2 className="text-5xl font-medium leading-[1.4] text-black">
+        <h2
+          className={`text-5xl font-medium leading-[1.4] ${
+            isTransparent ? "text-white" : "text-black"
+          }`}
+        >
           {title} <br />
-          <span className="text-[#6364FF]">{highlight}</span>
+          <span
+            className={`${isTransparent ? "text-[#473CF0]" : "text-[#6364FF]"}`}
+          >
+            {highlight}
+          </span>
         </h2>
       </div>
 
@@ -38,10 +50,10 @@ const ServiceTestimonial = ({ data }) => {
               {/* Image Box */}
               <div className="w-[326px] h-[175px] md:w-[511px] md:h-[341.34px] bg-gray-200 rounded-[20px] md:rounded-lg flex-shrink-0 flex items-center justify-center text-gray-400 overflow-hidden">
                 {review.image ? (
-                  <img 
-                    src={review.image} 
-                    alt={review.authorName} 
-                    className="w-full h-full object-cover" 
+                  <img
+                    src={review.image}
+                    alt={review.authorName}
+                    className="w-full h-full object-cover"
                   />
                 ) : (
                   <svg
@@ -72,9 +84,11 @@ const ServiceTestimonial = ({ data }) => {
                   <h4 className="w-full text-2xl font-semibold text-[#473CF0] leading-none">
                     {review.authorName}
                   </h4>
-                  <p className="w-full text-base font-normal text-black leading-none">
-                    {review.authorRole}
-                  </p>
+                  {review.authorRole && (
+                    <p className="w-full text-base font-normal text-black leading-none">
+                      {review.authorRole}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

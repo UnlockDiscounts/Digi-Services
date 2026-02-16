@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
 import UnlockDiscountsLoginpage from "./UnlockDiscoutsLoginpage";
-import WelcomePage from "./welcomePage.jsx";
-import Articles from "./pages/Articles.jsx";
-import Blog from "./pages/Blog.jsx";
-import ServiceCategory from "./pages/ServiceCategory.jsx";
-import ServiceDetail from "./pages/ServiceDetail.jsx";
-import Sidebar from "./components/sidebar/sidebar";
-import { LandingPage } from "./components/LandingPage/LandingPage.jsx";
+import WelcomePage from "./welcomePage";
+import { LandingPage } from "./components/LandingPage/LandingPage";
+import Articles from "./pages/Articles";
+import Blog from "./pages/Blog";
+import ServiceCategory from "./pages/ServiceCategory";
+import ServiceDetail from "./pages/ServiceDetail";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 
-import Navbar from "./components/NavBar.jsx";
-import Footer from "./components/Footer.jsx";
+// Components
+import Sidebar from "./components/sidebar/sidebar";
+import Navbar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 /* ---------------- CLIENT LAYOUT ---------------- */
 const ClientLayout = () => {
@@ -60,58 +61,62 @@ const AdminLayout = ({ isLoggedIn }) => {
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  
-
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
   };
 
   return (
     <>
-    <Routes>
+      <Routes>
+        {/* ================= CLIENT ROUTES ================= */}
+        <Route element={<ClientLayout />}>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/about" element={<AboutUs />} />
 
-      {/* ================= CLIENT ROUTES ================= */}
-      <Route element={<ClientLayout />}>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/about" element={<AboutUs />} />
+          {/* Blog / Articles */}
+          <Route path="/articles" element={<Articles />} />
+          <Route path="/blog/:id" element={<Blog />} />
 
-        {/* Blog / Articles */}
-        <Route path="/articles" element={<Articles />} />
-        <Route path="/blog/:id" element={<Blog />} />
+          {/* Services */}
+          <Route path="/services" element={<ServiceCategory />} />
+          <Route path="/services/:serviceType" element={<ServiceDetail />} />
+        </Route>
 
-        {/* Services */}
-        <Route path="/services" element={<ServiceCategory />} />
-        <Route path="/services/:serviceType" element={<ServiceDetail />} />
+        <Route
+          path="/contact"
+          element={
+            <div className="relative min-h-screen">
+              <div className="absolute top-3 left-0 w-full z-50">
+                <Navbar />
+              </div>
 
-      </Route>
+              {/* ContactUs page */}
+              <ContactUs />
+            </div>
+          }
+        />
 
-      
-      <Route path="/contact" element={
-      <div className="relative min-h-screen"> 
-      <div className="absolute top-3 left-0 w-full z-50">
-      <Navbar />
-      </div>
-    
-      {/* ContactUs page */}
-      <ContactUs />
-      </div>
-       } />
+        {/* ================= ADMIN ROUTES ================= */}
+        <Route path="/admin" element={<AdminLayout isLoggedIn={isLoggedIn} />}>
+          {isLoggedIn ? (
+            <Route
+              index
+              element={<Sidebar onLogout={() => setIsLoggedIn(false)} />}
+            />
+          ) : (
+            <Route
+              index
+              element={
+                <UnlockDiscountsLoginpage onLoginSuccess={handleLoginSuccess} />
+              }
+            />
+          )}
+        </Route>
 
-
-      {/* ================= ADMIN ROUTES ================= */}
-      <Route path="/admin" element={<AdminLayout isLoggedIn={isLoggedIn} />}>
-        {isLoggedIn ?
-          <Route index element={<Sidebar onLogout={() => setIsLoggedIn(false)} />} /> :
-          <Route index element={<UnlockDiscountsLoginpage onLoginSuccess={handleLoginSuccess} />} />}
-      </Route>
-
-      {/* 404 */}
-      <Route path="*" element={<div>404 - Not Found</div>} />
-
-    </Routes>
-
-
-</>
+        {/* 404 */}
+        <Route path="*" element={<div>404 - Not Found</div>} />
+      </Routes>
+    </>
   );
 };
 
