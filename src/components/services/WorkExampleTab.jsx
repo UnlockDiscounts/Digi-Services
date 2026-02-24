@@ -19,7 +19,7 @@ export default function WorkExampleTab({ workExamples, setWorkExamples, onNext }
 
       try {
         const response = await axios.post(
-          'https://digiservices-backend-6hc3.onrender.com/api/v1/works',
+          'https://digiservices-backend-main.onrender.com/api/v1/works',
           formData,
           {
             headers: { 'Content-Type': 'multipart/form-data' }
@@ -47,7 +47,7 @@ export default function WorkExampleTab({ workExamples, setWorkExamples, onNext }
     // Implementation of the delete API functionality
     if (window.confirm('Are you sure you want to delete this work example?')) {
       try {
-        const response = await axios.delete(`https://digiservices-backend-6hc3.onrender.com/api/v1/works/${id}`);
+        const response = await axios.delete(`https://digiservices-backend-main.onrender.com/api/v1/works/${id}`);
         
         if (response.status === 200 || response.status === 204) {
           setWorkExamples(workExamples.filter(item => item.id !== id));

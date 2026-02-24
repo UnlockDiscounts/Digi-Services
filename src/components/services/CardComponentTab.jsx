@@ -40,13 +40,13 @@ export default function CardComponentTab({ cardItems, setCardItems, onNext }) {
         if (editingId) {
           // IMPLEMENT UPDATE: PUT request to the specific card ID
           response = await axios.put(
-            `https://digiservices-backend-6hc3.onrender.com/api/v1/cards/${editingId}`,
+            `https://digiservices-backend-main.onrender.com/api/v1/cards/${editingId}`,
             payload
           );
         } else {
           // CREATE NEW: POST request
           response = await axios.post(
-            'https://digiservices-backend-6hc3.onrender.com/api/v1/cards',
+            'https://digiservices-backend-main.onrender.com/api/v1/cards',
             payload
           );
         }

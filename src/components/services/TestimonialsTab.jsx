@@ -36,7 +36,7 @@ export default function TestimonialsTab({ testimonials, setTestimonials, onNext 
         if (editingId) {
           // IMPLEMENT UPDATE: PUT request to the specific testimonial ID
           response = await axios.put(
-            `https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials/${editingId}`,
+            `https://digiservices-backend-main.onrender.com/api/v1/testimonials/${editingId}`,
             formData,
             {
               headers: { 'Content-Type': 'multipart/form-data' }
@@ -45,7 +45,7 @@ export default function TestimonialsTab({ testimonials, setTestimonials, onNext 
         } else {
           // CREATE NEW: POST request
           response = await axios.post(
-            'https://digiservices-backend-6hc3.onrender.com/api/v1/testimonials',
+            'https://digiservices-backend-main.onrender.com/api/v1/testimonials',
             formData,
             {
               headers: { 'Content-Type': 'multipart/form-data' }

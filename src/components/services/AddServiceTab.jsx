@@ -31,7 +31,7 @@ export default function AddServiceTab({ onNext }) {
 
     try {
       const response = await axios.post(
-        'https://digiservices-backend-6hc3.onrender.com/api/v1/services',
+        'https://digiservices-backend-main.onrender.com/api/v1/services',
         formData,
         {
           headers: {

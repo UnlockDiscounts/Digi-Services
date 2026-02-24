@@ -24,13 +24,13 @@ export default function FAQsTab({ faqs, setFaqs, onNext }) {
         if (editingId) {
           // IMPLEMENT UPDATE: API Endpoint for PUT from your screenshot (68)
           response = await axios.put(
-            `https://digiservices-backend-6hc3.onrender.com/api/v1/faqs/${editingId}`,
+            `https://digiservices-backend-main.onrender.com/api/v1/faqs/${editingId}`,
             payload
           );
         } else {
           // CREATE NEW: API Endpoint for POST from your screenshot (54)
           response = await axios.post(
-            'https://digiservices-backend-6hc3.onrender.com/api/v1/faqs',
+            'https://digiservices-backend-main.onrender.com/api/v1/faqs',
             payload
           );
         }

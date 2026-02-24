@@ -1,6 +1,6 @@
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
-  "https://digiservices-backend-6hc3.onrender.com";
+  "https://digiservices-backend-main.onrender.com";
 
 export const BLOGS_ENDPOINT =
   import.meta.env.VITE_BLOGS_ENDPOINT || `${API_BASE_URL}/api/v1/blog`;

@@ -20,7 +20,7 @@ export default function Service() {
     const fetchServices = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('https://digiservices-backend-6hc3.onrender.com/api/v1/services');
+        const response = await axios.get('https://digiservices-backend-main.onrender.com/api/v1/services');
         console.log(response.data);
         // Map the API structure to our local state needs
         const formattedServices = response.data.map(service => ({
@@ -45,7 +45,7 @@ export default function Service() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this service?')) {
       try {
-        await axios.delete(`https://digiservices-backend-6hc3.onrender.com/api/v1/services/${id}`);
+        await axios.delete(`https://digiservices-backend-main.onrender.com/api/v1/services/${id}`);
         setServices(services.filter(s => s.id !== id));
       } catch (error) {
         console.error("Delete failed:", error);
