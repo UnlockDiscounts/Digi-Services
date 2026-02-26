@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   getAllServices,
   getAllCards,
@@ -244,12 +244,18 @@ const ServiceDetail = () => {
 
         {/* Buttons Container */}
         <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-[678px] h-auto md:h-[79px] gap-4 md:gap-9 mx-auto mt-8 md:mt-6">
-          <button className="w-full md:w-[321px] h-[60px] md:h-[79px] bg-[#6364FF] rounded-2xl text-white flex items-center justify-center gap-2.5 px-5 py-2.5 text-xl md:text-2xl font-semibold leading-none shadow-lg">
+          <Link
+            to="/contact"
+            className="w-full md:w-[321px] h-[60px] md:h-[79px] bg-[#6364FF] rounded-2xl text-white flex items-center justify-center gap-2.5 px-5 py-2.5 text-xl md:text-2xl font-semibold leading-none shadow-lg"
+          >
             Start your journey
-          </button>
-          <button className="w-full md:w-[321px] h-[60px] md:h-[79px] bg-white rounded-2xl text-black flex items-center justify-center gap-2.5 px-5 py-2.5 text-xl md:text-2xl font-semibold leading-none shadow-lg">
+          </Link>
+          <Link
+            to="/contact"
+            className="w-full md:w-[321px] h-[60px] md:h-[79px] bg-white rounded-2xl text-black flex items-center justify-center gap-2.5 px-5 py-2.5 text-xl md:text-2xl font-semibold leading-none shadow-lg"
+          >
             Get a quote
-          </button>
+          </Link>
         </div>
       </section>
 

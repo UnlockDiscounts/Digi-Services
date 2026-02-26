@@ -31,11 +31,7 @@ export default function NavBar() {
         {/* Logo - left fixed */}
         <div className="w-10 h-10 lg:w-[40px] lg:h-[40px] flex-shrink-0">
           <Link to="/">
-            <img
-              src={logo}
-              alt="Logo"
-              className="w-full h-full object-cover rounded-full"
-            />
+            <img src={logo} alt="Logo" className="w-full h-full object-cover" />
           </Link>
         </div>
 

@@ -23,7 +23,7 @@ const ServiceTestimonial = ({ data, isTransparent = false }) => {
       {/* Heading */}
       <div className="text-center mb-16">
         <h2
-          className={`text-5xl font-medium leading-[1.4] ${
+          className={`text-3xl md:text-5xl font-medium leading-[1.4] ${
             isTransparent ? "text-white" : "text-black"
           }`}
         >
