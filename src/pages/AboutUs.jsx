@@ -161,7 +161,7 @@ const AboutUs = () => {
 
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <ArticlesHeroCurve1 className="absolute rotate-[-20deg] md:rotate-0 -top-10 left-[-60px] md:bottom-auto md:top-0 md:-left-2.5 w-[150%] md:w-auto h-auto opacity-60 md:opacity-100" />
-          <ArticlesHeroCurve2 className="absolute top-[90px] md:top-[100px] right-[-50px] w-full md:w-auto h-auto opacity-60 md:opacity-100" />
+          <ArticlesHeroCurve2 className="absolute bottom-0 md:bottom-auto md:top-[100px] right-[-50px] w-full md:w-auto h-auto opacity-60 md:opacity-100" />
         </div>
 
         <motion.h1
@@ -573,10 +573,12 @@ const AboutUs = () => {
       {/* Services Carousel */}
       <AnimatedSection className="bg-white py-20 w-full max-w-[1440px] mx-auto overflow-hidden relative">
         <div className="w-full overflow-x-auto scrollbar-hide">
-          <div className="relative h-[749px] md:h-[749px] h-[500px] w-[1440px] md:w-[1440px] w-full flex-shrink-0 px-4 md:px-0">
-            <div className="absolute left-0 md:left-[670px] top-[139px] md:top-[139px] top-[20px] w-full md:w-[1100px] h-[471px] md:h-[471px] h-[400px] overflow-hidden px-2 md:px-0">
+          {/* Responsive Container */}
+          <div className="relative h-[500px] md:h-[749px] w-full md:w-[1440px] mx-auto px-4 md:px-0 flex justify-center md:block">
+            {/* Cards Wrapper */}
+            <div className="relative md:absolute md:left-[670px] top-[20px] md:top-[139px] w-[331px] md:w-[1100px] h-[400px] md:h-[471px] overflow-hidden">
               <motion.div
-                className="flex gap-[65px] absolute "
+                className="flex gap-[65px]"
                 animate={{ x: -servicesScroll * 396 }}
               >
                 {services.map((service, idx) => (
@@ -590,9 +592,11 @@ const AboutUs = () => {
                     >
                       {service.title}
                     </h3>
+
                     <p className="font-medium text-[18px] text-black text-center mt-4 px-4">
                       {service.description}
                     </p>
+
                     <div className="absolute bottom-0 left-[36px] h-[297px] w-[258px] overflow-hidden">
                       <img
                         src={service.image}
@@ -605,6 +609,7 @@ const AboutUs = () => {
               </motion.div>
             </div>
 
+            {/* Desktop Left Panel — UNTOUCHED */}
             <div className="hidden md:block absolute left-[137px] top-0 h-[749px] w-[500px] rounded-[16px] overflow-hidden">
               <img
                 src={imginterview}
@@ -619,10 +624,10 @@ const AboutUs = () => {
                 }}
               />
               <div className="relative z-10 h-full flex flex-col items-center justify-center px-12 text-white">
-                <p className="font-bold text-[40px] text-center mb-6 md:text-[40px] text-2xl sm:text-3xl">
+                <p className="font-bold text-[40px] text-center mb-6">
                   Our Comprehensive Services
                 </p>
-                <p className="text-[24px] text-center md:text-[24px] text-lg sm:text-xl">
+                <p className="text-[24px] text-center">
                   We combine expertise with personalized service for all your
                   digital needs.
                 </p>
@@ -631,37 +636,41 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <motion.button
-          onClick={() => scrollServices("left")}
-          disabled={servicesScroll === 0}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          className={`absolute left-1/2 top-[850px] z-[30] size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all -translate-x-[80px] ${
-            servicesScroll === 0
-              ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-gray-100 cursor-pointer shadow-lg"
-          }`}
-          style={{ rotate: "180deg" }}
-        >
-          <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
-            <path d={svgPaths.p9338b00} fill="black" />
-          </svg>
-        </motion.button>
-        <motion.button
-          onClick={() => scrollServices("right")}
-          disabled={servicesScroll === services.length - 1}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          className={`absolute left-1/2 top-[850px] z-[30] size-[30px] rounded-full border border-black flex items-center justify-center bg-white transition-all -translate-x-[30px] ${
-            servicesScroll === services.length - 1
-              ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-gray-100 cursor-pointer shadow-lg"
-          }`}
-        >
-          <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
-            <path d={svgPaths.pe4e7700} fill="black" />
-          </svg>
-        </motion.button>
+        {/* Arrows */}
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-10 md:bottom-auto md:top-[850px] flex gap-6 z-[30]">
+          <motion.button
+            onClick={() => scrollServices("left")}
+            disabled={servicesScroll === 0}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className={`size-[40px] rounded-full border border-black flex items-center justify-center bg-white transition-all ${
+              servicesScroll === 0
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-gray-100 cursor-pointer shadow-lg"
+            }`}
+            style={{ rotate: "180deg" }}
+          >
+            <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
+              <path d={svgPaths.p9338b00} fill="black" />
+            </svg>
+          </motion.button>
+
+          <motion.button
+            onClick={() => scrollServices("right")}
+            disabled={servicesScroll === services.length - 1}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className={`size-[40px] rounded-full border border-black flex items-center justify-center bg-white transition-all ${
+              servicesScroll === services.length - 1
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-gray-100 cursor-pointer shadow-lg"
+            }`}
+          >
+            <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
+              <path d={svgPaths.pe4e7700} fill="black" />
+            </svg>
+          </motion.button>
+        </div>
       </AnimatedSection>
 
       <div className="min-h-[600px] py-20 bg-gray-100 flex items-center justify-center p-4">
