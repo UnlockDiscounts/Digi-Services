@@ -118,13 +118,13 @@ export function PricingSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 sm:mb-16"
+          className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-4 mb-12 sm:mb-16"
         >
           {pricingCategories.map((category, index) => (
             <button
               key={index}
               className={`
-                font-['Poppins'] font-medium text-base sm:text-lg md:text-xl lg:text-2xl px-4 sm:px-6 md:px-7 lg:px-8 py-2.5 sm:py-3 md:py-3.5 lg:py-4 rounded-[20px] sm:rounded-[24px] transition-all
+                w-[300px] sm:w-auto font-['Poppins'] font-medium text-base sm:text-lg md:text-xl lg:text-2xl px-4 sm:px-6 md:px-7 lg:px-8 py-2.5 sm:py-3 md:py-3.5 lg:py-4 rounded-[20px] sm:rounded-[24px] transition-all
                 ${
                   category.active
                     ? "bg-[#473cf0] text-white shadow-[0px_4px_30.5px_0px_rgba(71,60,240,0.25)]"
@@ -196,9 +196,15 @@ export function PricingSection() {
                   FEATURES
                 </h4>
                 {plan.features.map((feature, featureIndex) => (
-                  <div key={featureIndex} className="flex items-center gap-2 sm:gap-3">
+                  <div
+                    key={featureIndex}
+                    className="flex items-center gap-2 sm:gap-3"
+                  >
                     <div className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
-                      <Check className="w-5 h-5 sm:w-6 sm:h-6 text-black" strokeWidth={2.5} />
+                      <Check
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-black"
+                        strokeWidth={2.5}
+                      />
                     </div>
                     <span className="font-['Poppins'] font-medium text-black text-base sm:text-lg md:text-xl lg:text-2xl">
                       {feature}

@@ -25,7 +25,7 @@ const ServiceProcessAutomation = ({ data }) => {
         </h2>
 
         {/* Outer Frame */}
-        <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl w-full max-w-full h-auto min-h-[320px] sm:min-h-[350px] md:min-h-[420px] lg:min-h-[484px] pt-3 sm:pt-4 md:pt-[21px] pb-3 sm:pb-4 md:pb-[21px] shadow-[0px_1px_3px_0px_#0000004D,0px_4px_8px_3px_#00000026] flex flex-col items-center overflow-x-hidden">
+        <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl w-full max-w-full h-auto min-h-[320px] sm:min-h-[350px] md:min-h-[420px] lg:min-h-[484px] p-3 sm:p-4 md:p-[21px] shadow-[0px_1px_3px_0px_#0000004D,0px_4px_8px_3px_#00000026] flex flex-col items-center overflow-x-hidden">
           {/* Top Menu (Steps) - Scrollable on Mobile */}
           <div className="flex flex-nowrap items-center justify-start md:justify-around w-full h-auto min-h-8 sm:min-h-9 md:min-h-10 lg:min-h-[42px] mb-3 sm:mb-3.5 md:mb-4 lg:mb-[18px] overflow-x-auto scrollbar-hide px-2 sm:px-3 md:px-4 lg:px-6 gap-2 md:gap-0">
             {data.steps.map((step, index) => (
@@ -43,7 +43,7 @@ const ServiceProcessAutomation = ({ data }) => {
           </div>
 
           {/* Main Gradient Card */}
-          <div className="w-full mx-auto h-auto min-h-[260px] sm:min-h-[280px] md:min-h-[340px] lg:min-h-[386px] rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl bg-[linear-gradient(265.37deg,#FFCCF2_2.78%,#977DFF_70.04%,#0033FF_127.68%)] p-4 sm:p-5 md:p-6 lg:pt-[40px] lg:pl-[30px] lg:pr-[30px] lg:pb-[40px] xl:pt-[60px] xl:pl-[38px] xl:pr-16 xl:pb-16 flex flex-col md:flex-row items-center justify-between relative overflow-hidden">
+          <div className="w-full mx-auto h-auto min-h-[380px] sm:min-h-[400px] md:min-h-[350px] lg:min-h-[400px] xl:min-h-[430px] rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl bg-[linear-gradient(265.37deg,#FFCCF2_2.78%,#977DFF_70.04%,#0033FF_127.68%)] p-4 sm:p-5 md:p-6 lg:pt-[24px] lg:pl-[30px] lg:pr-[30px] lg:pb-[24px] xl:pt-[36px] xl:pl-[38px] xl:pr-16 xl:pb-[36px] flex flex-col md:flex-row items-center justify-between relative overflow-hidden">
             {/* Animated Content Wrapper */}
             <div
               key={currentStep}

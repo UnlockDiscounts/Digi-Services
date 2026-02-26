@@ -3,11 +3,9 @@ import { ChevronRight } from "lucide-react";
 import hero from "../../assets/hero.svg";
 import { Link } from "react-router-dom";
 
-
-
 export function HeroSection() {
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 md:pt-32 lg:pt-24 pb-16 overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-28 md:pt-32 lg:pt-24 pb-16 overflow-hidden">
       {/* Decorative blur effects */}
       <div className="absolute left-1/2 top-1/4 w-16 h-16 -translate-x-1/2 opacity-70">
         <div className="absolute inset-0 blur-[85px] bg-[#473CF0] rounded-full" />
@@ -55,52 +53,56 @@ export function HeroSection() {
           </motion.div>
 
           <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.6, duration: 0.8 }}
-  className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start pt-4 md:pt-6"
->
-  {/* Button 1: Start Your Journey (Floating Animation) */}
-  <button className="cursor-pointer relative bg-[#574dec] text-white font-['Poppins'] font-medium text-xl sm:text-2xl px-8 py-4 rounded-[16px] group hover:bg-[#473bd0] transition-colors shadow-lg">
-    <motion.div
-      animate={{ 
-        y: [0, -6, 0], // Subtle floating up and down
-      }}
-      transition={{
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-    >
-      Start Your Journey
-    </motion.div>
-  </button>
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start pt-4 md:pt-6"
+          >
+            {/* Button 1: Start Your Journey (Floating Animation) */}
+            <Link
+              to="/contact"
+              className="block cursor-pointer relative bg-[#574dec] text-white font-['Poppins'] font-medium text-xl sm:text-2xl px-8 py-4 rounded-[16px] group hover:bg-[#473bd0] transition-colors shadow-lg"
+            >
+              <motion.div
+                animate={{
+                  y: [0, -6, 0], // Subtle floating up and down
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                Start Your Journey
+              </motion.div>
+            </Link>
 
-  {/* Button 2: Explore Services (Identical Roundedness & Hidden Bracket) */}
-  
-  <button 
-    onClick={() => {
-      const servicesSection = document.getElementById('services');
-      if (servicesSection) {
-        servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }}
-    className="group relative bg-white text-black font-['Poppins'] font-medium text-xl sm:text-2xl px-8 py-4 rounded-[16px] hover:bg-gray-100 transition-all shadow-lg overflow-hidden min-w-[240px] cursor-pointer"
-  >
-    <Link to="/services">
-    <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-3 block">
-      Explore Services
-    </span>
-    </Link>
-    
-    {/* Bracket: Positioned absolutely so it takes up NO space when not hovered */}
-    <motion.div
-      className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0"
-    >
-      <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 stroke-[2]" />
-    </motion.div>
-  </button>
-</motion.div>
+            {/* Button 2: Explore Services (Identical Roundedness & Hidden Bracket) */}
+
+            <button
+              onClick={() => {
+                const servicesSection = document.getElementById("services");
+                if (servicesSection) {
+                  servicesSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }
+              }}
+              className="group relative bg-white text-black font-['Poppins'] font-medium text-xl sm:text-2xl px-8 py-4 rounded-[16px] hover:bg-gray-100 transition-all shadow-lg overflow-hidden min-w-[240px] cursor-pointer"
+            >
+              <Link to="/services">
+                <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-3 block">
+                  Explore Services
+                </span>
+              </Link>
+
+              {/* Bracket: Positioned absolutely so it takes up NO space when not hovered */}
+              <motion.div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
+                <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 stroke-[2]" />
+              </motion.div>
+            </button>
+          </motion.div>
         </motion.div>
 
         {/* Right Content - Laptop Image */}
@@ -113,12 +115,12 @@ export function HeroSection() {
           <motion.div
             animate={{
               y: [0, -20, 0],
-              rotate: [0, 2, 0, -2, 0]
+              rotate: [0, 2, 0, -2, 0],
             }}
             transition={{
               duration: 6,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
             className="relative w-full max-w-md lg:max-w-lg"
           >

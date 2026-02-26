@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import ServiceOverviewCard from "../components/ServiceOverviewCard.jsx";
 import ServiceProcessAutomation from "../components/ServiceProcessAutomation.jsx";
 
@@ -32,24 +33,30 @@ const ServiceCategory = () => {
     <div className="w-full">
       {/* HERO SECTION */}
       <section
-        className="min-h-[400px] md:min-h-[600px] flex flex-col justify-end items-center text-center text-white relative overflow-hidden pb-16 md:pb-32"
+        className="min-h-[500px] md:min-h-[600px] pt-32 md:pt-0 flex flex-col justify-end items-center text-center text-white relative overflow-hidden pb-16 md:pb-32"
         style={{
           background:
             "linear-gradient(90deg, #FDCBF2 0%, #907AFF 50%, #0435FF 100%)",
         }}
       >
-        <div className="w-full max-w-5xl mx-auto px-6 relative z-10 -mt-10">
+        <div className="w-full max-w-5xl mx-auto px-6 relative z-10 md:-mt-10">
           <h1 className="text-3xl md:text-5xl font-bold mb-8 leading-[1.3] text-[#E6E6E6] drop-shadow-sm tracking-normal">
             Smart Digital Services to <br /> Build, Grow, and Stand Out
           </h1>
 
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-9 mt-8">
-            <button className="w-full md:w-[321px] h-[60px] md:h-[79px] bg-[#6364FF] text-white rounded-2xl font-semibold text-xl md:text-2xl leading-none shadow-lg flex items-center justify-center tracking-normal">
+            <Link
+              to="/contact"
+              className="w-full md:w-[321px] h-[60px] md:h-[79px] bg-[#6364FF] text-white rounded-2xl font-semibold text-xl md:text-2xl leading-none shadow-lg flex items-center justify-center tracking-normal"
+            >
               Start Your Journey
-            </button>
-            <button className="w-full md:w-[321px] h-[60px] md:h-[79px] bg-white text-black rounded-2xl font-medium text-xl md:text-2xl leading-none shadow-lg opacity-80 flex items-center justify-center tracking-normal">
+            </Link>
+            <Link
+              to="/contact"
+              className="w-full md:w-[321px] h-[60px] md:h-[79px] bg-white text-black rounded-2xl font-medium text-xl md:text-2xl leading-none shadow-lg opacity-80 flex items-center justify-center tracking-normal"
+            >
               Get a quote
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -86,7 +93,9 @@ const ServiceCategory = () => {
 
         <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
           {loading ? (
-            <div className="w-full text-center text-lg sm:text-xl py-12">Loading services...</div>
+            <div className="w-full text-center text-lg sm:text-xl py-12">
+              Loading services...
+            </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
               {services.map((service) => (
