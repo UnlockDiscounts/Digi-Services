@@ -54,18 +54,19 @@ const ContactUs = () => {
           {/* <Navbar /> */}
         </div>
 
-        {/* Title - Responsive positioning */}
+        {/* Title - Fixed mobile overlap */}
         <motion.p
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-white text-center mb-12 sm:mb-12 lg:mb-[54px] px-4 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-[194px] w-full lg:w-[min(1377px,95%)]"
+          /* Added pt-20 for mobile to clear the navbar and changed mb to 8 */
+          className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-white text-center pt-20 mb-8 sm:mb-12 lg:mb-[54px] px-4 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-[194px] w-full lg:w-[min(1377px,95%)] lg:pt-0"
         >
           Get In Touch With Us
         </motion.p>
 
-        {/* Card - DEAD CENTER */}
-        <div className="flex-1 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-50 pb-8 sm:pb-12 lg:pb-12 mt-16 sm:mt-20 md:mt-[200px] lg:mt-[200px]">
+        {/* Card - Adjusted margin for mobile */}
+        <div className="flex-1 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-50 pb-8 sm:pb-12 lg:pb-12 mt-4 sm:mt-20 md:mt-[200px] lg:mt-[260px]">
           <div className="w-full max-w-[95vw] lg:max-w-5xl mx-auto">
             <div className="flex flex-col lg:flex-row rounded-none shadow-2xl overflow-hidden mx-auto">
               {/* Left purple card */}
